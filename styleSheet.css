@@ -1,0 +1,137 @@
+/*Global Styles*/
+table {
+    height: 100vh;
+    width: 100vw;
+    margin: 0;
+    padding: 0;
+    border-spacing: 0;
+    text-align: center;
+    font-family: Monospace;
+    border: white 2px solid;
+  }
+
+  body {
+    margin: 0;
+    background-color: #1d1e1e;
+    overflow: hidden;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover; 
+  }
+
+  button {
+    height: 11vh;
+    width: 13vw;
+    border: 3px solid black;
+    border-radius: 5px;
+    color: black;
+    font-size: 100%;
+    font-family: inherit;
+    box-shadow: 0px 0px 10px black;
+    font-size: 2.5vh;
+    text-overflow: clip;
+  }
+  
+  textarea {
+    resize: none;
+    background-color: rgba(0, 0, 0, 0.2);
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+    border: 3px solid white;
+    color: white;
+    text-align: left;
+    font-size: 1.5vh;
+  }
+  /*Everything Else*/
+  .header {
+    color: white;
+    font-size: 15vh;
+    text-shadow: 0px 0px 50px black;
+  }
+  .footer {
+    height: 20vh;
+  }
+  .topSideBox {
+    width: 20vw;
+  }
+  .comments {
+    height: 12vh;
+    width: 30vw;
+    font-size:2vh;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  .undo {
+    height: 10vh;
+    padding: 0;
+    border: 3px solid white;
+    border-radius: 0px;
+    -webkit-backdrop-filter: blur(15px);
+    backdrop-filter: blur(15px);
+    background-color: rgba(255, 0, 0, 0.5);
+    color: white;
+    font-size: 3vh;
+    background: #cc0000;
+  }
+  .infoBox {
+    height: 4vh;
+    width: 5vw;
+    background-color: rgba(0, 0, 0, 0.5);
+    -webkit-backdrop-filter: blur(50px);
+    backdrop-filter: blur(50px);
+    border: 3px solid white;
+    color: white;
+    text-align: center;
+    font-size: 3vh;
+  }
+  .inputBox {
+    height: 4vh;
+    width: 7vw;
+    background-color: rgba(0, 0, 0, 0.5);
+    -webkit-backdrop-filter: blur(50px);
+    backdrop-filter: blur(50px);
+    border: 3px solid white;
+    color: white;
+    text-align: center;
+    font-size: 3vh;
+  }
+  .backForth {
+    text-align: center;
+    font-size: 5vh;
+    height: 11vh;
+    width: 13vw;
+  }
+
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+  }
+
+  body::-webkit-scrollbar {
+    display: none; /* for Chrome, Safari, and Opera */
+  }
+
+.terminal {
+    width: 20vw;
+    height: 60vh;
+    resize: none;
+    background-color: rgba(0, 0, 0, 0.2);
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+    border: 3px solid white;
+    text-align: left;
+    color: white;
+    font-size: 1.5vh;
+    scrollbar-width: thin;
+    scrollbar-color: white rgba(0, 0, 0, 0.2);
+    font-size:2vh;
+    line-height: 1.51vw;
+}
+
+.score {
+    width: 14vw;
+    display: block;
+    box-sizing: border-box;
+    margin: auto;
+    text-align: center;
+    align-items: center;
+}

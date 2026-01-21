@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<script src="./app.js"></script>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Endgame</title>
+  <link rel="styleSheet" type="text/css" href="endgame.css">
+  <link rel="styleSheet" type="text/css" href="styleSheet.css">
+</head>
+
+<body id='body' style="overflow: scroll;" onload="loadPage()">
+  <table class="endGameTable" id="table">
+    <tr class="top" id="row1">
+      <th class="topSideBox">
+        <input class="infoBox" type="text" name="teamBox" id="teamNumberBox" readonly />
+      </th>
+      <th colspan="1" class="header">Endgame</th>
+      <th class="topSideBox">
+        <input class="infoBox" type="text" name="matchBox" id="matchNumberBox" readonly />
+      </th>
+    </tr>
+    <tr id="row2">
+      <td colspan="3">
+        <textarea class="comments" placeholder="Unleash your imagination" onchange="commentEdit(this.value)"
+          id="coment"></textarea>
+      </td>
+    </tr>
+    <tr id="row3">
+      <td></td>
+      <td rowspan="2" colspan="1">
+        <textarea readonly id="teamLog1" class="terminalEndgame" placeholder="Nothing to undo"></textarea>
+        <br>
+        <textarea readonly id="teamLog2" class="score" placeholder="Nothing yet"></textarea>
+        <br>
+        <button class="undo" id="undo" onclick="Undo()">Undo</button>
+      </td>
+    </tr>
+    <tr class="footer" id="row4">
+      <td>
+        <button class="backForth nextColor" id="next"
+          onclick="load('teleop')">&larr;</button>
+      </td>
+      <td>
+        <button class="backForth nextColor" id="next"
+          onclick="load('qr')">&rarr;</button>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
