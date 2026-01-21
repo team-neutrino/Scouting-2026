@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>index</title>
+    <script src="app.js"></script>
+    <link rel="stylesheet" type="text/css" href="styleSheet.css">
+    <link rel="stylesheet" type="text/css" href="index.css">
+</head>
+
+<body onload="pullIPadID();setTeam(matchNum.value, iPadIDarea.value);alliancePick('No Alliance')" id="body"
+    style="overflow: scroll;">
+    <table class="table" id="indexTable">
+
+        <tr id="row1">
+            <th class="headerIndex" colspan="3"></th>
+        </tr>
+        <tr id="row2">
+            <td>
+                <input class="inputBox" type="number" name="matchBox" placeholder="Team" id="teamNum" maxlength="4"
+                    oninput="this.value=this.value.replace(/[^0-9]/g,'')" />
+            </td>
+            <td>
+                <input class="inputBox" type="text" name="matchBox" placeholder="Scout" maxlength="3" id="scout"
+                    oninput="this.value = this.value.replace(/[^a-zA-Z]/g, '').toUpperCase();" />
+            </td>
+            <td>
+                <input class="inputBox" type="number" name="matchBox" placeholder="Match" id="matchNum"
+                    oninput="if(this.value.length > 3) { this.value = this.value.slice(0,3); }"
+                    onchange="setTeam(this.value, iPadIDarea.value)" />
+            </td>
+        </tr>
+
+        <tr id="row3">
+            <td rowspan="2"></td>
+            <td>
+                <button class="redButton" id="Red Alliance" onclick="alliancePick(this.id)">Red
+                    Alliance</button>
+            </td>
+            <td rowspan="2"></td>
+        </tr>
+
+        <tr id="row4">
+            <td>
+                <button class="blueButton" id="Blue Alliance" onclick="alliancePick(this.id)">Blue
+                    Alliance</button>
+            </td>
+        </tr>
+
+        <tr id="row5" style="position: relative;">
+            <td style="z-index: -1">
+                <input id="iPadIDarea" type="number" class="inputBox" placeholder="ID"
+                    onchange="setTeam(matchNum.value, this.value)" maxlength="1"
+                    style="position: relative; z-index: 1;" />
+            </td>
+            <td style="z-index: 1">
+                <button class="goButton" ondblclick="skipToQr(iPadIDarea.value, matchNum.value, scout.value)"
+                    onclick="GO(iPadIDarea.value, matchNum.value, scout.value);" id="goButton"
+                    style="position: relative; z-index: 2;">Go!</button>
+            </td>
+            <td style="z-index: -1"></td>
+        </tr>
+
+    </table>
+</body>
+
+</html>
