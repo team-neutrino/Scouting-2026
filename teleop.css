@@ -1,0 +1,15 @@
+.navigationButton {
+    background-image: linear-gradient(
+        #999999,
+        #777777,
+    );
+    border: #333333,
+}
+
+.navigationButton:hover {
+    background-image: linear-gradient(
+        #777777,
+        #555555,
+    );
+    border: #222222,
+}
