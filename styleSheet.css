@@ -31,6 +31,14 @@ table {
     font-size: 2.5vh;
     text-overflow: clip;
   }
+
+  button:hover {
+    filter: brightness(0.8);
+  }
+
+  button:active {
+    filter: brightness(1.2);
+  }
   
   textarea {
     resize: none;
@@ -96,6 +104,7 @@ table {
   }
   .backForth {
     text-align: center;
+    background-color: rgb(128,71,28);
     font-size: 5vh;
     height: 11vh;
     width: 13vw;
