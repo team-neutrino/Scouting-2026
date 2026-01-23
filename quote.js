@@ -14,8 +14,7 @@ function getQuote() {
   let quotePackage = [quote, "-" + keyList[keyNumber], ((0.45*wordCount))*1000];
   return quotePackage;
 }
-//0.005x^{2}+4
-//((0.004*wordCount)^2+4)*1000, 
+
 function getRandomInt(min, max) {
   const minCeiled = Math.ceil(min);
   const maxFloored = Math.floor(max);

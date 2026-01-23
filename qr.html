@@ -40,7 +40,7 @@
         actionList = JSON.parse(unparsedActionList);
         compressedList = JSON.parse(unparsedCompressedList);
         extraData = JSON.parse(unparsedExtradata);
-        var sums = Array(27).fill(0); //Compress List Length
+        var sums = Array(6).fill(0); //Compress List
         for (const item of compressedList) {
             sums[item]++;
         }
