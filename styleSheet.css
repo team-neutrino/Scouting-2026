@@ -135,3 +135,7 @@ table {
     text-align: center;
     align-items: center;
 }
+
+.top {
+  height: 25vh;
+}
