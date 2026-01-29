@@ -27,21 +27,21 @@ td {
   height: 13vh;
   width: 13vw;
   text-align: center;
+  background-color: rgb(138, 195, 213);
 }
 
 .sideButton {
   height: 13vh;
   position: absolute;
-  bottom: 22vh;
-  left: 60vw;
+  left: 80vw;
 }
 
 #backsideButton {
   bottom: 51vh;
-  left: 80vw;
+  background-color: rgb(159, 221, 67);
 }
 
 #noTry {
   bottom: 36vh;
-  left: 80vw;
+  background-color: rgb(222, 90, 90);
 }
