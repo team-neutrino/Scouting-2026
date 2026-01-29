@@ -20,6 +20,11 @@ table {
   }
 
   button {
+    background-image: linear-gradient(
+        to right,
+        #999999,
+        #478301
+    );
     height: 11vh;
     width: 13vw;
     border: 3px solid black;
@@ -134,4 +139,20 @@ table {
     margin: auto;
     text-align: center;
     align-items: center;
+}
+
+.navigationButton {
+    background-image: linear-gradient(
+        #999999,
+        #777777
+    );
+    border: #333333;
+}
+ 
+.navigationButton:hover {
+    background-image: linear-gradient(
+        #777777,
+        #555555
+    );
+    border: #333333;
 }

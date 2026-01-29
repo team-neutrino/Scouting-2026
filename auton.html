@@ -28,15 +28,17 @@
                 <textarea readonly id="teamLog2" class="score" placeholder="Nothing yet"></textarea>
                 <br>
                 <button class="undo" id="undo" onclick="Undo()">Undo</button>
+                <button class="undo" id="+1" onclick="pushFuel(1)">+1</button>
+                <button class="undo" id="+5" onclick="pushFuel(5)">+5</button>
             </td>
             <td rowspan='1' colspan='1'></td>
         </tr>
         <tr class="footer">  
             <td rowspan='1' colspan='1'>
-                <button onclick="load('index')">&larr;</button>
+                <button class="navigationButton" onclick="load('index')">&larr;</button>
             </td>
             <td rowspan='1' colspan='1'>
-                <button onclick="load('teleop')">&rarr;</button>
+                <button class="navigationButton" onclick="load('teleop')">&rarr;</button>
             </td>
         </tr>
     </table>

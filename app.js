@@ -40,6 +40,34 @@ function addAction(action, number) { //Used for buttons that have a data validat
   updateScore();
 }
 
+var lastUpdatedTimestamp = 0
+var stackedAmount
+var actionLength
+var newPosition
+
+var sillyOnomatopoeia = [
+  "Pow!",
+  "Ka-chow!",
+  "Pew!",
+  "Ping!",
+  "Swish!",
+  "Boom!",
+]
+
+function pushFuel(amt) {
+  if (actionLength == null) {
+    actionLength = actionList.length;
+    newPosition = actionLength;
+    stackedAmount = amt
+    actionList.push(sillyOnomatopoeia[Math.round(Math.random() * (sillyOnomatopoeia.length - 1))] + " +" + amt + " Fuel (" + stackedAmount + ")");
+  } else {
+    stackedAmount += amt
+    // actionList[newPosition] = sillyOnomatopoeia[Math.round(Math.random() * (sillyOnomatopoeia.length - 1))] + " +" + amt + " Fuel (" + stackedAmount + ")";
+    actionList.push(sillyOnomatopoeia[Math.round(Math.random() * (sillyOnomatopoeia.length - 1))] + " +" + amt + " Fuel (" + stackedAmount + ")");
+  }
+  updateLog()
+};
+
 function updateScore() {
   var currentScore = 0
   for(i = 0; i < compressedList.length; i++){
@@ -128,9 +156,9 @@ function displayBoxData() {
   if (extraData[1] !== undefined) {
     document.getElementById('matchNumberBox').value = extraData[1];
   }
-  if (extraData[3] !== undefined) {
-    document.getElementById('coment').value = extraData[3];
-  }
+  // if (extraData[3] !== undefined) {
+  //   document.getElementById('coment').value = extraData[3];
+  // }
 }
 
 function updateLog() {
