@@ -12,16 +12,20 @@
 <body class="teleopBody" style="overflow: scroll;" onload="loadPage()">
     <table id="table">
         <tr class="top" id="row1">
-            <th class="topSideBox">
+            <th class="topSideBox" colspan="2">
                 <input class="infoBox" type="text" name="teamBox" id="teamNumberBox" readonly />
             </th>
-            <th colspan="3" class="header" id="color">Teleop</th>
-            <th class="topSideBox">
+            <th colspan="1" class="header" id="color" rowspan="2">Teleop</th>
+            <th class="topSideBox" colspan="2">
                 <input class="infoBox" type="text" name="matchBox" id="matchNumberBox" readonly />
             </th>
         </tr>
-        <tr>
-            <td colspan="2" class="subheader">score</td>
+        <tr class="subHeaderRow">
+            <td colspan="2" rowspan="2" class="subHeader">score</td>
+            <td colspan="2" rowspan="2" class="subHeader">pass</td>
+        </tr>
+        <tr class="subHeaderRow">
+
             <td colspan="1" rowspan="6">
                 <textarea readonly id="teamLog1" class="terminal" placeholder="Nothing to undo"></textarea>
                 <br>
@@ -29,7 +33,7 @@
                 <br>
                 <button class="undo" id="undo" onclick="Undo()">Undo</button>
             </td>
-            <td colspan="2" class="subheader">pass</td>
+
         </tr>
         <tr>
             <td class="largeRow">

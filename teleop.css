@@ -5,9 +5,13 @@ td {
     /* border: 1px solid gray; */
 }
 
-.subheader {
+.subHeader {
     color: white;
     font-size: 10vh;
+}
+
+.subHeaderRow {
+    height: 5vh;
 }
 
 .smallRow {
