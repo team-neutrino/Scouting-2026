@@ -14,21 +14,23 @@ td {
     height: 5vh;
 }
 
-.smallRow {
+.smallColumm {
     width: 5vw;
 }
 
-.largeRow {
+.largeColumm {
     width: 32vw;
 }
 
 .minusButton {
     width: 6vw;
+    background-color: red;
 }
 
 
 .plusButton {
     width: 90%;
+    background-color: orange;
 }
 
 .navigationButton {

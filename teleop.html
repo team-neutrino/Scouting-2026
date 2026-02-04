@@ -20,13 +20,12 @@
                 <input class="infoBox" type="text" name="matchBox" id="matchNumberBox" readonly />
             </th>
         </tr>
-        <tr class="subHeaderRow">
+        <tr class="subHeaderRow" id="row2">
             <td colspan="2" rowspan="2" class="subHeader">score</td>
             <td colspan="2" rowspan="2" class="subHeader">pass</td>
         </tr>
         <tr class="subHeaderRow">
-
-            <td colspan="1" rowspan="6">
+            <td rowspan="6">
                 <textarea readonly id="teamLog1" class="terminal" placeholder="Nothing to undo"></textarea>
                 <br>
                 <textarea readonly id="teamLog2" class="score" placeholder="Nothing yet"></textarea>
@@ -35,21 +34,21 @@
             </td>
 
         </tr>
-        <tr>
-            <td class="largeRow">
+        <tr id="row3">
+            <td class="largeColumm">
                 <button class="plusButton">10</button>
             </td>
-            <td class="smallRow">
+            <td class="smallColumm">
                 <button class="minusButton">-10</button>
             </td>
-            <td class="smallRow">
+            <td class="smallColumm">
                 <button class="minusButton">-10</button>
             </td>
-            <td class="largeRow">
+            <td class="largeColumm">
                 <button class="plusButton">10</button>
             </td>
         </tr>
-        <tr>
+        <tr id="row4">
             <td>
                 <button class="plusButton">8</button>
             </td>
@@ -63,7 +62,7 @@
                 <button class="plusButton" class="plusButton">8</button>
             </td>
         </tr>
-        <tr>
+        <tr id="row5">
             <td>
                 <button class="plusButton">5</button>
             </td>
@@ -77,7 +76,7 @@
                 <button class="plusButton">5</button>
             </td>
         </tr>
-        <tr>
+        <tr id="row6">
             <td>
                 <button class="plusButton">1</button>
             </td>
@@ -91,33 +90,16 @@
                 <button class="plusButton">1</button>
             </td>
         </tr>
-        <tr>
-            <td colspan="2">
-                <button>back</button>
+        <tr class="footer" id="row7">
+            <td>
+                <button class="backForth nextColor" id="next" onclick="load('teleop')">&larr;</button>
             </td>
-            <td colspan="2">
-                <button>next</button>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="backForth nextColor" id="next" onclick="load('endgame')">&rarr;</button>
             </td>
         </tr>
-        <!-- <tr>
-            <td rowspan='1' colspan='1'></td>
-            <td rowspan="2" colspan="1">
-                <textarea readonly id="teamLog1" class="terminal" placeholder="Nothing to undo"></textarea>
-                <br>
-                <textarea readonly id="teamLog2" class="score" placeholder="Nothing yet"></textarea>
-                <br>
-                <button class="undo" id="undo" onclick="Undo()">Undo</button>
-            </td>
-            <td rowspan='1' colspan='1'></td>
-        </tr>
-        <tr class="footer">
-            <td>
-                <button class="navigationButton" onclick="load('auton')">&larr;</button>
-            </td>
-            <td>
-                <button class="navigationButton" onclick="load('endgame')">&rarr;</button>
-            </td>
-        </tr> -->
     </table>
 </body>
 
