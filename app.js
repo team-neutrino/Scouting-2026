@@ -1,4 +1,4 @@
-const pointList = [1,4,3]
+const pointList = [1, 4, 3, 1, 5, 10]
 
 let extraData = []; //['teamNum', 'matchNum', 'scout', 'comment', 'alliance pick']
 var matchNumber = []; //Match Number
@@ -6,12 +6,12 @@ var teamNumber = []; //Team Number
 var actionList = [""]; //This is the list that populates the log with human friendly text.
 var compressedList = []; //This is the list that collects all the IDs for the QR Code.
 var comments = ""; //Comments Box
-var blue1 = [1,2];
-var blue2 = [3,4];
-var blue3 = [5,6];
-var red1 = [7,8];
-var red2 = [9,10];
-var red3 = [11,12];
+var blue1 = [1, 2];
+var blue2 = [3, 4];
+var blue3 = [5, 6];
+var red1 = [7, 8];
+var red2 = [9, 10];
+var red3 = [11, 12];
 var ipadID = localStorage.getItem("iPadId");
 var incmatchnumber = "1";
 var matchnum = 1;
@@ -51,26 +51,42 @@ var sillyOnomatopoeia = [
   "Pew!",
   "Ping!",
   "Swish!",
-  "Boom!",
+  "Boom!"
 ]
 
+var amtToCompressed = { // index = fuel amount, value = position in compressed list. someone should rework this system
+  [1]: 3,
+  [5]: 4,
+  [10]: 5,
+}
+
 function pushFuel(amt) {
-  if (actionLength == null) {
+  if (actionLength == null || lastUpdatedTimestamp < (Date.now() - 1000)) {
     actionLength = actionList.length;
     newPosition = actionLength;
     stackedAmount = amt
     actionList.push(sillyOnomatopoeia[Math.round(Math.random() * (sillyOnomatopoeia.length - 1))] + " +" + amt + " Fuel (" + stackedAmount + ")");
+    compressedList.push(amtToCompressed[amt]);
   } else {
     stackedAmount += amt
     // actionList[newPosition] = sillyOnomatopoeia[Math.round(Math.random() * (sillyOnomatopoeia.length - 1))] + " +" + amt + " Fuel (" + stackedAmount + ")";
     actionList.push(sillyOnomatopoeia[Math.round(Math.random() * (sillyOnomatopoeia.length - 1))] + " +" + amt + " Fuel (" + stackedAmount + ")");
+    compressedList.push(amtToCompressed[amt]);
   }
   updateLog()
+  updateScore()
+
+  lastUpdatedTimestamp = Date.now()
 };
+
+function resetFuel() {
+  actionLength = null;
+  lastUpdatedTimestamp = 0;
+}
 
 function updateScore() {
   var currentScore = 0
-  for(i = 0; i < compressedList.length; i++){
+  for (i = 0; i < compressedList.length; i++) {
     currentScore += pointList[compressedList[i]]
   }
   score = currentScore;
@@ -172,6 +188,7 @@ function commentEdit(comment) {
 }
 function Undo() {
   var lastAction = actionList.pop();
+  resetFuel()
 
   if (lastAction) {
     document.getElementById('teamLog1').style.border = '3px solid red';
