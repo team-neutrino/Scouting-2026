@@ -1,4 +1,4 @@
-const pointList = [1, 4, 3, 1, 5, 10]
+const pointList = [1, 4, 3, 0, 1, 5, 10]
 
 let extraData = []; //['teamNum', 'matchNum', 'scout', 'comment', 'alliance pick']
 var matchNumber = []; //Match Number
@@ -55,13 +55,19 @@ var sillyOnomatopoeia = [
 ]
 
 var amtToCompressed = { // index = fuel amount, value = position in compressed list. someone should rework this system
-  [1]: 3,
-  [5]: 4,
-  [10]: 5,
+  [1]: 4,
+  [5]: 5,
+  [10]: 6,
 }
+var compressedPositionsForFuel = [3, 4, 5, 6]
 
 function pushFuel(amt) {
   if (actionLength == null || lastUpdatedTimestamp < (Date.now() - 1000)) {
+    if (lastUpdatedTimestamp < (Date.now() - 1000) && typeof (stackedAmount) == "number" && actionLength != null) {
+      actionList.push("Score timed out! Scored " + stackedAmount + " fuel.")
+      compressedList.push(3)
+    }
+
     actionLength = actionList.length;
     newPosition = actionLength;
     stackedAmount = amt
@@ -205,6 +211,27 @@ function Undo() {
   } else {
     console.log("Nothing to undo");
   }
+}
+
+function UndoAllFuel() { // operating under the very dangerous assumption that the compressed and action list are in sync
+  let compressedLength = compressedList.length - 1;
+
+  for (let i = compressedLength; i > 0, i--;) {
+    let check = compressedList[i]
+
+    if (compressedPositionsForFuel.includes(check)) {
+      compressedList.pop()
+      actionList.pop()
+    }
+
+    if (check == 3) {
+      break
+    }
+  }
+
+  updateLog()
+  updateScore()
+  resetFuel()
 }
 
 function pullIPadID() {
