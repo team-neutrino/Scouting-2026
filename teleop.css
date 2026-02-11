@@ -2,7 +2,7 @@ table,
 th,
 tr,
 td {
-    /* border: 1px solid gray; */
+    border: 1px solid gray;
 }
 
 .subHeader {
@@ -45,4 +45,12 @@ td {
             #555555,
         );
     border: #222222,
+}
+
+#back {
+    margin-left: -36%;
+}
+
+#next {
+    margin-left: 36%;
 }
