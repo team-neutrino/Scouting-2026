@@ -1,4 +1,4 @@
-const pointList = [1,4,3]
+const pointList = [1, 4, 3]
 
 let extraData = []; //['teamNum', 'matchNum', 'scout', 'comment', 'alliance pick']
 var matchNumber = []; //Match Number
@@ -6,12 +6,12 @@ var teamNumber = []; //Team Number
 var actionList = [""]; //This is the list that populates the log with human friendly text.
 var compressedList = []; //This is the list that collects all the IDs for the QR Code.
 var comments = ""; //Comments Box
-var blue1 = [1,2];
-var blue2 = [3,4];
-var blue3 = [5,6];
-var red1 = [7,8];
-var red2 = [9,10];
-var red3 = [11,12];
+var blue1 = [1, 2];
+var blue2 = [3, 4];
+var blue3 = [5, 6];
+var red1 = [7, 8];
+var red2 = [9, 10];
+var red3 = [11, 12];
 var ipadID = localStorage.getItem("iPadId");
 var incmatchnumber = "1";
 var matchnum = 1;
@@ -42,7 +42,7 @@ function addAction(action, number) { //Used for buttons that have a data validat
 
 function updateScore() {
   var currentScore = 0
-  for(i = 0; i < compressedList.length; i++){
+  for (i = 0; i < compressedList.length; i++) {
     currentScore += pointList[compressedList[i]]
   }
   score = currentScore;
@@ -54,7 +54,111 @@ function alliancePick(alliance) {
   console.log(extraData);
 }
 
-function GO(iPadID, matchsaver, scoutsaver, page) {
+function replaceClimb(action, number) {
+  var index19 = actionList.indexOf("Fail");
+  var index20 = actionList.indexOf("L3L");
+  var index21 = actionList.indexOf("L3M");
+  var index22 = actionList.indexOf("L3R");
+  var index23 = actionList.indexOf("L2L");
+  var index24 = actionList.indexOf("L2M");
+  var index25 = actionList.indexOf("L2R");
+  var index26 = actionList.indexOf("L1L");
+  var index27 = actionList.indexOf("L1M");
+  var index28 = actionList.indexOf("L1R");
+  var index29 = actionList.indexOf("No Attempt");
+  var index = actionList.indexOf(action);
+
+  if (index > -1) {
+    actionList.splice(index, 1);
+  }
+  if (index19 > -1) {
+    actionList.splice(index19, 1);
+  }
+  if (index20 > -1) {
+    actionList.splice(index20, 1);
+  }
+  if (index21 > -1) {
+    actionList.splice(index21, 1);
+  }
+  if (index22 > -1) {
+    actionList.splice(index22, 1);
+  }
+  if (index23 > -1) {
+    actionList.splice(index23, 1);
+  }
+  if (index24 > -1) {
+    actionList.splice(index24, 1);
+  }
+  if (index25 > -1) {
+    actionList.splice(index25, 1);
+  }
+  if (index26 > -1) {
+    actionList.splice(index26, 1);
+  }
+  if (index27 > -1) {
+    actionList.splice(index27, 1);
+  }
+  if (index28 > -1) {
+    actionList.splice(index28, 1);
+  }
+  if (index29 > -1) {
+    actionList.splice(index29, 1);
+  }
+  var compressed19 = compressedList.indexOf(19);
+  var compressed20 = compressedList.indexOf(20);
+  var compressed21 = compressedList.indexOf(21);
+  var compressed22 = compressedList.indexOf(22);
+  var compressed23 = compressedList.indexOf(23);
+  var compressed24 = compressedList.indexOf(24);
+  var compressed25 = compressedList.indexOf(25);
+  var compressed26 = compressedList.indexOf(26);
+  var compressed27 = compressedList.indexOf(27);
+  var compressed28 = compressedList.indexOf(28);
+  var compressed29 = compressedList.indexOf(29);
+  var compressed = compressedList.indexOf(number);
+
+  if (compressed > -1) {
+    compressedList.splice(compressed, 1);
+  }
+  if (compressed19 > -1) {
+    compressedList.splice(compressed19, 1);
+  }
+  if (compressed20 > -1) {
+    compressedList.splice(compressed20, 1);
+  }
+  if (compressed21 > -1) {
+    compressedList.splice(compressed21, 1);
+  }
+  if (compressed22 > -1) {
+    compressedList.splice(compressed22, 1);
+  }
+  if (compressed23 > -1) {
+    compressedList.splice(compressed23, 1);
+  }
+  if (compressed24 > -1) {
+    compressedList.splice(compressed24, 1);
+  }
+  if (compressed25 > -1) {
+    compressedList.splice(compressed25, 1);
+  }
+  if (compressed26 > -1) {
+    compressedList.splice(compressed26, 1);
+  }
+  if (compressed27 > -1) {
+    compressedList.splice(compressed27, 1);
+  }
+  if (compressed28 > -1) {
+    compressedList.splice(compressed28, 1);
+  }
+  if (compressed29 > -1) {
+    compressedList.splice(compressed29, 1);
+  }
+
+  console.log(actionList);
+  updateLog();
+}
+
+function GO(iPadID, matchsaver, scoutsaver) {
   getBoxData();
   var allClear = true;
   var team = document.getElementById("teamNum");

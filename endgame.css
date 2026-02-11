@@ -13,12 +13,9 @@ table {
   width: 100%;
 }
 
-tr {
-  border-bottom: 2px solid rgb(25, 188, 80);
-}
+tr {}
 
 td {
-  border-bottom: 2px solid rgb(25, 188, 80);
   vertical-align: middle;
   text-align: center;
 }

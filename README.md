@@ -6,4 +6,6 @@ Compressed list position:
 3. Score Teleop
 4. Pass Teleop
 5. Climb Auto
-6. Climb Endgame
+6. Auto Backside
+7. Climb Endgame
+8. Endgame Backside
