@@ -54,7 +54,7 @@ function alliancePick(alliance) {
   console.log(extraData);
 }
 
-function GO(iPadID, matchsaver, scoutsaver) {
+function GO(iPadID, matchsaver, scoutsaver, page) {
   getBoxData();
   var allClear = true;
   var team = document.getElementById("teamNum");
@@ -78,7 +78,7 @@ function GO(iPadID, matchsaver, scoutsaver) {
   actionList[0] = extraData[4];
   saveData();
   if (allClear) {
-    window.location.href = "./" + "auton" + ".html";
+    window.location.href = "./" + page + ".html";
   }
 }
 
