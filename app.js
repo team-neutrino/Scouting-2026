@@ -1,4 +1,4 @@
-const pointList = [1, 4, 3, 0, 1, 5, 10]
+const pointList = [1, 0, 1, 0, 15, 10, 20, 30, 0, 0]
 
 let extraData = []; //['teamNum', 'matchNum', 'scout', 'comment', 'alliance pick']
 var matchNumber = []; //Match Number
@@ -54,30 +54,61 @@ var sillyOnomatopoeia = [
   "Boom!"
 ]
 
-var amtToCompressed = { // index = fuel amount, value = position in compressed list. someone should rework this system
-  [1]: 4,
-  [5]: 5,
-  [10]: 6,
-}
-var compressedPositionsForFuel = [3, 4, 5, 6]
+var compressedPositionsForFuel = [0, 2, 8, 9]
 
-function pushFuel(amt) {
+function addFuelToCompressed(amt, auto) {
+  for (let i = 1; i <= amt, i++;) {
+    if (auto) {
+      compressedList.push(0)
+    } else {
+      compressedList.push(2)
+    }
+  }
+  compressedList.push(8)
+}
+
+var masterList = [
+  {
+    "Type": "Fuel",
+    "Message": "+5 fuel (20)",
+    "Value": 5,
+    "ScoredInAuto": false
+  }
+]
+
+function convertToCompressed() {
+  for (let i = 0; i < masterList.length, i++;) {
+    let entry = masterList[i]
+
+    if (entry.Type == "Fuel") {
+      for (let i = 0; i < entry.Value, i++;) {
+        compressedList.push(0)
+      }
+    }
+  }
+}
+
+function pushFuel(amt, auto) {
   if (actionLength == null || lastUpdatedTimestamp < (Date.now() - 1000)) {
     if (lastUpdatedTimestamp < (Date.now() - 1000) && typeof (stackedAmount) == "number" && actionLength != null) {
       actionList.push("Score timed out! Scored " + stackedAmount + " fuel.")
-      compressedList.push(3)
+      compressedList.push(9)
     }
 
     actionLength = actionList.length;
     newPosition = actionLength;
     stackedAmount = amt
-    actionList.push(sillyOnomatopoeia[Math.round(Math.random() * (sillyOnomatopoeia.length - 1))] + " +" + amt + " Fuel (" + stackedAmount + ")");
-    compressedList.push(amtToCompressed[amt]);
+    // actionList.push(sillyOnomatopoeia[Math.round(Math.random() * (sillyOnomatopoeia.length - 1))] + " +" + amt + " Fuel (" + stackedAmount + ")");
+    // compressedList.push(amtToCompressed[amt]);
+
+    addFuelToCompressed(amt, auto)
   } else {
     stackedAmount += amt
     // actionList[newPosition] = sillyOnomatopoeia[Math.round(Math.random() * (sillyOnomatopoeia.length - 1))] + " +" + amt + " Fuel (" + stackedAmount + ")";
-    actionList.push(sillyOnomatopoeia[Math.round(Math.random() * (sillyOnomatopoeia.length - 1))] + " +" + amt + " Fuel (" + stackedAmount + ")");
-    compressedList.push(amtToCompressed[amt]);
+    // actionList.push(sillyOnomatopoeia[Math.round(Math.random() * (sillyOnomatopoeia.length - 1))] + " +" + amt + " Fuel (" + stackedAmount + ")");
+    // compressedList.push(amtToCompressed[amt]);
+
+    addFuelToCompressed(amt, auto)
   }
   updateLog()
   updateScore()

@@ -6,4 +6,8 @@ Compressed list position:
 3. Score Teleop
 4. Pass Teleop
 5. Climb Auto
-6. Climb Endgame
+6. Climb Endgame (L1)
+7. Climb Endgame (L2)
+8. Climb Endgame (L3)
+9. Score spacer (individual)
+10. Score spacer (block)
