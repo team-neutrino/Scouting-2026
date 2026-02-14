@@ -71,6 +71,17 @@ function replaceBackside() {
   console.log(actionList);
 }
 
+function selectBackside(boxId) {
+  if (compressedList.indexOf(8) > -1) {
+    replaceBackside();
+    document.getElementById(boxId).style.backgroundColor = "#9fdd43";
+  } else {
+    addAction('Backside', 8);
+    document.getElementById(boxId).style.backgroundColor = "#40591bff";
+  }
+  console.log(actionList);
+}
+
 function replaceClimb(action) {
   var index = actionList.indexOf(action);
   if (index > -1) {
