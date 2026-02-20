@@ -19,7 +19,7 @@ var team = "";
 var match = "";
 var savescout = sessionStorage.getItem("scoutInitials");
 var score = 0;
-var qrClimb = "notInitialized";
+var climbList = ["", false, "", false];
 
 /* Function List
 --- Direct Button Functions ---
@@ -56,47 +56,37 @@ function alliancePick(alliance) {
   console.log(extraData);
 }
 
-function replaceBackside() {
-  var backsideAction = actionList.indexOf("Backside");
-
-  if (backsideAction > -1) {
-    actionList.splice(backsideAction, 1);
+function selectBackside(boxId, page) {
+  var backsideIndex = 3;
+  if(page === "auton"){
+    backsideIndex = 1;
   }
-  var backsideCompressed = compressedList.indexOf(8);
-
-  if (backsideCompressed > -1) {
-    compressedList.splice(backsideCompressed, 1);
-  }
-
-  console.log(actionList);
-}
-
-function selectBackside(boxId) {
-  if (compressedList.indexOf(8) > -1) {
-    replaceBackside();
-    document.getElementById(boxId).style.backgroundColor = "#9fdd43";
+  climbList[backsideIndex] = !climbList[backsideIndex]
+  if (climbList[backsideIndex]) {
+    document.getElementById(boxId).style.backgroundColor = "#547522";
   } else {
-    addAction('Backside', 8);
-    document.getElementById(boxId).style.backgroundColor = "#40591bff";
+    document.getElementById(boxId).style.backgroundColor = "#9fdd43";
   }
-  console.log(actionList);
 }
 
-function updateClimb(name) {
-  if (!(qrClimb === 'notInitialized')) {
-    document.getElementById(qrClimb).style.backgroundColor = "#8ac3d5"; // get rid of old style
+function updateClimb(name, page) {
+  var climbIndex = 2;
+  if(page === "auton"){
+    climbIndex = 0;
   }
-  console.log(qrClimb)
-  qrClimb = name;
-  console.log(qrClimb)
-  document.getElementById(qrClimb).style.backgroundColor = "#508ddbff"; // add new style
-}
 
-function getQrClimb() {
-  return sessionStorage.getItem("qrClimb");
+  if (!(climbList[climbIndex] === "")) {
+    document.getElementById(climbList[climbIndex]).style.backgroundColor = "#8ac3d5"; // get rid of old style
+  }
+  console.log(climbList[climbIndex])
+  climbList[climbIndex] = name;
+  console.log(climbList[climbIndex])
+  document.getElementById(climbList[climbIndex]).style.backgroundColor = "#508ddbff"; // add new style
 }
 
 function GO(iPadID, matchsaver, scoutsaver, page) {
+  console.log(matchsaver);
+  console.log(scoutsaver);
   getBoxData();
   var allClear = true;
   var team = document.getElementById("teamNum");
@@ -136,22 +126,19 @@ function saveData() {
   sessionStorage.setItem("compressedList", JSON.stringify(compressedList));
   sessionStorage.setItem("extraData", JSON.stringify(extraData));
   sessionStorage.setItem("score", score.toString());
-  sessionStorage.setItem("qrClimb", qrClimb);
+  sessionStorage.setItem("climbList", JSON.stringify(climbList));
 }
 
 function getData() {
-  let unparsedActionList = sessionStorage.getItem("actionList");
-  let unparsedExtradata = sessionStorage.getItem("extraData");
-  let unparsedCompressedList = sessionStorage.getItem("compressedList");
   score = parseInt(sessionStorage.getItem("score"), 10);
-  actionList = JSON.parse(unparsedActionList);
-  compressedList = JSON.parse(unparsedCompressedList);
-  extraData = JSON.parse(unparsedExtradata);
-  qrClimb = sessionStorage.getItem("qrClimb");
+  actionList = getList("actionList");
+  compressedList = getList("compressedList");
+  extraData = getList("extraData");
+  climbList = getList("climbList");
   console.log(actionList);
   console.log(compressedList);
   console.log(extraData);
-  console.log(qrClimb);
+  console.log(climbList);
   if (document.getElementById('teamLog1') !== null) {
     updateLog();
   }
@@ -160,8 +147,11 @@ function getData() {
   }
 }
 
+function getList(name) {
+  return JSON.parse(sessionStorage.getItem(name));
+}
+
 function loadPage() {
-  console.log(qrClimb)
   getData();
   displayBoxData();
   document.getElementById("teamLog2").value = score;

@@ -49,7 +49,7 @@
 
             document.getElementById('teamNumberBox').value = extraData[0];
             document.getElementById('matchNumberBox').value = extraData[1];
-            extraData[2] = getQrClimb();
+            var climb = getList("climbList");
 
             qrcode.clear();
             qrcode.makeCode(
@@ -65,11 +65,7 @@
                 "\t" +
                 extraData[5] +
                 "\t" +
-                extraData[6] +
-                "\t" +
-                extraData[7] +
-                "\t" +
-                extraData[8] +
+                climb +
                 "\t" +
                 sums.join(",")
             );
