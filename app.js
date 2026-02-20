@@ -86,7 +86,9 @@ function updateClimb(name) {
   if (!(qrClimb === 'notInitialized')) {
     document.getElementById(qrClimb).style.backgroundColor = "#8ac3d5"; // get rid of old style
   }
+  console.log(qrClimb)
   qrClimb = name;
+  console.log(qrClimb)
   document.getElementById(qrClimb).style.backgroundColor = "#508ddbff"; // add new style
 }
 
@@ -145,9 +147,11 @@ function getData() {
   actionList = JSON.parse(unparsedActionList);
   compressedList = JSON.parse(unparsedCompressedList);
   extraData = JSON.parse(unparsedExtradata);
+  qrClimb = sessionStorage.getItem("qrClimb");
   console.log(actionList);
   console.log(compressedList);
   console.log(extraData);
+  console.log(qrClimb);
   if (document.getElementById('teamLog1') !== null) {
     updateLog();
   }
@@ -157,6 +161,7 @@ function getData() {
 }
 
 function loadPage() {
+  console.log(qrClimb)
   getData();
   displayBoxData();
   document.getElementById("teamLog2").value = score;
