@@ -76,15 +76,11 @@ function updateClimb(name, page) {
   if (!(climbList[climbIndex] === "")) {
     document.getElementById(climbList[climbIndex]).style.backgroundColor = "#8ac3d5"; // get rid of old style
   }
-  console.log(climbList[climbIndex])
   climbList[climbIndex] = name;
-  console.log(climbList[climbIndex])
   document.getElementById(climbList[climbIndex]).style.backgroundColor = "#508ddbff"; // add new style
 }
 
 function GO(iPadID, matchsaver, scoutsaver, page) {
-  console.log(matchsaver);
-  console.log(scoutsaver);
   getBoxData();
   var allClear = true;
   var team = document.getElementById("teamNum");
