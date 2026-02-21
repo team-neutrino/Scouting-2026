@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8">
     <title>teleop</title>
     <script src="app.js"></script>
     <link rel="styleSheet" type="text/css" href="styleSheet.css">
-    <link rel="styleSheet" type="text/css" href="teleop.css">
+    <link rel="styleSheet" type="text/css" href="fuel.css">
 </head>
+
 <body class="teleopBody" style="overflow: scroll;" onload="loadPage()">
     <table id="table">
         <tr class="top" id="row1">
@@ -29,62 +31,63 @@
                 <textarea readonly id="teamLog2" class="score" placeholder="Nothing yet"></textarea>
                 <br>
                 <button class="undo" id="undo" onclick="Undo()">Undo</button>
+                <button class="undo" id="undo" onclick="UndoAll()">Undo Last Period</button>
             </td>
         </tr>
         <tr id="row3">
             <td class="largeColumm">
-                <button class="plusButton scoreButton">10</button>
+                <button class="plusButton scoreButton" onclick="addFuel(2, 10)">10</button>
             </td>
             <td class="smallColumm">
-                <button class="minusButton">-10</button>
+                <button class="minusButton" onclick="addFuel(2, -10)">-10</button>
             </td>
             <td class="smallColumm">
-                <button class="minusButton">-10</button>
+                <button class="minusButton" onclick="addFuel(3, -10)">-10</button>
             </td>
             <td class="largeColumm">
-                <button class="plusButton passButton">10</button>
+                <button class="plusButton passButton" onclick="addFuel(3, 10)">10</button>
             </td>
         </tr>
         <tr id="row4">
             <td>
-                <button class="plusButton scoreButton">8</button>
+                <button class="plusButton scoreButton" onclick="addFuel(2, 8)">8</button>
             </td>
             <td>
-                <button class="minusButton">-8</button>
+                <button class="minusButton" onclick="addFuel(2, -8)">-8</button>
             </td>
             <td>
-                <button class="minusButton">-8</button>
+                <button class="minusButton" onclick="addFuel(3, -8)">-8</button>
             </td>
             <td>
-                <button class="plusButton passButton">8</button>
+                <button class="plusButton passButton" onclick="addFuel(3, 8)">8</button>
             </td>
         </tr>
         <tr id="row5">
             <td>
-                <button class="plusButton scoreButton">5</button>
+                <button class="plusButton scoreButton" onclick="addFuel(2, 5)">5</button>
             </td>
             <td>
-                <button class="minusButton">-5</button>
+                <button class="minusButton" onclick="addFuel(2, -5)">-5</button>
             </td>
             <td>
-                <button class="minusButton">-5</button>
+                <button class="minusButton" onclick="addFuel(3, -5)">-5</button>
             </td>
             <td>
-                <button class="plusButton passButton">5</button>
+                <button class="plusButton passButton" onclick="addFuel(3, 5)">5</button>
             </td>
         </tr>
         <tr id="row6">
             <td>
-                <button class="plusButton scoreButton">1</button>
+                <button class="plusButton scoreButton" onclick="addFuel(2, 1)">1</button>
             </td>
             <td>
-                <button class="minusButton">-1</button>
+                <button class="minusButton" onclick="addFuel(2, -1)">-1</button>
             </td>
             <td>
-                <button class="minusButton">-1</button>
+                <button class="minusButton" onclick="addFuel(3, -1)">-1</button>
             </td>
             <td>
-                <button class="plusButton passButton">1</button>
+                <button class="plusButton passButton" onclick="addFuel(3, 1)">1</button>
             </td>
         </tr>
         <tr class="footer" id="row7">
@@ -99,4 +102,5 @@
         </tr>
     </table>
 </body>
+
 </html>

@@ -43,8 +43,8 @@
             compressedList = JSON.parse(unparsedCompressedList);
             extraData = JSON.parse(unparsedExtradata);
             var sums = Array(6).fill(0); //Compress List
-            for (const item of compressedList) {
-                sums[item]++;
+            for (const period of compressedList) {
+                sums[period[0]] += period[1];
             }
 
             document.getElementById('teamNumberBox').value = extraData[0];

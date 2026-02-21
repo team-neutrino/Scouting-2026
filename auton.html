@@ -6,37 +6,98 @@
     <title>auton</title>
     <script src="app.js"></script>
     <link rel="styleSheet" type="text/css" href="styleSheet.css">
-    <link rel="styleSheet" type="text/css" href="auton.css">
+    <link rel="styleSheet" type="text/css" href="fuel.css">
 </head>
 
-<body class="autonBody" style="overflow: scroll;" onload="loadPage()">
+<body class="teleopBody" style="overflow: scroll;" onload="loadPage()">
     <table id="table">
         <tr class="top" id="row1">
-            <th class="topSideBox">
+            <th class="topSideBox" colspan="2">
                 <input class="infoBox" type="text" name="teamBox" id="teamNumberBox" readonly />
             </th>
-            <th colspan="1" class="header" id="color">A<span style="display: inline-block;">u</span>ton</th>
-            <th class="topSideBox">
+            <th colspan="1" class="header" id="color" rowspan="2">Auton</th>
+            <th class="topSideBox" colspan="2">
                 <input class="infoBox" type="text" name="matchBox" id="matchNumberBox" readonly />
             </th>
         </tr>
-        <tr>
-            <td rowspan='1' colspan='1'></td>
-            <td rowspan="2" colspan="1">
+        <tr class="subHeaderRow" id="row2">
+            <td colspan="2" rowspan="2" class="subHeader">score</td>
+            <td colspan="2" rowspan="2" class="subHeader">pass</td>
+        </tr>
+        <tr class="subHeaderRow">
+            <td rowspan="6">
                 <textarea readonly id="teamLog1" class="terminal" placeholder="Nothing to undo"></textarea>
                 <br>
                 <textarea readonly id="teamLog2" class="score" placeholder="Nothing yet"></textarea>
                 <br>
                 <button class="undo" id="undo" onclick="Undo()">Undo</button>
+                <button class="undo" id="undo" onclick="UndoAll()">Undo Last Period</button>
             </td>
-            <td rowspan='1' colspan='1'></td>
         </tr>
-        <tr class="footer">  
-            <td rowspan='1' colspan='1'>
-                <button onclick="load('index')">&larr;</button>
+        <tr id="row3">
+            <td class="largeColumm">
+                <button class="plusButton scoreButton" onclick="addFuel(0, 10)">10</button>
             </td>
-            <td rowspan='1' colspan='1'>
-                <button onclick="load('autonClimb')">&rarr;</button>
+            <td class="smallColumm">
+                <button class="minusButton" onclick="addFuel(0, -10)">-10</button>
+            </td>
+            <td class="smallColumm">
+                <button class="minusButton" onclick="addFuel(1, -10)">-10</button>
+            </td>
+            <td class="largeColumm">
+                <button class="plusButton passButton" onclick="addFuel(1, 10)">10</button>
+            </td>
+        </tr>
+        <tr id="row4">
+            <td>
+                <button class="plusButton scoreButton" onclick="addFuel(0, 8)">8</button>
+            </td>
+            <td>
+                <button class="minusButton" onclick="addFuel(0, -8)">-8</button>
+            </td>
+            <td>
+                <button class="minusButton" onclick="addFuel(1, -8)">-8</button>
+            </td>
+            <td>
+                <button class="plusButton passButton" onclick="addFuel(1, 8)">8</button>
+            </td>
+        </tr>
+        <tr id="row5">
+            <td>
+                <button class="plusButton scoreButton" onclick="addFuel(0, 5)">5</button>
+            </td>
+            <td>
+                <button class="minusButton" onclick="addFuel(0, -5)">-5</button>
+            </td>
+            <td>
+                <button class="minusButton" onclick="addFuel(1, -5)">-5</button>
+            </td>
+            <td>
+                <button class="plusButton passButton" onclick="addFuel(1, 5)">5</button>
+            </td>
+        </tr>
+        <tr id="row6">
+            <td>
+                <button class="plusButton scoreButton" onclick="addFuel(0, 1)">1</button>
+            </td>
+            <td>
+                <button class="minusButton" onclick="addFuel(0, -1)">-1</button>
+            </td>
+            <td>
+                <button class="minusButton" onclick="addFuel(1, -1)">-1</button>
+            </td>
+            <td>
+                <button class="plusButton passButton" onclick="addFuel(1, 1)">1</button>
+            </td>
+        </tr>
+        <tr class="footer" id="row7">
+            <td>
+                <button class="backForth nextColor" id="back" onclick="load('index')">&larr;</button>
+            </td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="backForth nextColor" id="next" onclick="load('autonClimb')">&rarr;</button>
             </td>
         </tr>
     </table>
