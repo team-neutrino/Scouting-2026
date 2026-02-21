@@ -19,10 +19,6 @@ h2 {
     height: 100%;
 }
 
-table,tr,th,td {
-    border: 1px solid black;
-}
-
 .reset-pop-up {
   height: min(50vh, 50vw);
   width: min(50vh, 50vw);
@@ -66,4 +62,24 @@ table,tr,th,td {
   backdrop-filter: blur(1vh);
   transition: transform 0.25s cubic-bezier(0, .5, .5, 1), opacity 0.5s cubic-bezier(0, .5, .5, 1);
   border: 2px solid white; 
+}
+
+#resetButton {
+  background-color: rgb(180,0,0);
+}
+
+#regenButton {
+  background-color: rgb(0,150,100);
+}
+
+#noButton {
+  background-color: red;
+}
+
+#yesButton {
+  background-color: limegreen;
+}
+
+#contineButton {
+  background-color: rgb(204, 137, 29);
 }

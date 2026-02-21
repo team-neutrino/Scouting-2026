@@ -1,0 +1,23 @@
+.redButton {
+    background-color: rgb(255,0,0);
+}
+
+.blueButton {
+    background-color: rgb(50,150,255);
+}
+
+.goButton {
+    background-color: rgb(0,175,0);
+}
+
+.qrButton {
+    background-color: rgb(128,71,28);
+}
+
+.sideColumn {
+    width: 25vw;
+}
+
+table, tr, td, th {
+    border: 1px solid black;
+}

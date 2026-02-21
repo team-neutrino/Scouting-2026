@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<script src="./app.js"></script>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Endgame Climb</title>
+  <link rel="styleSheet" type="text/css" href="climb.css">
+  <link rel="styleSheet" type="text/css" href="styleSheet.css">
+</head>
+
+<body id='body' style="overflow: scroll;" onload="loadPage()">
+  <table class="endGameTable" id="table">
+    <tr class="yess id=" row1>
+      <th class="topSideBox">
+        <input class="infoBox" type="text" name="teamBox" id="teamNumberBox" readonly />
+      </th>
+      <th colspan="3" class="header">Endgame Climb</th>
+      <th class="topSideBox">
+        <input class="infoBox" type="text" name="matchBox" id="matchNumberBox" readonly />
+      </th>
+    </tr>
+    <tr id="row2">
+      <td colspan="5">
+        <button class="largeButton" id="L3L" onclick="updateClimb(this.id, 'endgame')">L3L</button>
+        <button class="largeButton" id="L3M" onclick="updateClimb(this.id, 'endgame')">L3M</button>
+        <button class="largeButton" id="L3R" onclick="updateClimb(this.id, 'endgame')">L3R</button>
+        <button class="sideButton" id="backsideButton" onclick="selectBackside(this.id, 'endgame')">Backside</button>
+      </td>
+
+    </tr>
+    <tr id="row3">
+      <td colspan="5">
+        <button class="largeButton" id="L2L" onclick="updateClimb(this.id, 'endgame')">L2L</button>
+        <button class="largeButton" id="L2M" onclick="updateClimb(this.id, 'endgame')">L2M</button>
+        <button class="largeButton" id="L2R" onclick="updateClimb(this.id, 'endgame')">L2R</button>
+        <button class="sideButton" id="noTry" onclick="updateClimb(this.id, 'endgame')">No Attempt</button>
+      </td>
+    </tr>
+    <tr id="row4">
+      <td colspan="5">
+        <button class="largeButton" id="L1L" onclick="updateClimb(this.id, 'endgame')">L1L</button>
+        <button class="largeButton" id="L1M" onclick="updateClimb(this.id, 'endgame')">L1M</button>
+        <button class="largeButton" id="L1R" onclick="updateClimb(this.id, 'endgame')">L1R</button>
+      </td>
+    </tr>
+    <tr id="row5">
+      <td colspan="5">
+        <button class="largeButton" id="FailL" onclick="updateClimb(this.id, 'endgame')">Failed</button>
+        <button class="largeButton" id="FailM" onclick="updateClimb(this.id, 'endgame')">Failed</button>
+        <button class="largeButton" id="FailR" onclick="updateClimb(this.id, 'endgame')">Failed</button>
+      </td>
+    </tr>
+    <tr class="footer" id="row7">
+      <td>
+        <button class="backForth nextColor" id="next" onclick="load('teleop')">&larr;</button>
+      </td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>
+        <button class="backForth nextColor" id="next" onclick="load('qr')">&rarr;</button>
+      </td>
+    </tr>
+  </table>
+</body>
+
+</html>

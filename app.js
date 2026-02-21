@@ -1,17 +1,16 @@
-const pointList = [1,4,3]
+const pointList = [1, 4, 3]
 
 let extraData = []; //['teamNum', 'matchNum', 'scout', 'comment', 'alliance pick']
-var matchNumber = []; //Match Number
-var teamNumber = []; //Team Number
 var actionList = [""]; //This is the list that populates the log with human friendly text.
 var compressedList = []; //This is the list that collects all the IDs for the QR Code.
+var climbList = ["", false, "", false]; //['auton climb', auton backside, 'endgame climb', endgame backside]
 var comments = ""; //Comments Box
-var blue1 = [1,2];
-var blue2 = [3,4];
-var blue3 = [5,6];
-var red1 = [7,8];
-var red2 = [9,10];
-var red3 = [11,12];
+var blue1 = [1, 2];
+var blue2 = [3, 4];
+var blue3 = [5, 6];
+var red1 = [7, 8];
+var red2 = [9, 10];
+var red3 = [11, 12];
 var ipadID = localStorage.getItem("iPadId");
 var incmatchnumber = "1";
 var matchnum = 1;
@@ -19,7 +18,6 @@ var team = "";
 var match = "";
 var savescout = sessionStorage.getItem("scoutInitials");
 var score = 0;
-
 
 /* Function List
 --- Direct Button Functions ---
@@ -33,16 +31,18 @@ updateAvail: This was created to enable/disable (validation) scoring buttons bas
 
 function addAction(action, number) { //Used for buttons that have a data validation script
   actionList.push(action); //Add it to the actionList (what the scouter sees on the app)
-  compressedList.push(number); //Add it to the compressedList (QR Code)//
-  updateLog(); //Update what the scouter sees on the app (actionList)
+  compressedList.push(number); //Add it to the compressedList (QR Code)
+  if (document.getElementById('teamLog1') !== null) {
+    updateLog(); //Update what the scouter sees on the app (actionList)
+    updateScore();
+  }
   saveData();
   console.log(compressedList);
-  updateScore();
 }
 
 function updateScore() {
   var currentScore = 0
-  for(i = 0; i < compressedList.length; i++){
+  for (i = 0; i < compressedList.length; i++) {
     currentScore += pointList[compressedList[i]]
   }
   score = currentScore;
@@ -54,7 +54,33 @@ function alliancePick(alliance) {
   console.log(extraData);
 }
 
-function GO(iPadID, matchsaver, scoutsaver) {
+function selectBackside(boxId, page) {
+  var backsideIndex = 3;
+  if(page === "auton"){
+    backsideIndex = 1;
+  }
+  climbList[backsideIndex] = !climbList[backsideIndex]
+  if (climbList[backsideIndex]) {
+    document.getElementById(boxId).style.backgroundColor = "#547522";
+  } else {
+    document.getElementById(boxId).style.backgroundColor = "#9fdd43";
+  }
+}
+
+function updateClimb(name, page) {
+  var climbIndex = 2;
+  if(page === "auton"){
+    climbIndex = 0;
+  }
+
+  if (!(climbList[climbIndex] === "")) {
+    document.getElementById(climbList[climbIndex]).style.backgroundColor = "#8ac3d5"; // get rid of old style
+  }
+  climbList[climbIndex] = name;
+  document.getElementById(climbList[climbIndex]).style.backgroundColor = "#508ddbff"; // add new style
+}
+
+function GO(iPadID, matchsaver, scoutsaver, page) {
   getBoxData();
   var allClear = true;
   var team = document.getElementById("teamNum");
@@ -78,7 +104,7 @@ function GO(iPadID, matchsaver, scoutsaver) {
   actionList[0] = extraData[4];
   saveData();
   if (allClear) {
-    window.location.href = "./" + "auton" + ".html";
+    window.location.href = "./" + page + ".html";
   }
 }
 
@@ -94,25 +120,29 @@ function saveData() {
   sessionStorage.setItem("compressedList", JSON.stringify(compressedList));
   sessionStorage.setItem("extraData", JSON.stringify(extraData));
   sessionStorage.setItem("score", score.toString());
+  sessionStorage.setItem("climbList", JSON.stringify(climbList));
 }
 
 function getData() {
-  let unparsedActionList = sessionStorage.getItem("actionList");
-  let unparsedExtradata = sessionStorage.getItem("extraData");
-  let unparsedCompressedList = sessionStorage.getItem("compressedList");
   score = parseInt(sessionStorage.getItem("score"), 10);
-  actionList = JSON.parse(unparsedActionList);
-  compressedList = JSON.parse(unparsedCompressedList);
-  extraData = JSON.parse(unparsedExtradata);
+  actionList = getList("actionList");
+  compressedList = getList("compressedList");
+  extraData = getList("extraData");
+  climbList = getList("climbList");
   console.log(actionList);
   console.log(compressedList);
   console.log(extraData);
+  console.log(climbList);
   if (document.getElementById('teamLog1') !== null) {
     updateLog();
   }
   if (document.getElementById('teamLog2') !== null) {
     updateScore();
   }
+}
+
+function getList(name) {
+  return JSON.parse(sessionStorage.getItem(name));
 }
 
 function loadPage() {
@@ -129,7 +159,7 @@ function displayBoxData() {
     document.getElementById('matchNumberBox').value = extraData[1];
   }
   if (extraData[3] !== undefined) {
-    document.getElementById('coment').value = extraData[3];
+    document.getElementById('comment').value = extraData[3];
   }
 }
 
@@ -241,7 +271,7 @@ function reset(action) {
 }
 
 function load(windowLocation) {
-  saveData()
+  saveData();
   window.location.href = `./${windowLocation}.html`;
 }
 
@@ -283,7 +313,8 @@ function toQuotes() {
   setTimeout(() => {
     insertQuote.innerHTML += "<br><br><strong>" + author + "</strong>";
     insertQuote.innerHTML += "<button onclick='window.location.href = `./index.html`' class='continuieButton' id='contineButton'>Continue</button>";
-    var sums = Array(27).fill(0); //Compress List
+    insertQuote.innerHTML += "<strong>Score: " + score + "</strong>";
+    var sums = Array(6).fill(0); //Compress List
     for (const item of compressedList) {
       sums[item]++;
     }
