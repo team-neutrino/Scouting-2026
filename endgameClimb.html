@@ -21,43 +21,44 @@
       </th>
     </tr>
     <tr id="row2">
-      <td colspan="5">
-        <button class="largeButton" id="L3L" onclick="updateClimb(this.id, 'endgame')">L3L</button>
-        <button class="largeButton" id="L3M" onclick="updateClimb(this.id, 'endgame')">L3M</button>
-        <button class="largeButton" id="L3R" onclick="updateClimb(this.id, 'endgame')">L3R</button>
+      <td rowspan="3">
+        <textarea class="coments" placeholder="Unleash your imagination" onchange="commentEdit(this.value)"
+          id="coment"></textarea>
+      </td>
+      <td colspan="3">
+        <button class="largeButton" id="L3" onclick="updateClimb(this.id, 'endgame')">L3L</button>
+        <button class="largeButton" id="M3" onclick="updateClimb(this.id, 'endgame')">L3M</button>
+        <button class="largeButton" id="R3" onclick="updateClimb(this.id, 'endgame')">L3R</button>
+        <button class="largeButton" id="F3" onclick="updateClimb(this.id, 'endgame')">Failed L3</button>
+      </td>
+      <td>
         <button class="sideButton" id="backsideButton" onclick="selectBackside(this.id, 'endgame')">Backside</button>
       </td>
-
     </tr>
     <tr id="row3">
-      <td colspan="5">
-        <button class="largeButton" id="L2L" onclick="updateClimb(this.id, 'endgame')">L2L</button>
-        <button class="largeButton" id="L2M" onclick="updateClimb(this.id, 'endgame')">L2M</button>
-        <button class="largeButton" id="L2R" onclick="updateClimb(this.id, 'endgame')">L2R</button>
+      <td colspan="3">
+        <button class="largeButton" id="L2" onclick="updateClimb(this.id, 'endgame')">L2L</button>
+        <button class="largeButton" id="M2" onclick="updateClimb(this.id, 'endgame')">L2M</button>
+        <button class="largeButton" id="R2" onclick="updateClimb(this.id, 'endgame')">L2R</button>
+        <button class="largeButton" id="F2" onclick="updateClimb(this.id, 'endgame')">Failed L2</button>
+      </td>
+      <td>
         <button class="sideButton" id="noTry" onclick="updateClimb(this.id, 'endgame')">No Attempt</button>
       </td>
     </tr>
     <tr id="row4">
-      <td colspan="5">
-        <button class="largeButton" id="L1L" onclick="updateClimb(this.id, 'endgame')">L1L</button>
-        <button class="largeButton" id="L1M" onclick="updateClimb(this.id, 'endgame')">L1M</button>
-        <button class="largeButton" id="L1R" onclick="updateClimb(this.id, 'endgame')">L1R</button>
-      </td>
-    </tr>
-    <tr id="row5">
-      <td colspan="5">
-        <button class="largeButton" id="FailL" onclick="updateClimb(this.id, 'endgame')">Failed</button>
-        <button class="largeButton" id="FailM" onclick="updateClimb(this.id, 'endgame')">Failed</button>
-        <button class="largeButton" id="FailR" onclick="updateClimb(this.id, 'endgame')">Failed</button>
+      <td colspan="3">
+        <button class="largeButton" id="L1" onclick="updateClimb(this.id, 'endgame')">L1L</button>
+        <button class="largeButton" id="M1" onclick="updateClimb(this.id, 'endgame')">L1M</button>
+        <button class="largeButton" id="R1" onclick="updateClimb(this.id, 'endgame')">L1R</button>
+        <button class="largeButton" id="F1" onclick="updateClimb(this.id, 'endgame')">Failed L1</button>
       </td>
     </tr>
     <tr class="footer" id="row7">
       <td>
         <button class="backForth nextColor" id="next" onclick="load('teleop')">&larr;</button>
       </td>
-      <td></td>
-      <td></td>
-      <td></td>
+      <td colspan="3"></td>
       <td>
         <button class="backForth nextColor" id="next" onclick="load('qr')">&rarr;</button>
       </td>

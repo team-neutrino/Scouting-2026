@@ -31,6 +31,12 @@ td {
   left: 80vw;
 }
 
+.coments {
+  height: 24vh;
+  width: 15vw;
+  font-size: 2vh;
+}
+
 #backsideButton {
   bottom: 51vh;
   background-color: rgb(159, 221, 67);
