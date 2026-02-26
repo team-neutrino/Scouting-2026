@@ -1,0 +1,381 @@
+/* ============================================
+   REBUILT LOADER - INDUSTRIAL/MACHINERY THEME
+   ============================================ */
+
+.loader-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #0a0a0b;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  overflow: hidden;
+}
+
+/* Vignette Effect */
+.loader-vignette {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(ellipse at center, transparent 0%, rgba(0, 0, 0, 0.8) 100%);
+  pointer-events: none;
+}
+
+/* Technical Grid Background */
+.loader-grid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    linear-gradient(rgba(255, 199, 0, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 199, 0, 0.05) 1px, transparent 1px);
+  background-size: 80px 80px;
+  animation: gridScan 4s linear infinite;
+}
+
+@keyframes gridScan {
+  0% { transform: perspective(500px) rotateX(60deg) translateY(0); }
+  100% { transform: perspective(500px) rotateX(60deg) translateY(80px); }
+}
+
+/* Welding Sparks */
+.loader-sparks {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.spark {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: #ffc700;
+  border-radius: 50%;
+  box-shadow: 
+    0 0 6px #ffc700,
+    0 0 12px #ff6b35,
+    0 0 18px #e63946;
+  animation: sparkFly 1s ease-out forwards;
+}
+
+@keyframes sparkFly {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--tx), var(--ty)) scale(0);
+    opacity: 0;
+  }
+}
+
+/* Main Content */
+.loader-content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2.5rem;
+  z-index: 10;
+  padding: 3rem;
+}
+
+/* Brand Label */
+.loader-brand {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.loader-accent-line {
+  width: 60px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #ffc700);
+  animation: lineExtend 1s ease-out forwards;
+}
+
+@keyframes lineExtend {
+  from { width: 0; }
+  to { width: 60px; }
+}
+
+.loader-label {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  color: #666;
+}
+
+/* Animated Text */
+.loader-text-container {
+  position: relative;
+  display: flex;
+  gap: 0.1em;
+}
+
+.loader-char {
+  font-family: 'Teko', sans-serif;
+  font-size: clamp(5rem, 18vw, 12rem);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 0.9;
+  color: transparent;
+  background: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    #ffc700 40%,
+    #ff6b35 70%,
+    #e63946 100%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: 
+    drop-shadow(0 0 40px rgba(255, 199, 0, 0.4))
+    drop-shadow(0 0 80px rgba(255, 107, 53, 0.2));
+  animation: 
+    charReveal 0.6s ease-out backwards,
+    charPulse 3s ease-in-out infinite;
+  animation-delay: calc(var(--char-index) * 0.08s), calc(var(--char-index) * 0.08s + 0.6s);
+  transform-origin: center bottom;
+}
+
+@keyframes charReveal {
+  from {
+    opacity: 0;
+    transform: translateY(40px) scale(0.8);
+    filter: blur(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes charPulse {
+  0%, 100% {
+    filter: 
+      drop-shadow(0 0 40px rgba(255, 199, 0, 0.4))
+      drop-shadow(0 0 80px rgba(255, 107, 53, 0.2));
+  }
+  50% {
+    filter: 
+      drop-shadow(0 0 60px rgba(255, 199, 0, 0.6))
+      drop-shadow(0 0 120px rgba(255, 107, 53, 0.4));
+  }
+}
+
+/* Metrics Display */
+.loader-metrics {
+  display: flex;
+  gap: 4rem;
+  margin-top: 1rem;
+}
+
+.loader-metric {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.metric-label {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  color: #666;
+}
+
+.metric-value {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #ffc700;
+  text-shadow: 0 0 20px rgba(255, 199, 0, 0.5);
+}
+
+/* Progress Container */
+.loader-progress-container {
+  position: relative;
+  width: 400px;
+  max-width: 80vw;
+}
+
+.loader-progress-bg {
+  position: relative;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.loader-progress-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(
+    90deg,
+    #e63946 0%,
+    #ff6b35 30%,
+    #ffc700 60%,
+    #ffffff 100%
+  );
+  border-radius: 3px;
+  box-shadow: 0 0 20px rgba(255, 199, 0, 0.5);
+  transition: width 0.1s linear;
+}
+
+.loader-progress-glow {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  width: 100%;
+  height: 20px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 199, 0, 0.3),
+    transparent
+  );
+  filter: blur(10px);
+  opacity: 0;
+  animation: glowPulse 2s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.6; }
+}
+
+/* Progress Markers */
+.loader-progress-markers {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  transform: translateY(-50%);
+  display: flex;
+  justify-content: space-between;
+  padding: 0 2px;
+  pointer-events: none;
+}
+
+.loader-progress-markers span {
+  width: 2px;
+  height: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+/* Corner Accents */
+.loader-corner {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  border-color: rgba(255, 199, 0, 0.3);
+  border-style: solid;
+  border-width: 0;
+  animation: cornerDraw 0.8s ease-out forwards;
+}
+
+.loader-corner-tl {
+  top: 40px;
+  left: 40px;
+  border-top-width: 2px;
+  border-left-width: 2px;
+  animation-delay: 0.2s;
+}
+
+.loader-corner-tr {
+  top: 40px;
+  right: 40px;
+  border-top-width: 2px;
+  border-right-width: 2px;
+  animation-delay: 0.4s;
+}
+
+.loader-corner-bl {
+  bottom: 40px;
+  left: 40px;
+  border-bottom-width: 2px;
+  border-left-width: 2px;
+  animation-delay: 0.6s;
+}
+
+.loader-corner-br {
+  bottom: 40px;
+  right: 40px;
+  border-bottom-width: 2px;
+  border-right-width: 2px;
+  animation-delay: 0.8s;
+}
+
+@keyframes cornerDraw {
+  from {
+    width: 0;
+    height: 0;
+    opacity: 0;
+  }
+  to {
+    width: 60px;
+    height: 60px;
+    opacity: 1;
+  }
+}
+
+/* Exit Animation */
+.loader-overlay.exiting {
+  animation: loaderExit 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes loaderExit {
+  0% {
+    opacity: 1;
+    clip-path: inset(0);
+  }
+  100% {
+    opacity: 0;
+    clip-path: inset(50%);
+  }
+}
+
+/* Scanline Effect */
+.loader-overlay::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.03) 2px,
+    rgba(0, 0, 0, 0.03) 4px
+  );
+  pointer-events: none;
+  animation: scanline 8s linear infinite;
+}
+
+@keyframes scanline {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(4px); }
+}

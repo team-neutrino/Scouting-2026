@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>REBUILT // SCOUTING INTERFACE</title>
+  <link rel="styleSheet" type="text/css" href="index.css">
+  <link rel="styleSheet" type="text/css" href="loader.css">
+  
+  <!-- Industrial Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Teko:wght@300;400;500;600;700&family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Loading Screen -->
+  <div id="loader" class="loader-overlay">
+    <div class="loader-vignette"></div>
+    <div class="loader-grid"></div>
+    <div class="loader-sparks" id="sparkContainer"></div>
+    <div class="loader-content">
+      <div class="loader-brand">
+        <div class="loader-accent-line"></div>
+        <span class="loader-label">SYSTEM BOOT</span>
+      </div>
+      <div class="loader-text-container">
+        <span class="loader-char" style="--char-index: 0">R</span>
+        <span class="loader-char" style="--char-index: 1">E</span>
+        <span class="loader-char" style="--char-index: 2">B</span>
+        <span class="loader-char" style="--char-index: 3">U</span>
+        <span class="loader-char" style="--char-index: 4">I</span>
+        <span class="loader-char" style="--char-index: 5">L</span>
+        <span class="loader-char" style="--char-index: 6">T</span>
+      </div>
+      <div class="loader-metrics">
+        <div class="loader-metric">
+          <span class="metric-label">STATUS</span>
+          <span class="metric-value" id="loaderStatus">INITIALIZING</span>
+        </div>
+        <div class="loader-metric">
+          <span class="metric-label">PROGRESS</span>
+          <span class="metric-value" id="loaderPercent">0%</span>
+        </div>
+      </div>
+      <div class="loader-progress-container">
+        <div class="loader-progress-bg">
+          <div class="loader-progress-fill" id="loaderProgressFill"></div>
+          <div class="loader-progress-glow"></div>
+        </div>
+        <div class="loader-progress-markers">
+          <span></span><span></span><span></span><span></span><span></span>
+        </div>
+      </div>
+    </div>
+    <div class="loader-corner loader-corner-tl"></div>
+    <div class="loader-corner loader-corner-tr"></div>
+    <div class="loader-corner loader-corner-bl"></div>
+    <div class="loader-corner loader-corner-br"></div>
+  </div>
+
+  <!-- Main Application -->
+  <div class="app-container" id="mainApp">
+    <!-- Ambient Background -->
+    <div class="ambient-grid"></div>
+    <div class="ambient-glow"></div>
+    <div class="noise-overlay"></div>
+    
+    <!-- Header Section -->
+    <header class="app-header">
+      <div class="header-accent"></div>
+      <div class="header-content">
+        <div class="brand-mark">
+          <div class="brand-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+              <polyline points="2 17 12 22 22 17"></polyline>
+              <polyline points="2 12 12 17 22 12"></polyline>
+            </svg>
+          </div>
+          <div class="brand-text">
+            <span class="brand-title">REBUILT</span>
+            <span class="brand-subtitle">SCOUTING INTERFACE v2.0</span>
+          </div>
+        </div>
+        <div class="header-meta">
+          <div class="meta-item">
+            <span class="meta-label">SESSION</span>
+            <span class="meta-value" id="sessionId">--</span>
+          </div>
+          <div class="meta-divider"></div>
+          <div class="meta-item">
+            <span class="meta-label">TIME</span>
+            <span class="meta-value" id="currentTime">--:--</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="app-main">
+      <!-- Primary Data Entry -->
+      <section class="data-section primary-data">
+        <div class="section-header">
+          <div class="section-indicator"></div>
+          <h2 class="section-title">MATCH CONFIGURATION</h2>
+        </div>
+        
+        <div class="input-grid">
+          <div class="input-group large">
+            <label class="input-label">
+              <span class="label-text">TEAM NUMBER</span>
+              <span class="label-hint">4 digits</span>
+            </label>
+            <div class="input-wrapper">
+              <input type="text" id="teamInput" class="data-input" placeholder="0000" maxlength="4" pattern="[0-9]*">
+              <div class="input-focus-indicator"></div>
+            </div>
+          </div>
+
+          <div class="input-group">
+            <label class="input-label">
+              <span class="label-text">MATCH</span>
+              <span class="label-hint">#</span>
+            </label>
+            <div class="input-wrapper">
+              <input type="text" id="matchInput" class="data-input" placeholder="00" maxlength="3" pattern="[0-9]*">
+              <div class="input-focus-indicator"></div>
+            </div>
+          </div>
+
+          <div class="input-group">
+            <label class="input-label">
+              <span class="label-text">SCOUT ID</span>
+              <span class="label-hint">initials</span>
+            </label>
+            <div class="input-wrapper">
+              <input type="text" id="scoutInput" class="data-input" placeholder="ABC" maxlength="3">
+              <div class="input-focus-indicator"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Alliance Selection -->
+      <section class="data-section alliance-section">
+        <div class="section-header">
+          <div class="section-indicator alliance-indicator"></div>
+          <h2 class="section-title">ALLIANCE SELECTION</h2>
+        </div>
+        
+        <div class="alliance-grid">
+          <button class="alliance-btn red-alliance" id="redAllianceBtn" data-alliance="red">
+            <div class="alliance-content">
+              <div class="alliance-icon">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                </svg>
+              </div>
+              <span class="alliance-name">RED ALLIANCE</span>
+              <span class="alliance-status">SELECT</span>
+            </div>
+            <div class="alliance-glow red-glow"></div>
+            <div class="alliance-border"></div>
+          </button>
+
+          <button class="alliance-btn blue-alliance" id="blueAllianceBtn" data-alliance="blue">
+            <div class="alliance-content">
+              <div class="alliance-icon">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                </svg>
+              </div>
+              <span class="alliance-name">BLUE ALLIANCE</span>
+              <span class="alliance-status">SELECT</span>
+            </div>
+            <div class="alliance-glow blue-glow"></div>
+            <div class="alliance-border"></div>
+          </button>
+        </div>
+      </section>
+
+      <!-- Device & Actions -->
+      <section class="data-section action-section">
+        <div class="action-grid">
+          <div class="input-group compact">
+            <label class="input-label">
+              <span class="label-text">DEVICE ID</span>
+            </label>
+            <div class="input-wrapper">
+              <input type="text" id="deviceInput" class="data-input" placeholder="00" maxlength="2" pattern="[0-9]*">
+              <div class="input-focus-indicator"></div>
+            </div>
+          </div>
+
+          <button class="action-btn primary" id="goBtn">
+            <div class="btn-content">
+              <span class="btn-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                </svg>
+              </span>
+              <span class="btn-text">INITIATE</span>
+            </div>
+            <div class="btn-glow"></div>
+            <div class="btn-border"></div>
+          </button>
+
+          <button class="action-btn secondary" id="qrBtn">
+            <div class="btn-content">
+              <span class="btn-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="3" width="7" height="7"></rect>
+                  <rect x="14" y="3" width="7" height="7"></rect>
+                  <rect x="14" y="14" width="7" height="7"></rect>
+                  <rect x="3" y="14" width="7" height="7"></rect>
+                </svg>
+              </span>
+              <span class="btn-text">QUICK QR</span>
+            </div>
+            <div class="btn-border"></div>
+          </button>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <div class="footer-line"></div>
+      <div class="footer-content">
+        <span class="footer-text">FRC 2025 // REBUILT PROTOCOLS ACTIVE</span>
+        <div class="footer-indicators">
+          <span class="indicator active" data-label="SYS"></span>
+          <span class="indicator" data-label="NET"></span>
+          <span class="indicator active" data-label="STORAGE"></span>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script src="loader.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
