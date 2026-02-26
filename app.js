@@ -1,17 +1,15 @@
-const pointList = [1,4,3]
+const pointList = [1, 4, 3]
 
 let extraData = []; //['teamNum', 'matchNum', 'scout', 'comment', 'alliance pick']
-var matchNumber = []; //Match Number
-var teamNumber = []; //Team Number
-var actionList = [""]; //This is the list that populates the log with human friendly text.
 var compressedList = []; //This is the list that collects all the IDs for the QR Code.
+var climbList = ["", false, "", false]; //['auton climb', auton backside, 'endgame climb', endgame backside]
 var comments = ""; //Comments Box
-var blue1 = [1,2];
-var blue2 = [3,4];
-var blue3 = [5,6];
-var red1 = [7,8];
-var red2 = [9,10];
-var red3 = [11,12];
+var blue1 = [1, 2];
+var blue2 = [3, 4];
+var blue3 = [5, 6];
+var red1 = [7, 8];
+var red2 = [9, 10];
+var red3 = [11, 12];
 var ipadID = localStorage.getItem("iPadId");
 var incmatchnumber = "1";
 var matchnum = 1;
@@ -20,6 +18,7 @@ var match = "";
 var savescout = sessionStorage.getItem("scoutInitials");
 var score = 0;
 
+const TIMEOUT = 1000 // time before fuel scoring period times out, measured in ms
 
 /* Function List
 --- Direct Button Functions ---
@@ -32,18 +31,62 @@ updateAvail: This was created to enable/disable (validation) scoring buttons bas
 */
 
 function addAction(action, number) { //Used for buttons that have a data validation script
-  actionList.push(action); //Add it to the actionList (what the scouter sees on the app)
-  compressedList.push(number); //Add it to the compressedList (QR Code)//
-  updateLog(); //Update what the scouter sees on the app (actionList)
+  // compressedList.push(number); //Add it (NOT!) to the compressedList (QR Code)
+  if (document.getElementById('teamLog1') !== null) {
+    updateLog(); //Update what the scouter sees on the app
+    updateScore();
+  }
   saveData();
   console.log(compressedList);
+}
+
+lastUpdatedTimestamp = 0
+
+function addFuel(type, amt) {
+  lastPosition = compressedList[compressedList.length - 1];
+
+  if (!lastPosition) {
+    compressedList.push([type, amt, [amt], false]);
+    lastUpdatedTimestamp = Date.now();
+    updateLog();
+    return;
+  };
+
+  lastType = lastPosition[0];
+  lastScore = lastPosition[1];
+  lastScoreTypes = lastPosition[2];
+
+  if (Date.now() - lastUpdatedTimestamp > TIMEOUT) {
+    lastPosition[3] = true;
+  }
+
+  if (type != lastType) {
+    lastPosition[3] = true;
+  }
+
+  finished = lastPosition[3];
+
+  console.log(finished)
+  console.log(lastPosition)
+
+  if (!finished) {
+    compressedList[compressedList.length - 1][1] += amt;
+    compressedList[compressedList.length - 1][2].push(amt);
+  } else {
+    compressedList.push([type, amt, [amt], false]);
+  }
+
+  lastUpdatedTimestamp = Date.now();
+  updateLog();
   updateScore();
 }
 
 function updateScore() {
   var currentScore = 0
-  for(i = 0; i < compressedList.length; i++){
-    currentScore += pointList[compressedList[i]]
+  for (i = 0; i < compressedList.length; i++) {
+    if (compressedList[i][0] === 0 || compressedList[i][0] === 2) {
+      currentScore += compressedList[i][1];
+    }
   }
   score = currentScore;
   document.getElementById("teamLog2").value = score;
@@ -52,6 +95,32 @@ function updateScore() {
 function alliancePick(alliance) {
   extraData[4] = alliance;
   console.log(extraData);
+}
+
+function selectBackside(boxId, page) {
+  var backsideIndex = 3;
+  if (page === "auton") {
+    backsideIndex = 1;
+  }
+  climbList[backsideIndex] = !climbList[backsideIndex]
+  if (climbList[backsideIndex]) {
+    document.getElementById(boxId).style.backgroundColor = "#547522";
+  } else {
+    document.getElementById(boxId).style.backgroundColor = "#9fdd43";
+  }
+}
+
+function updateClimb(name, page) {
+  var climbIndex = 2;
+  if (page === "auton") {
+    climbIndex = 0;
+  }
+
+  if (!(climbList[climbIndex] === "")) {
+    document.getElementById(climbList[climbIndex]).style.backgroundColor = "#8ac3d5"; // get rid of old style
+  }
+  climbList[climbIndex] = name;
+  document.getElementById(climbList[climbIndex]).style.backgroundColor = "#508ddbff"; // add new style
 }
 
 function GO(iPadID, matchsaver, scoutsaver, page) {
@@ -75,7 +144,6 @@ function GO(iPadID, matchsaver, scoutsaver, page) {
   localStorage.setItem("iPadId", iPadID)
   sessionStorage.setItem("scoutInitials", scoutsaver)
   sessionStorage.setItem("matchNum", matchsaver)
-  actionList[0] = extraData[4];
   saveData();
   if (allClear) {
     window.location.href = "./" + page + ".html";
@@ -90,29 +158,30 @@ function getBoxData() {
 }
 
 function saveData() {
-  sessionStorage.setItem("actionList", JSON.stringify(actionList));
   sessionStorage.setItem("compressedList", JSON.stringify(compressedList));
   sessionStorage.setItem("extraData", JSON.stringify(extraData));
   sessionStorage.setItem("score", score.toString());
+  sessionStorage.setItem("climbList", JSON.stringify(climbList));
 }
 
 function getData() {
-  let unparsedActionList = sessionStorage.getItem("actionList");
-  let unparsedExtradata = sessionStorage.getItem("extraData");
-  let unparsedCompressedList = sessionStorage.getItem("compressedList");
   score = parseInt(sessionStorage.getItem("score"), 10);
-  actionList = JSON.parse(unparsedActionList);
-  compressedList = JSON.parse(unparsedCompressedList);
-  extraData = JSON.parse(unparsedExtradata);
-  console.log(actionList);
+  compressedList = getList("compressedList");
+  extraData = getList("extraData");
+  climbList = getList("climbList");
   console.log(compressedList);
   console.log(extraData);
+  console.log(climbList);
   if (document.getElementById('teamLog1') !== null) {
     updateLog();
   }
   if (document.getElementById('teamLog2') !== null) {
     updateScore();
   }
+}
+
+function getList(name) {
+  return JSON.parse(sessionStorage.getItem(name));
 }
 
 function loadPage() {
@@ -129,12 +198,47 @@ function displayBoxData() {
     document.getElementById('matchNumberBox').value = extraData[1];
   }
   if (extraData[3] !== undefined) {
-    document.getElementById('coment').value = extraData[3];
+    // document.getElementById('comment').value = extraData[3];
   }
 }
 
 function updateLog() {
-  var logText = actionList.slice().reverse().join("\n");
+  // var logText = actionList.slice().reverse().join("\n");
+  // document.getElementById("teamLog1").value = logText;
+
+  logText = ""
+
+  console.log(compressedList.length)
+
+  for (let i = compressedList.length - 1; i >= 0; i--) {
+    period = compressedList[i];
+    console.log(period)
+
+    if (period[3]) { // if period finished
+      if (period[0] === 1 || period[0] === 3) {
+        logText = logText + "Fuel passing period ended! Passed " + period[1] + " fuel.\n"
+      } else {
+        logText = logText + "Fuel scoring period ended! Scored " + period[1] + " fuel.\n"
+      }
+      console.log(logText)
+    }
+
+    score = period[1]
+
+    for (let i = period[2].length - 1; i >= 0; i--) {
+      amt = period[2][i]
+      if (period[0] === 1 || period[0] === 3) {
+        logText = logText + "Passed " + amt + " Fuel (" + score + " total)\n"
+      } else {
+        logText = logText + amt + " Fuel (" + score + " total)\n"
+      }
+      score -= amt
+    }
+    console.log(logText)
+  }
+
+  console.log(logText);
+
   document.getElementById("teamLog1").value = logText;
 }
 
@@ -142,24 +246,44 @@ function commentEdit(comment) {
   extraData[3] = comment;
   saveData();
 }
-function Undo() {
-  var lastAction = actionList.pop();
 
-  if (lastAction) {
-    document.getElementById('teamLog1').style.border = '3px solid red';
-    setTimeout(() => {
-      document.getElementById('teamLog1').style.border = '3px solid white';
-      document.getElementById('teamLog1').style.transition = 'border 1s ease-in-out';
-    }, 100);
-    setTimeout(() => {
-      document.getElementById('teamLog1').removeAttribute('style');
-    }, 1100);
-    compressedList.pop();
-    updateLog();
-    updateScore();
-  } else {
-    console.log("Nothing to undo");
+// function Undo() {
+//   var lastAction = actionList.pop();
+
+//   if (lastAction) {
+//     document.getElementById('teamLog1').style.border = '3px solid red';
+//     setTimeout(() => {
+//       document.getElementById('teamLog1').style.border = '3px solid white';
+//       document.getElementById('teamLog1').style.transition = 'border 1s ease-in-out';
+//     }, 100);
+//     setTimeout(() => {
+//       document.getElementById('teamLog1').removeAttribute('style');
+//     }, 1100);
+//     compressedList.pop();
+//     updateLog();
+//     updateScore();
+//   } else {
+//     console.log("Nothing to undo");
+//   }
+// }
+
+function Undo() {
+  lastPosition = compressedList[compressedList.length - 1];
+
+  if (lastPosition) {
+    lastScored = lastPosition[2].pop();
+    lastPosition[1] -= lastScored;
   }
+
+  updateLog();
+  updateScore();
+}
+
+function UndoAll() {
+  lastPosition = compressedList.pop()
+
+  updateLog();
+  updateScore();
 }
 
 function pullIPadID() {
@@ -241,7 +365,7 @@ function reset(action) {
 }
 
 function load(windowLocation) {
-  saveData()
+  saveData();
   window.location.href = `./${windowLocation}.html`;
 }
 
@@ -284,9 +408,9 @@ function toQuotes() {
     insertQuote.innerHTML += "<br><br><strong>" + author + "</strong>";
     insertQuote.innerHTML += "<button onclick='window.location.href = `./index.html`' class='continuieButton' id='contineButton'>Continue</button>";
     insertQuote.innerHTML += "<strong>Score: " + score + "</strong>";
-    var sums = Array(6).fill(0); //Compress List
-    for (const item of compressedList) {
-      sums[item]++;
+    var sums = Array(4).fill(0); //Compress List
+    for (const period of compressedList) {
+      sums[period[0]] += period[1];
     }
     localStorage.setItem("oldCompList" + extraData[1], sums);
     localStorage.setItem("oldExtraData" + extraData[1], extraData);

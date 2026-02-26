@@ -1,0 +1,48 @@
+.endGameTable {
+  text-align: center;
+  position: relative;
+}
+
+.terminalEndgame {
+  height: 45vh;
+  font-size: 2vh;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td {
+  vertical-align: middle;
+  text-align: center;
+}
+
+.largeButton {
+  height: 13vh;
+  width: 13vw;
+  text-align: center;
+  background-color: rgb(138, 195, 213);
+}
+
+.sideButton {
+  height: 13vh;
+  position: absolute;
+  left: 80vw;
+}
+
+.coments {
+  height: 24vh;
+  width: 15vw;
+  font-size: 2vh;
+}
+
+#backsideButton {
+  bottom: 51vh;
+  background-color: rgb(159, 221, 67);
+}
+
+#noTry {
+  bottom: 36vh;
+  background-color: rgb(138, 195, 213);
+}
