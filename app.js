@@ -99,7 +99,7 @@ function alliancePick(alliance) {
 
 function selectBackside(boxId, page) {
   var backsideIndex = 3;
-  if (page === "auton") {
+  if (page === "autonClimb") {
     backsideIndex = 1;
   }
   climbList[backsideIndex] = !climbList[backsideIndex]
@@ -112,7 +112,7 @@ function selectBackside(boxId, page) {
 
 function updateClimb(name, page) {
   var climbIndex = 2;
-  if (page === "auton") {
+  if (page === "autonClimb") {
     climbIndex = 0;
   }
 
@@ -184,10 +184,26 @@ function getList(name) {
   return JSON.parse(sessionStorage.getItem(name));
 }
 
-function loadPage() {
+function loadPage(page) {
   getData();
   displayBoxData();
+  if(document.getElementById("teamLog2") !== null){
   document.getElementById("teamLog2").value = score;
+  }
+  if (page === 'autonClimb' || page === 'endgameClimb'){
+    loadClimb(page)
+  }
+}
+
+function loadClimb(page) {
+  var climbModifier = 2;
+  if(page === 'autonClimb'){
+    climbModifier = 0;
+  }
+  updateClimb(climbList[climbModifier], page);
+  if(climbList[1 + climbModifier] == true){
+    document.getElementById("backsideButton").style.backgroundColor = "#547522";
+  }
 }
 
 function displayBoxData() {
@@ -197,8 +213,8 @@ function displayBoxData() {
   if (extraData[1] !== undefined) {
     document.getElementById('matchNumberBox').value = extraData[1];
   }
-  if (extraData[3] !== undefined) {
-    // document.getElementById('comment').value = extraData[3];
+  if (document.getElementById('comment') !== null && extraData[3] !== undefined) {
+    document.getElementById('comment').value = extraData[3];
   }
 }
 
