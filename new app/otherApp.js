@@ -1,5 +1,6 @@
 // REBUILT Scouting App - Industrial Interface Controller
 
+
 (function() {
   'use strict';
 
@@ -88,9 +89,9 @@
   // ============================================
   
   // DOM Elements
-  const teamInput = document.getElementById('teamInput');
-  const matchInput = document.getElementById('matchInput');
-  const scoutInput = document.getElementById('scoutInput');
+  const teamNum = document.getElementById('teamNum');
+  const matchNum = document.getElementById('matchNum');
+  const scout = document.getElementById('scout');
   const deviceInput = document.getElementById('deviceInput');
   const redAllianceBtn = document.getElementById('redAllianceBtn');
   const blueAllianceBtn = document.getElementById('blueAllianceBtn');
@@ -127,22 +128,23 @@
   // ============================================
   
   // Team number - numeric only
-  teamInput.addEventListener('input', function(e) {
+  teamNum.addEventListener('input', function(e) {
     this.value = this.value.replace(/[^0-9]/g, '');
   });
   
   // Match number - numeric only
-  matchInput.addEventListener('input', function(e) {
+  matchNum.addEventListener('input', function(e) {
     this.value = this.value.replace(/[^0-9]/g, '');
   });
   
   // Scout initials - letters only, uppercase
-  scoutInput.addEventListener('input', function(e) {
+  scout.addEventListener('input', function(e) {
     this.value = this.value.replace(/[^a-zA-Z]/g, '').toUpperCase();
+    sessionStorage.setItem("scoutInitials", scout.value);
   });
   
   // Device ID - numeric only
-  deviceInput.addEventListener('input', function(e) {
+  iPadIDarea.addEventListener('input', function(e) {
     this.value = this.value.replace(/[^0-9]/g, '');
   });
   
@@ -187,23 +189,24 @@
   function validateForm() {
     const errors = [];
     
-    if (!teamInput.value || teamInput.value.length < 1) {
+    if (!teamNum.value || teamNum.value.length < 1) {
       errors.push('Team number is required');
-      teamInput.parentElement.classList.add('error');
+      teamNum.parentElement.classList.add('error');
     }
     
-    if (!matchInput.value) {
+    if (!matchNum.value) {
       errors.push('Match number is required');
-      matchInput.parentElement.classList.add('error');
+      matchNum.parentElement.classList.add('error');
     }
     
-    if (!scoutInput.value || scoutInput.value.length < 2) {
+    if (!scout.value || scout.value.length < 2) {
       errors.push('Scout initials are required (min 2 chars)');
-      scoutInput.parentElement.classList.add('error');
+      scout.parentElement.classList.add('error');
     }
     
     if (!selectedAlliance) {
       errors.push('Please select an alliance');
+      document.getElementById('allliance-selection').classList.add('error');
     }
     
     return errors;
@@ -213,6 +216,8 @@
     document.querySelectorAll('.input-wrapper').forEach(wrapper => {
       wrapper.classList.remove('error');
     });
+
+    document.getElementById('allliance-selection').classList.remove('error');
   }
   
   goBtn.addEventListener('click', function() {
@@ -233,11 +238,11 @@
     
     // Success - store data and proceed
     const scoutingData = {
-      team: teamInput.value,
-      match: matchInput.value,
-      scout: scoutInput.value,
+      team: teamNum.value,
+      match: matchNum.value,
+      scout: scout.value,
       alliance: selectedAlliance,
-      device: deviceInput.value || '00',
+      device: iPadIDarea.value || '00',
       sessionId: sessionId.textContent,
       timestamp: new Date().toISOString()
     };
@@ -251,6 +256,7 @@
     setTimeout(() => {
       console.log('Proceeding with data:', scoutingData);
       // window.location.href = 'auton.html';
+      GO(document.getElementById('iPadIDarea').value, document.getElementById('matchNum').value, document.getElementById('scout').value, "auton");
     }, 500);
   });
   
@@ -286,6 +292,10 @@
   style.textContent = `
     .input-wrapper.error .data-input {
       border-color: #e63946 !important;
+      animation: shake 0.5s ease-in-out;
+    }
+    .alliance-grid.error {
+      border: 2px solid #e63946;
       animation: shake 0.5s ease-in-out;
     }
     

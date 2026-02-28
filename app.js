@@ -146,7 +146,7 @@ function GO(iPadID, matchsaver, scoutsaver, page) {
   sessionStorage.setItem("matchNum", matchsaver)
   saveData();
   if (allClear) {
-    window.location.href = "./" + page + ".html";
+    window.location.href = "../" + page + ".html";
   }
 }
 

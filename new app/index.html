@@ -12,11 +12,11 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Teko:wght@300;400;500;600;700&family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 </head>
-<body>
+<body onload="pullIPadID();setTeam(matchNum.value, iPadIDarea.value);alliancePick('No Alliance')">
   <!-- Loading Screen -->
   <div id="loader" class="loader-overlay">
     <div class="loader-vignette"></div>
-    <div class="loader-grid"></div>
+    <div class="loader-grid"></div> 
     <div class="loader-sparks" id="sparkContainer"></div>
     <div class="loader-content">
       <div class="loader-brand">
@@ -112,7 +112,7 @@
               <span class="label-hint">4 digits</span>
             </label>
             <div class="input-wrapper">
-              <input type="text" id="teamInput" class="data-input" placeholder="0000" maxlength="4" pattern="[0-9]*">
+              <input type="text" id="teamNum" class="data-input" placeholder="0000" maxlength="4" pattern="[0-9]*">
               <div class="input-focus-indicator"></div>
             </div>
           </div>
@@ -123,7 +123,7 @@
               <span class="label-hint">#</span>
             </label>
             <div class="input-wrapper">
-              <input type="text" id="matchInput" class="data-input" placeholder="00" maxlength="3" pattern="[0-9]*">
+              <input type="text" id="matchNum" class="data-input" placeholder="00" maxlength="3" pattern="[0-9]*" onchange="setTeam(this.value, iPadIDarea.value)">
               <div class="input-focus-indicator"></div>
             </div>
           </div>
@@ -134,7 +134,7 @@
               <span class="label-hint">initials</span>
             </label>
             <div class="input-wrapper">
-              <input type="text" id="scoutInput" class="data-input" placeholder="ABC" maxlength="3">
+              <input type="text" id="scout" class="data-input" placeholder="ABC" maxlength="3">
               <div class="input-focus-indicator"></div>
             </div>
           </div>
@@ -148,7 +148,7 @@
           <h2 class="section-title">ALLIANCE SELECTION</h2>
         </div>
         
-        <div class="alliance-grid">
+        <div class="alliance-grid"  id="allliance-selection">
           <button class="alliance-btn red-alliance" id="redAllianceBtn" data-alliance="red">
             <div class="alliance-content">
               <div class="alliance-icon">
@@ -187,7 +187,7 @@
               <span class="label-text">DEVICE ID</span>
             </label>
             <div class="input-wrapper">
-              <input type="text" id="deviceInput" class="data-input" placeholder="00" maxlength="2" pattern="[0-9]*">
+              <input type="text" id="iPadIDarea" class="data-input" placeholder="00" maxlength="2" pattern="[0-9]*">
               <div class="input-focus-indicator"></div>
             </div>
           </div>
@@ -205,7 +205,7 @@
             <div class="btn-border"></div>
           </button>
 
-          <button class="action-btn secondary" id="qrBtn">
+          <button class="action-btn secondary" id="qrBtn" onclick="window.location.href='../qr.html'">
             <div class="btn-content">
               <span class="btn-icon">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -238,6 +238,8 @@
   </div>
 
   <script src="loader.js"></script>
-  <script src="app.js"></script>
+  <script src="../app.js"></script>
+  <script src="otherApp.js"></script>
+  
 </body>
 </html>

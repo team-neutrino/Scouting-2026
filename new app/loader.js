@@ -3,7 +3,7 @@
 (function() {
   // Create floating debris/dust particles
   const debrisContainer = document.getElementById('debrisContainer');
-  const debrisCount = 20;
+  const debrisCount = 2000;
   
   for (let i = 0; i < debrisCount; i++) {
     const debris = document.createElement('div');
