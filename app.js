@@ -104,9 +104,9 @@ function selectBackside(boxId, page) {
   }
   climbList[backsideIndex] = !climbList[backsideIndex]
   if (climbList[backsideIndex]) {
-    document.getElementById(boxId).style.backgroundColor = "#547522";
+    document.getElementById(boxId).style.backgroundColor = "rgb(159, 221, 67)";
   } else {
-    document.getElementById(boxId).style.backgroundColor = "#9fdd43";
+    document.getElementById(boxId).style.backgroundColor = "rgb(227, 137, 20)";
   }
 }
 
@@ -120,7 +120,7 @@ function updateClimb(name, page) {
     document.getElementById(climbList[climbIndex]).style.backgroundColor = "#8ac3d5"; // get rid of old style
   }
   climbList[climbIndex] = name;
-  document.getElementById(climbList[climbIndex]).style.backgroundColor = "#508ddbff"; // add new style
+  document.getElementById(climbList[climbIndex]).style.backgroundColor = "rgb(159, 221, 67)"; // add new style
 }
 
 function GO(iPadID, matchsaver, scoutsaver, page) {
@@ -202,7 +202,7 @@ function loadClimb(page) {
   }
   updateClimb(climbList[climbModifier], page);
   if(climbList[1 + climbModifier] == true){
-    document.getElementById("backsideButton").style.backgroundColor = "#547522";
+    document.getElementById("backsideButton").style.backgroundColor = "rgb(159, 221, 67)";
   }
 }
 
