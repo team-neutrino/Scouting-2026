@@ -222,6 +222,10 @@ function updateLog() {
   // var logText = actionList.slice().reverse().join("\n");
   // document.getElementById("teamLog1").value = logText;
 
+  if (document.getElementById("teamLog1") == null) {
+    return
+  }
+
   logText = ""
 
   console.log(compressedList.length)
@@ -401,6 +405,10 @@ function reset(action) {
 }
 
 function load(windowLocation) {
+  if (windowLocation == "teleop" && window.location.pathname === `/auton.html`) {
+    console.log("fun");
+    climbList[0] = "noTry";
+  }
   saveData();
   window.location.href = `./${windowLocation}.html`;
 }
