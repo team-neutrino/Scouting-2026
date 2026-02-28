@@ -187,21 +187,21 @@ function getList(name) {
 function loadPage(page) {
   getData();
   displayBoxData();
-  if(document.getElementById("teamLog2") !== null){
-  document.getElementById("teamLog2").value = score;
+  if (document.getElementById("teamLog2") !== null) {
+    document.getElementById("teamLog2").value = score;
   }
-  if (page === 'autonClimb' || page === 'endgameClimb'){
+  if (page === 'autonClimb' || page === 'endgameClimb') {
     loadClimb(page)
   }
 }
 
 function loadClimb(page) {
   var climbModifier = 2;
-  if(page === 'autonClimb'){
+  if (page === 'autonClimb') {
     climbModifier = 0;
   }
   updateClimb(climbList[climbModifier], page);
-  if(climbList[1 + climbModifier] == true){
+  if (climbList[1 + climbModifier] == true) {
     document.getElementById("backsideButton").style.backgroundColor = "rgb(159, 221, 67)";
   }
 }
@@ -222,21 +222,31 @@ function updateLog() {
   // var logText = actionList.slice().reverse().join("\n");
   // document.getElementById("teamLog1").value = logText;
 
+  if (document.getElementById("teamLog1") == null) {
+    return
+  }
+
   logText = ""
 
   console.log(compressedList.length)
 
   for (let i = compressedList.length - 1; i >= 0; i--) {
     period = compressedList[i];
-    console.log(period)
 
-    if (period[3]) { // if period finished
+    if (period[3] || Date.now() - lastUpdatedTimestamp > TIMEOUT) { // if period finished
       if (period[0] === 1 || period[0] === 3) {
-        logText = logText + "Fuel passing period ended! Passed " + period[1] + " fuel.\n"
+        logText = logText + "-- Passed " + period[1] + " fuel. --"
       } else {
-        logText = logText + "Fuel scoring period ended! Scored " + period[1] + " fuel.\n"
+        logText = logText + "-- Scored " + period[1] + " fuel. --"
       }
-      console.log(logText)
+
+      if (period[0] < 2) {
+        logText = logText + " (A)"
+      } else {
+        logText = logText + " (T)"
+      }
+
+      logText = logText + "\n"
     }
 
     score = period[1]
@@ -244,16 +254,22 @@ function updateLog() {
     for (let i = period[2].length - 1; i >= 0; i--) {
       amt = period[2][i]
       if (period[0] === 1 || period[0] === 3) {
-        logText = logText + "Passed " + amt + " Fuel (" + score + " total)\n"
+        logText = logText + "Passed " + amt + " Fuel (" + score + " total)"
       } else {
-        logText = logText + amt + " Fuel (" + score + " total)\n"
+        logText = logText + amt + " Fuel (" + score + " total)"
       }
+
+      if (period[0] < 2) {
+        logText = logText + " (A)"
+      } else {
+        logText = logText + " (T)"
+      }
+
+      logText = logText + "\n"
+
       score -= amt
     }
-    console.log(logText)
   }
-
-  console.log(logText);
 
   document.getElementById("teamLog1").value = logText;
 }
@@ -262,6 +278,8 @@ function commentEdit(comment) {
   extraData[3] = comment;
   saveData();
 }
+
+setInterval(updateLog, 1);
 
 // function Undo() {
 //   var lastAction = actionList.pop();
@@ -285,6 +303,12 @@ function commentEdit(comment) {
 
 function Undo() {
   lastPosition = compressedList[compressedList.length - 1];
+
+  if (lastPosition[2].length == 0) {
+    compressedList.pop();
+    Undo();
+    return;
+  }
 
   if (lastPosition) {
     lastScored = lastPosition[2].pop();
@@ -381,6 +405,10 @@ function reset(action) {
 }
 
 function load(windowLocation) {
+  if (windowLocation == "teleop" && window.location.pathname === `/auton.html`) {
+    console.log("fun");
+    climbList[0] = "noTry";
+  }
   saveData();
   window.location.href = `./${windowLocation}.html`;
 }
