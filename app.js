@@ -315,13 +315,6 @@ function Undo() {
   updateScore();
 }
 
-function UndoAll() {
-  lastPosition = compressedList.pop()
-
-  updateLog();
-  updateScore();
-}
-
 function pullIPadID() {
   document.getElementById("iPadIDarea").value = localStorage.getItem("iPadId");
   savescout = sessionStorage.getItem("scoutInitials");
