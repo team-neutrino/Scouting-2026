@@ -187,21 +187,21 @@ function getList(name) {
 function loadPage(page) {
   getData();
   displayBoxData();
-  if(document.getElementById("teamLog2") !== null){
-  document.getElementById("teamLog2").value = score;
+  if (document.getElementById("teamLog2") !== null) {
+    document.getElementById("teamLog2").value = score;
   }
-  if (page === 'autonClimb' || page === 'endgameClimb'){
+  if (page === 'autonClimb' || page === 'endgameClimb') {
     loadClimb(page)
   }
 }
 
 function loadClimb(page) {
   var climbModifier = 2;
-  if(page === 'autonClimb'){
+  if (page === 'autonClimb') {
     climbModifier = 0;
   }
   updateClimb(climbList[climbModifier], page);
-  if(climbList[1 + climbModifier] == true){
+  if (climbList[1 + climbModifier] == true) {
     document.getElementById("backsideButton").style.backgroundColor = "rgb(159, 221, 67)";
   }
 }
@@ -285,6 +285,12 @@ function commentEdit(comment) {
 
 function Undo() {
   lastPosition = compressedList[compressedList.length - 1];
+
+  if (lastPosition[2].length == 0) {
+    compressedList.pop();
+    Undo();
+    return;
+  }
 
   if (lastPosition) {
     lastScored = lastPosition[2].pop();
