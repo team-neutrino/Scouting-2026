@@ -42,7 +42,7 @@
             actionList = JSON.parse(unparsedActionList);
             compressedList = JSON.parse(unparsedCompressedList);
             extraData = JSON.parse(unparsedExtradata);
-            var sums = Array(6).fill(0); //Compress List
+            var sums = Array(4).fill(0); //Compress List
             for (const period of compressedList) {
                 sums[period[0]] += period[1];
             }
@@ -68,8 +68,6 @@
                 extraData[3] +
                 "\t" +
                 extraData[4] +
-                "\t" +
-                extraData[5] +
                 "\t" +
                 climb +
                 "\t" +
