@@ -1,149 +1,425 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Qr</title>
-    <link rel="stylesheet" href="qr.css">
-    <link rel="stylesheet" href="styleSheet.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Bubblegum+Sans&family=Coustard:wght@400;900&family=Playpen+Sans:wght@100..800&family=Seaweed+Script&display=swap"
-        rel="stylesheet">
-    <script src="./app.js" defer></script>
-    <script src="./qrCode.js" defer></script>
-    <script src="./quote.js" defer></script>
-    <script>
-        let lastSelect = "m2";
-        function initQRCode() {
-            let height = document.body.clientHeight;
-            let width = document.body.clientWidth;
-            let qrSize = 200;
-            if (height <= width) {
-                qrSize = height / 2;
-            }
-            if (width < height) {
-                qrSize = width / 2;
-            }
-            qrcode = new QRCode(document.getElementById("qrArea"), {
-                text: "",
-                width: qrSize,
-                height: qrSize,
-                colorDark: "black",
-                colorLight: "white",
-                correctLevel: QRCode.CorrectLevel.M,
-            });
-            document.getElementById('qrArea').style.width = qrSize + "px";
-            let unparsedActionList = sessionStorage.getItem("actionList");
-            let unparsedExtradata = sessionStorage.getItem("extraData");
-            let unparsedCompressedList = sessionStorage.getItem("compressedList");
-            actionList = JSON.parse(unparsedActionList);
-            compressedList = JSON.parse(unparsedCompressedList);
-            extraData = JSON.parse(unparsedExtradata);
-            var sums = Array(4).fill(0); //Compress List
-            for (const period of compressedList) {
-                sums[period[0]] += period[1];
-            }
-
-            document.getElementById('teamNumberBox').value = extraData[0];
-            document.getElementById('matchNumberBox').value = extraData[1];
-            var climb = getList("climbList");
-            if(climb[0] === "noTry"){
-                climb[0] = "0";
-            }
-            if(climb[2] === "noTry"){
-                climb[2] = "0";
-            }
-
-            qrcode.clear();
-            qrcode.makeCode(
-                extraData[0] +
-                "\t" +
-                extraData[1] +
-                "\t" +
-                extraData[2] +
-                "\t" +
-                extraData[3] +
-                "\t" +
-                extraData[4] +
-                "\t" +
-                climb +
-                "\t" +
-                sums.join(",")
-            );
-        }
-
-        document.addEventListener("DOMContentLoaded", function () {
-            let body = document.getElementById('body');
-            let fragment = document.createDocumentFragment(); // Batch append for performance
-        });
-
-        function regenOldQR() {
-            const oldMatch = prompt("What Match?");
-            const oldCompList = localStorage.getItem("oldCompList" + oldMatch)
-            if (oldCompList === null) {
-                return;
-            }
-            let oldExtraData = localStorage.getItem("oldExtraData" + oldMatch).split(",");
-            qrcode.clear();
-            qrcode.makeCode(
-                oldExtraData[0] +
-                "\t" +
-                oldExtraData[1] +
-                "\t" +
-                oldExtraData[2] +
-                "\t" +
-                oldExtraData[3] +
-                "\t" +
-                oldExtraData[4] +
-                "\t" +
-                oldExtraData[5] +
-                "\t" +
-                oldExtraData[6] +
-                "\t" +
-                oldExtraData[7] +
-                "\t" +
-                oldExtraData[8] +
-                "\t" +
-                oldCompList
-            );
-        }
-    </script>
-    <style id="changeStyle"></style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QR CODE // REBUILT SCOUTING</title>
+  
+  <!-- Shared Styles -->
+  <link rel="stylesheet" href="styles/base.css">
+  <link rel="stylesheet" href="styles/components.css">
+  <link rel="stylesheet" href="styles/animations.css">
+  
+  <!-- Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Teko:wght@300;400;500;600;700&family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  
+  <!-- QR Code Library -->
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+  
+  <style>
+    /* QR-specific accent override */
+    :root {
+      --page-accent: #ffffff;
+      --page-accent-rgb: 255, 255, 255;
+    }
+    
+    /* QR layout */
+    .qr-layout {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-xl);
+      flex: 1;
+      padding: var(--space-xl);
+    }
+    
+    /* QR Container */
+    .qr-container {
+      position: relative;
+      padding: var(--space-xl);
+      background: white;
+      border-radius: 8px;
+      box-shadow: 
+        0 0 60px rgba(255, 255, 255, 0.1),
+        0 0 100px rgba(255, 255, 255, 0.05);
+      cursor: pointer;
+      transition: transform var(--transition-base);
+    }
+    
+    .qr-container:hover {
+      transform: scale(1.02);
+    }
+    
+    .qr-container::before {
+      content: 'CLICK TO ZOOM';
+      position: absolute;
+      bottom: -30px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      opacity: 0;
+      transition: opacity var(--transition-base);
+    }
+    
+    .qr-container:hover::before {
+      opacity: 1;
+    }
+    
+    /* Match Summary */
+    .match-summary {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-lg);
+      width: 100%;
+      max-width: 550px;
+    }
+    
+    .summary-item {
+      background: var(--bg-tertiary);
+      border: 2px solid var(--border-subtle);
+      border-radius: 4px;
+      padding: var(--space-lg);
+      text-align: center;
+    }
+    
+    .summary-label {
+      font-family: var(--font-mono);
+      font-size: 0.9rem;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+    }
+    
+    .summary-value {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 600;
+      color: var(--page-accent);
+      margin-top: 6px;
+    }
+    
+    /* Button Group */
+    .qr-actions {
+      display: flex;
+      gap: var(--space-lg);
+    }
+    
+    .qr-btn {
+      min-width: 160px;
+      height: 70px;
+      font-size: 1.25rem;
+    }
+    
+    /* Zoom Modal */
+    .qr-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.9);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 10000;
+    }
+    
+    .qr-modal.active {
+      display: flex;
+    }
+    
+    .qr-modal-content {
+      position: relative;
+      padding: var(--space-xl);
+      background: white;
+      border-radius: 8px;
+    }
+    
+    .qr-modal-close {
+      position: absolute;
+      top: -40px;
+      right: 0;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 2rem;
+      cursor: pointer;
+      padding: var(--space-sm);
+    }
+    
+    .qr-modal-close:hover {
+      color: var(--accent-red);
+    }
+  </style>
 </head>
+<body onload="initQRCode(); loadPage('qr')" data-page="qr">
+  
+  <div class="page-container">
+    <!-- Ambient Background -->
+    <div class="ambient-grid"></div>
+    <div class="ambient-glow"></div>
+    <div class="noise-overlay"></div>
+    
+    <!-- Header -->
+    <header class="page-header">
+      <div class="header-accent"></div>
+      <div class="header-content">
+        <div class="brand-mark">
+          <div class="brand-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+              <polyline points="2 17 12 22 22 17"></polyline>
+              <polyline points="2 12 12 17 22 12"></polyline>
+            </svg>
+          </div>
+          <div class="brand-text">
+            <span class="brand-title">QR CODE</span>
+            <span class="brand-subtitle">MATCH DATA EXPORT</span>
+          </div>
+        </div>
+        
+        <div class="header-meta">
+          <div class="match-info">
+            <span class="match-label">TEAM</span>
+            <span class="match-value" id="teamNumberBox">----</span>
+          </div>
+          <div class="match-info">
+            <span class="match-label">MATCH</span>
+            <span class="match-value" id="matchNumberBox">--</span>
+          </div>
+        </div>
+      </div>
+    </header>
 
-<body onload="initQRCode();loadPage('qr')" id="body" class="qrBody"style="overflow: scroll;">
-    <table>
-        <tr class="top" id="row1">
-            <th class="topSideBox">
-                <input class="infoBox" type="text" name="teamBox" id="teamNumberBox" readonly />
-            </th>
-            <th colspan="1" class="header">Qr</th>
-            <th class="topSideBox">
-                <input class="infoBox" type="text" name="matchBox" id="matchNumberBox" readonly />
-            </th>
-        </tr>
-        <tr id="row2">
-            <td></td>
-            <td class="qr-holder" id="resetQr">
-                <div id="qrArea" onclick="qrZoom()" style="opacity: 1; transform: scale(1, 1)"></div>
-            </td>
-            <td></td>
-        </tr>
-        <tr class="footer" id="row3">
-            <td>
-                <button class="backForth nextColor" id="next" onclick="load('endgameClimb')">&larr;</button>
-            </td>
-            <td>
-                <button id="regenButton" onclick="regenOldQR()">Regen</button>
-            </td>
-            <td>
-                <button id="resetButton" onclick="reset('reset')">Reset</button>
-            </td>
-        </tr>
-    </table>
+    <!-- Main Content -->
+    <main class="page-main">
+      <div class="qr-layout">
+        
+        <!-- QR Code -->
+        <div class="qr-container" id="qrArea" onclick="qrZoom()"></div>
+        
+        <!-- Match Summary -->
+        <div class="match-summary">
+          <div class="summary-item">
+            <div class="summary-label">AUTON SCORE</div>
+            <div class="summary-value" id="autonScore">--</div>
+          </div>
+          <div class="summary-item">
+            <div class="summary-label">TELEOP SCORE</div>
+            <div class="summary-value" id="teleopScore">--</div>
+          </div>
+          <div class="summary-item">
+            <div class="summary-label">AUTON CLIMB</div>
+            <div class="summary-value" id="autonClimb">--</div>
+          </div>
+          <div class="summary-item">
+            <div class="summary-label">ENDGAME CLIMB</div>
+            <div class="summary-value" id="endgameClimb">--</div>
+          </div>
+        </div>
+        
+        <!-- Actions -->
+        <div class="qr-actions">
+          <button class="btn btn-nav qr-btn" onclick="regenOldQR()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 20px; height: 20px;">
+              <polyline points="23 4 23 10 17 10"></polyline>
+              <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+            </svg>
+            <span>REGEN</span>
+          </button>
+          
+          <button class="btn btn-primary qr-btn" onclick="reset('reset')" style="--page-accent: #e63946; --page-accent-rgb: 230, 57, 70;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 20px; height: 20px;">
+              <polyline points="3 6 5 6 21 6"></polyline>
+              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+            </svg>
+            <span>RESET</span>
+          </button>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer Navigation -->
+    <footer class="page-footer">
+      <div class="footer-accent"></div>
+      <div class="footer-content">
+        <button class="btn btn-nav back" onclick="load('endgameClimb')">
+          <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+          <span>BACK</span>
+        </button>
+        
+        <div class="footer-indicators">
+          <span class="indicator" data-label="AUTON"></span>
+          <span class="indicator" data-label="CLIMB"></span>
+          <span class="indicator" data-label="TELEOP"></span>
+          <span class="indicator" data-label="END"></span>
+          <span class="indicator active" data-label="QR"></span>
+        </div>
+        
+        <button class="btn btn-nav" onclick="load('app')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 20px; height: 20px;">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+          </svg>
+          <span>HOME</span>
+        </button>
+      </div>
+    </footer>
+  </div>
+  
+  <!-- QR Zoom Modal -->
+  <div class="qr-modal" id="qrModal" onclick="closeQrZoom()">
+    <div class="qr-modal-content" onclick="event.stopPropagation()">
+      <button class="qr-modal-close" onclick="closeQrZoom()">&times;</button>
+      <div id="qrModalContent"></div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+  <script src="new app/otherApp.js"></script>
+  
+  <script>
+    let qrcode;
+    let lastSelect = "m2";
+    
+    function initQRCode() {
+      let height = document.body.clientHeight;
+      let width = document.body.clientWidth;
+      let qrSize = 200;
+      
+      if (height <= width) {
+        qrSize = height / 2;
+      }
+      if (width < height) {
+        qrSize = width / 2;
+      }
+      
+      // Limit max size
+      qrSize = Math.min(qrSize, 280);
+      
+      qrcode = new QRCode(document.getElementById("qrArea"), {
+        text: "",
+        width: qrSize,
+        height: qrSize,
+        colorDark: "black",
+        colorLight: "white",
+        correctLevel: QRCode.CorrectLevel.M,
+      });
+      
+      document.getElementById('qrArea').style.width = qrSize + "px";
+      
+      // Get data from sessionStorage
+      let unparsedActionList = sessionStorage.getItem("actionList");
+      let unparsedExtradata = sessionStorage.getItem("extraData");
+      let unparsedCompressedList = sessionStorage.getItem("compressedList");
+      
+      if (!unparsedActionList || !unparsedExtradata) {
+        console.warn('No match data found in sessionStorage');
+        return;
+      }
+      
+      actionList = JSON.parse(unparsedActionList);
+      compressedList = JSON.parse(unparsedCompressedList);
+      extraData = JSON.parse(unparsedExtradata);
+      
+      // Calculate sums
+      var sums = Array(4).fill(0);
+      for (const period of compressedList) {
+        sums[period[0]] += period[1];
+      }
+      
+      // Display info
+      document.getElementById('teamNumberBox').value = extraData[0];
+      document.getElementById('matchNumberBox').value = extraData[1];
+      
+      // Update summary displays
+      document.getElementById('autonScore').textContent = sums[0] || 0;
+      document.getElementById('teleopScore').textContent = (sums[2] || 0) + (sums[3] || 0);
+      
+      var climb = getList("climbList");
+      if(climb[0] === "noTry") {
+        climb[0] = "0";
+      }
+      if(climb[2] === "noTry") {
+        climb[2] = "0";
+      }
+      
+      // Display climb info
+      document.getElementById('autonClimb').textContent = climb[0] || '--';
+      document.getElementById('endgameClimb').textContent = climb[2] || '--';
+      
+      // Generate QR code
+      qrcode.clear();
+      qrcode.makeCode(
+        extraData[0] + "\t" +
+        extraData[1] + "\t" +
+        extraData[2] + "\t" +
+        extraData[3] + "\t" +
+        extraData[4] + "\t" +
+        climb + "\t" +
+        sums.join(",")
+      );
+    }
+    
+    function qrZoom() {
+      const modal = document.getElementById('qrModal');
+      const modalContent = document.getElementById('qrModalContent');
+      
+      // Create larger QR code for modal
+      modalContent.innerHTML = '';
+      const modalQR = new QRCode(modalContent, {
+        text: qrcode._el.title,
+        width: 400,
+        height: 400,
+        colorDark: "black",
+        colorLight: "white",
+        correctLevel: QRCode.CorrectLevel.M,
+      });
+      
+      modal.classList.add('active');
+    }
+    
+    function closeQrZoom() {
+      document.getElementById('qrModal').classList.remove('active');
+    }
+    
+    function regenOldQR() {
+      const oldMatch = prompt("What Match?");
+      if (!oldMatch) return;
+      
+      const oldCompList = localStorage.getItem("oldCompList" + oldMatch);
+      if (oldCompList === null) {
+        alert("No data found for match " + oldMatch);
+        return;
+      }
+      
+      let oldExtraData = localStorage.getItem("oldExtraData" + oldMatch).split(",");
+      
+      qrcode.clear();
+      qrcode.makeCode(
+        oldExtraData[0] + "\t" +
+        oldExtraData[1] + "\t" +
+        oldExtraData[2] + "\t" +
+        oldExtraData[3] + "\t" +
+        oldExtraData[4] + "\t" +
+        oldExtraData[5] + "\t" +
+        oldExtraData[6] + "\t" +
+        oldExtraData[7] + "\t" +
+        oldExtraData[8] + "\t" +
+        oldCompList
+      );
+      
+      // Update display
+      document.getElementById('teamNumberBox').value = oldExtraData[0];
+      document.getElementById('matchNumberBox').value = oldExtraData[1];
+    }
+  </script>
 </body>
-
 </html>

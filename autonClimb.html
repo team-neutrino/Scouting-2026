@@ -1,66 +1,342 @@
 <!DOCTYPE html>
 <html lang="en">
-<script src="./app.js"></script>
-
 <head>
   <meta charset="UTF-8">
-  <title>Auton Climb</title>
-  <link rel="styleSheet" type="text/css" href="climb.css">
-  <link rel="styleSheet" type="text/css" href="styleSheet.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AUTON CLIMB // REBUILT SCOUTING</title>
+  
+  <!-- Shared Styles -->
+  <link rel="stylesheet" href="styles/base.css">
+  <link rel="stylesheet" href="styles/components.css">
+  <link rel="stylesheet" href="styles/animations.css">
+  
+  <!-- Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Teko:wght@300;400;500;600;700&family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-card: #1a1a1f;
+      --accent: #10b981;
+      --accent-rgb: 16, 185, 129;
+      --accent-glow: rgba(16, 185, 129, 0.2);
+      --pass: #06b6d4;
+      --pass-bg: rgba(6, 182, 212, 0.12);
+      --minus: #ef4444;
+      --minus-bg: rgba(239, 68, 68, 0.12);
+      --text: #fafafa;
+      --text-dim: #71717a;
+      --border: rgba(255,255,255,0.08);
+    }
+    
+    html, body {
+      overflow: hidden !important;
+      height: 100%;
+    }
+    
+    .page-container {
+      height: 100vh !important;
+      overflow: hidden;
+    }
+    
+    .page-header {
+      padding: var(--space-sm) var(--space-lg);
+      flex-shrink: 0;
+      background: linear-gradient(180deg, #1a1a1f 0%, transparent 100%);
+    }
+    
+    .brand-icon {
+      width: 32px;
+      height: 32px;
+      color: var(--accent);
+      filter: drop-shadow(0 0 8px var(--accent-glow));
+    }
+    
+    .brand-title {
+      font-size: 1.5rem;
+    }
+    
+    .brand-subtitle {
+      font-size: 0.5rem;
+    }
+    
+    .match-info {
+      padding: var(--space-xs) var(--space-sm);
+      min-width: 70px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+    }
+    
+    .match-label {
+      font-size: 0.5rem;
+      color: var(--text-dim);
+    }
+    
+    .match-value {
+      font-size: 1.25rem;
+      color: var(--accent);
+    }
+    
+    .page-main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: var(--space-sm) var(--space-md);
+      gap: var(--space-xs);
+      overflow: hidden;
+    }
+    
+    .climb-title {
+      font-family: var(--font-display);
+      font-size: 0.9rem;
+      color: var(--text-dim);
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      margin-bottom: var(--space-xs);
+    }
+    
+    .climb-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+      flex: 1;
+    }
+    
+    .climb-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.1s ease;
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      color: var(--text);
+      min-height: 50px;
+    }
+    
+    .climb-btn:active {
+      transform: scale(0.95);
+    }
+    
+    .climb-btn.selected {
+      background: var(--accent);
+      color: #0a0a0b;
+      font-weight: 700;
+      box-shadow: 0 0 15px var(--accent-glow);
+    }
+    
+    .climb-btn.failed {
+      background: var(--minus-bg);
+      color: var(--minus);
+    }
+    
+    .climb-btn-label {
+      font-size: 0.5rem;
+      color: var(--text-dim);
+      margin-top: 2px;
+    }
+    
+    .climb-btn.selected .climb-btn-label,
+    .climb-btn.failed .climb-btn-label {
+      color: inherit;
+    }
+    
+    .side-buttons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+      margin-top: 2px;
+    }
+    
+    .side-btn {
+      padding: 6px;
+      font-size: 0.7rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text-dim);
+      cursor: pointer;
+      text-align: center;
+    }
+    
+    .side-btn.selected {
+      background: var(--accent);
+      color: #0a0a0b;
+    }
+    
+    .page-footer {
+      padding: var(--space-xs) var(--space-md);
+      flex-shrink: 0;
+      background: #1a1a1f;
+    }
+    
+    .btn-nav {
+      min-width: 60px;
+      height: 40px;
+      font-size: 0.75rem;
+    }
+    
+    .btn-icon {
+      width: 16px;
+      height: 16px;
+    }
+    
+    .indicator {
+      background: var(--text-dim);
+    }
+    
+    .indicator.active {
+      background: var(--accent);
+      box-shadow: 0 0 8px var(--accent-glow);
+    }
+  </style>
 </head>
+<body onload="loadPage('autonClimb')" data-page="autonclimb">
+  
+  <div class="page-container">
+    <div class="ambient-grid"></div>
+    <div class="ambient-glow"></div>
+    <div class="noise-overlay"></div>
+    
+    <header class="page-header">
+      <div class="header-accent"></div>
+      <div class="header-content">
+        <div class="brand-mark">
+          <div class="brand-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+              <polyline points="2 17 12 22 22 17"></polyline>
+              <polyline points="2 12 12 17 22 12"></polyline>
+            </svg>
+          </div>
+          <div class="brand-text">
+            <span class="brand-title">AUTON CLIMB</span>
+            <span class="brand-subtitle">AUTONOMOUS CLIMB</span>
+          </div>
+        </div>
+        
+        <div class="header-meta">
+          <div class="match-info">
+            <span class="match-label">TEAM</span>
+            <span class="match-value" id="teamNumberBox">----</span>
+          </div>
+          <div class="match-info">
+            <span class="match-label">MATCH</span>
+            <span class="match-value" id="matchNumberBox">--</span>
+          </div>
+        </div>
+      </div>
+    </header>
 
-<body id='body' class="autonClimbBody"style="overflow: scroll;" onload="loadPage('autonClimb')">
-  <table class="endGameTable" id="table">
-    <tr class="yess id=" row1>
-      <th class="topSideBox">
-        <input class="infoBox" type="text" name="teamBox" id="teamNumberBox" readonly />
-      </th>
-      <th colspan="3" class="header">Auton Climb</th>
-      <th class="topSideBox">
-        <input class="infoBox" type="text" name="matchBox" id="matchNumberBox" readonly />
-      </th>
-    </tr>
-    <tr id="row2">
-      <td rowspan="3"></td>
-      <td colspan="3">
-        <button class="largeButton" id="L3" onclick="updateClimb(this.id, 'autonClimb')">L3L</button>
-        <button class="largeButton" id="M3" onclick="updateClimb(this.id, 'autonClimb')">L3M</button>
-        <button class="largeButton" id="R3" onclick="updateClimb(this.id, 'autonClimb')">L3R</button>
-        <button class="largeButton" id="F3" onclick="updateClimb(this.id, 'autonClimb')">Failed L3</button>
-      </td>
-      <td>
-        <button class="sideButton" id="backsideButton" onclick="selectBackside(this.id, 'autonClimb')">Backside</button>
-      </td>
-    </tr>
-    <tr id="row3">
-      <td colspan="3">
-        <button class="largeButton" id="L2" onclick="updateClimb(this.id, 'autonClimb')">L2L</button>
-        <button class="largeButton" id="M2" onclick="updateClimb(this.id, 'autonClimb')">L2M</button>
-        <button class="largeButton" id="R2" onclick="updateClimb(this.id, 'autonClimb')">L2R</button>
-        <button class="largeButton" id="F2" onclick="updateClimb(this.id, 'autonClimb')">Failed L2</button>
-      </td>
-      <td>
-        <button class="sideButton" id="noTry" onclick="updateClimb(this.id, 'autonClimb')">No Attempt</button>
-      </td>
-    </tr>
-    <tr id="row4">
-      <td colspan="3">
-        <button class="largeButton" id="L1" onclick="updateClimb(this.id, 'autonClimb')">L1L</button>
-        <button class="largeButton" id="M1" onclick="updateClimb(this.id, 'autonClimb')">L1M</button>
-        <button class="largeButton" id="R1" onclick="updateClimb(this.id, 'autonClimb')">L1R</button>
-        <button class="largeButton" id="F1" onclick="updateClimb(this.id, 'autonClimb')">Failed L1</button>
-      </td>
-    </tr>
-    <tr class="footer" id="row7">
-      <td>
-        <button class="backForth nextColor" id="next" onclick="load('auton')">&larr;</button>
-      </td>
-      <td colspan="3"></td>
-      <td>
-        <button class="backForth nextColor" id="next" onclick="load('teleop')">&rarr;</button>
-      </td>
-    </tr>
-  </table>
+    <main class="page-main">
+      <!-- Level 3 -->
+      <div class="climb-title">LEVEL 3</div>
+      <div class="climb-grid">
+        <button class="climb-btn" id="L3" onclick="updateClimb('L3', 'autonClimb')">
+          L3L
+          <span class="climb-btn-label">LEFT</span>
+        </button>
+        <button class="climb-btn" id="M3" onclick="updateClimb('M3', 'autonClimb')">
+          L3M
+          <span class="climb-btn-label">MIDDLE</span>
+        </button>
+        <button class="climb-btn" id="R3" onclick="updateClimb('R3', 'autonClimb')">
+          L3R
+          <span class="climb-btn-label">RIGHT</span>
+        </button>
+        <button class="climb-btn failed" id="F3" onclick="updateClimb('F3', 'autonClimb')">
+          FAIL
+          <span class="climb-btn-label">LEVEL 3</span>
+        </button>
+      </div>
+      
+      <!-- Level 2 -->
+      <div class="climb-title">LEVEL 2</div>
+      <div class="climb-grid">
+        <button class="climb-btn" id="L2" onclick="updateClimb('L2', 'autonClimb')">
+          L2L
+          <span class="climb-btn-label">LEFT</span>
+        </button>
+        <button class="climb-btn" id="M2" onclick="updateClimb('M2', 'autonClimb')">
+          L2M
+          <span class="climb-btn-label">MIDDLE</span>
+        </button>
+        <button class="climb-btn" id="R2" onclick="updateClimb('R2', 'autonClimb')">
+          L2R
+          <span class="climb-btn-label">RIGHT</span>
+        </button>
+        <button class="climb-btn failed" id="F2" onclick="updateClimb('F2', 'autonClimb')">
+          FAIL
+          <span class="climb-btn-label">LEVEL 2</span>
+        </button>
+      </div>
+      
+      <!-- Level 1 + Side Buttons -->
+      <div class="climb-title">LEVEL 1</div>
+      <div style="display: flex; gap: 6px; align-items: stretch;">
+        <div class="climb-grid" style="flex: 1;">
+          <button class="climb-btn" id="L1" onclick="updateClimb('L1', 'autonClimb')">
+            L1L
+            <span class="climb-btn-label">LEFT</span>
+          </button>
+          <button class="climb-btn" id="M1" onclick="updateClimb('M1', 'autonClimb')">
+            L1M
+            <span class="climb-btn-label">MIDDLE</span>
+          </button>
+          <button class="climb-btn" id="R1" onclick="updateClimb('R1', 'autonClimb')">
+            L1R
+            <span class="climb-btn-label">RIGHT</span>
+          </button>
+          <button class="climb-btn failed" id="F1" onclick="updateClimb('F1', 'autonClimb')">
+            FAIL
+            <span class="climb-btn-label">LEVEL 1</span>
+          </button>
+        </div>
+        
+        <div class="side-buttons">
+          <button class="side-btn" id="backsideButton" onclick="selectBackside('backsideButton', 'autonClimb')">
+            BACKSIDE
+          </button>
+          <button class="side-btn" id="noTry" onclick="updateClimb('noTry', 'autonClimb')">
+            NO TRY
+          </button>
+        </div>
+      </div>
+    </main>
+
+    <footer class="page-footer">
+      <div class="footer-accent"></div>
+      <div class="footer-content">
+        <button class="btn btn-nav back" onclick="load('auton')">
+          <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+          <span>BACK</span>
+        </button>
+        
+        <div class="footer-indicators">
+          <span class="indicator" data-label="AUTON"></span>
+          <span class="indicator active" data-label="CLIMB"></span>
+          <span class="indicator" data-label="TELEOP"></span>
+          <span class="indicator" data-label="END"></span>
+        </div>
+        
+        <button class="btn btn-nav" onclick="load('teleop')">
+          <span>NEXT</span>
+          <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
+      </div>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
 </body>
-
 </html>
