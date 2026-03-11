@@ -1,91 +1,438 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-    <meta charset="utf-8">
-    <title>teleop</title>
-    <script src="app.js"></script>
-    <link rel="styleSheet" type="text/css" href="styleSheet.css">
-    <link rel="styleSheet" type="text/css" href="fuel.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TELEOP // REBUILT SCOUTING</title>
+  
+  <!-- Shared Styles -->
+  <link rel="stylesheet" href="styles/base.css">
+  <link rel="stylesheet" href="styles/components.css">
+  <link rel="stylesheet" href="styles/animations.css">
+  
+  <!-- Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Teko:wght@300;400;500;600;700&family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-card: #1a1a1f;
+      --accent: #6366f1;
+      --accent-rgb: 99, 102, 241;
+      --accent-glow: rgba(99, 102, 241, 0.2);
+      --score: #22c55e;
+      --score-bg: rgba(34, 197, 94, 0.12);
+      --pass: #06b6d4;
+      --pass-bg: rgba(6, 182, 212, 0.12);
+      --minus: #ef4444;
+      --minus-bg: rgba(239, 68, 68, 0.12);
+      --text: #fafafa;
+      --text-dim: #71717a;
+      --border: rgba(255,255,255,0.08);
+    }
+    
+    html, body {
+      overflow: hidden !important;
+      height: 100%;
+    }
+    
+    .page-container {
+      height: 100vh !important;
+      overflow: hidden;
+    }
+    
+    .page-header {
+      padding: var(--space-sm) var(--space-lg);
+      flex-shrink: 0;
+      background: linear-gradient(180deg, #1a1a1f 0%, transparent 100%);
+    }
+    
+    .brand-icon {
+      width: 32px;
+      height: 32px;
+      color: var(--accent);
+      filter: drop-shadow(0 0 8px var(--accent-glow));
+    }
+    
+    .brand-title {
+      font-size: 1.5rem;
+    }
+    
+    .brand-subtitle {
+      font-size: 0.5rem;
+    }
+    
+    .match-info {
+      padding: var(--space-xs) var(--space-sm);
+      min-width: 70px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+    }
+    
+    .match-label {
+      font-size: 0.5rem;
+      color: var(--text-dim);
+    }
+    
+    .match-value {
+      font-size: 1.25rem;
+      color: var(--accent);
+    }
+    
+    .page-main {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 160px;
+      gap: var(--space-sm);
+      padding: var(--space-sm) var(--space-md);
+      overflow: hidden;
+      min-height: 0;
+    }
+    
+    .score-section {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+      overflow: hidden;
+    }
+    
+    .score-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: var(--space-xs) var(--space-sm);
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .score-card-title {
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      color: var(--text-dim);
+      text-align: center;
+      margin-bottom: 2px;
+      text-transform: uppercase;
+      flex-shrink: 0;
+    }
+    
+    .score-card-buttons {
+      display: grid;
+      grid-template-columns: 50px 1fr 1fr 50px;
+      gap: 4px;
+      align-items: center;
+      flex: 1;
+      min-height: 0;
+    }
+    
+    .tap-btn {
+      height: 100%;
+      min-height: 40px;
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 600;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.1s ease;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .tap-btn:active {
+      transform: scale(0.95);
+      filter: brightness(1.15);
+    }
+    
+    .tap-btn.minus {
+      background: var(--minus-bg);
+      color: var(--minus);
+    }
+    
+    .tap-btn.score {
+      background: var(--score-bg);
+      color: var(--score);
+    }
+    
+    .tap-btn.pass {
+      background: var(--pass-bg);
+      color: var(--pass);
+    }
+    
+    .right-panel {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+      overflow: hidden;
+    }
+    
+    .score-displays {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      flex-shrink: 0;
+    }
+    
+    .score-display-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 4px 6px;
+      text-align: center;
+    }
+    
+    .score-display-label {
+      font-family: var(--font-mono);
+      font-size: 0.5rem;
+      letter-spacing: 0.2em;
+      color: var(--text-dim);
+    }
+    
+    .score-display-value {
+      font-family: var(--font-display);
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.1;
+    }
+    
+    .log-section {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      overflow: hidden;
+    }
+    
+    .terminal-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 6px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      overflow: hidden;
+    }
+    
+    .terminal-card-title {
+      font-family: var(--font-mono);
+      font-size: 0.5rem;
+      letter-spacing: 0.2em;
+      color: var(--text-dim);
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      flex-shrink: 0;
+    }
+    
+    .terminal-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+    
+    .terminal-card-content {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--text-dim);
+      white-space: pre-wrap;
+      line-height: 1.4;
+      overflow-y: auto;
+      flex: 1;
+    }
+    
+    .page-footer {
+      padding: var(--space-xs) var(--space-md);
+      flex-shrink: 0;
+      background: #1a1a1f;
+    }
+    
+    .footer-accent {
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    }
+    
+    .undo-btn {
+      height: 40px;
+      min-width: 70px;
+      font-size: 0.8rem;
+      background: var(--minus-bg);
+      border: 1px solid rgba(239, 68, 68, 0.2);
+      color: var(--minus);
+    }
+    
+    .btn-nav {
+      min-width: 60px;
+      height: 40px;
+      font-size: 0.75rem;
+    }
+    
+    .btn-icon {
+      width: 16px;
+      height: 16px;
+    }
+    
+    .indicator {
+      background: var(--text-dim);
+    }
+    
+    .indicator.active {
+      background: var(--accent);
+      box-shadow: 0 0 8px var(--accent);
+    }
+    
+    @media (max-width: 768px) {
+      .page-main {
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 120px;
+      }
+      
+      .score-card-buttons {
+        grid-template-columns: 40px 1fr 1fr 40px;
+      }
+      
+      .right-panel {
+        flex-direction: row;
+      }
+      
+      .score-displays {
+        width: 80px;
+      }
+    }
+  </style>
 </head>
+<body onload="loadPage('teleop')" data-page="teleop">
+  
+  <div class="page-container">
+    <div class="ambient-grid"></div>
+    <div class="ambient-glow"></div>
+    <div class="noise-overlay"></div>
+    
+    <header class="page-header">
+      <div class="header-accent"></div>
+      <div class="header-content">
+        <div class="brand-mark">
+          <div class="brand-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+              <polyline points="2 17 12 22 22 17"></polyline>
+              <polyline points="2 12 12 17 22 12"></polyline>
+            </svg>
+          </div>
+          <div class="brand-text">
+            <span class="brand-title">TELEOP</span>
+            <span class="brand-subtitle">DRIVER CONTROL PERIOD</span>
+          </div>
+        </div>
+        
+        <div class="header-meta">
+          <div class="match-info">
+            <span class="match-label">TEAM</span>
+            <span class="match-value" id="teamNumberBox">----</span>
+          </div>
+          <div class="match-info">
+            <span class="match-label">MATCH</span>
+            <span class="match-value" id="matchNumberBox">--</span>
+          </div>
+        </div>
+      </div>
+    </header>
 
-<body class="teleopBody" style="overflow: scroll;" onload="loadPage('teleop')">
-    <table id="table">
-        <tr id="row1">
-            <th class="topSideBox" colspan="2">
-                <input class="infoBox" type="text" name="teamBox" id="teamNumberBox" readonly />
-            </th>
-            <th colspan="1" class="header" id="color" rowspan="2">Teleop</th>
-            <th class="topSideBox" colspan="2">
-                <input class="infoBox" type="text" name="matchBox" id="matchNumberBox" readonly />
-            </th>
-        </tr>
-        <tr class="subHeaderRow" id="row2">
-            <td colspan="2" rowspan="2" class="subHeader">score</td>
-            <td colspan="2" rowspan="2" class="subHeader">pass</td>
-        </tr>
-        <tr class="subHeaderRow">
-            <td rowspan="6">
-                <textarea readonly id="teamLog1" class="terminalFuel" placeholder="Nothing to undo"></textarea>
-                <br>
-                <textarea readonly id="teamLog2" class="score" placeholder="Nothing yet"></textarea>
-                <br>
-                <button class="undo" id="undo" onclick="Undo()">Undo</button>
-            </td>
-        </tr>
-        <tr id="row3">
-            <td class="largeColumm">
-                <button class="plusButton scoreButton" onclick="addFuel(2, 10)">10</button>
-            </td>
-            <td class="smallColumm">
-                <button class="minusButton" onclick="addFuel(2, -10)">-10</button>
-            </td>
-            <td class="smallColumm">
-                <button class="minusButton" onclick="addFuel(3, -10)">-10</button>
-            </td>
-            <td class="largeColumm">
-                <button class="plusButton passButton" onclick="addFuel(3, 10)">10</button>
-            </td>
-        </tr>
-        <tr id="row5">
-            <td>
-                <button class="plusButton scoreButton" onclick="addFuel(2, 5)">5</button>
-            </td>
-            <td>
-                <button class="minusButton" onclick="addFuel(2, -5)">-5</button>
-            </td>
-            <td>
-                <button class="minusButton" onclick="addFuel(3, -5)">-5</button>
-            </td>
-            <td>
-                <button class="plusButton passButton" onclick="addFuel(3, 5)">5</button>
-            </td>
-        </tr>
-        <tr id="row6">
-            <td>
-                <button class="plusButton scoreButton" onclick="addFuel(2, 1)">1</button>
-            </td>
-            <td>
-                <button class="minusButton" onclick="addFuel(2, -1)">-1</button>
-            </td>
-            <td>
-                <button class="minusButton" onclick="addFuel(3, -1)">-1</button>
-            </td>
-            <td>
-                <button class="plusButton passButton" onclick="addFuel(3, 1)">1</button>
-            </td>
-        </tr>
-        <tr class="footer" id="row7">
-            <td>
-                <button class="backForth nextColor" id="back" onclick="load('autonClimb')">&larr;</button>
-            </td>
-            <td></td>
-            <td></td>
-            <td>
-                <button class="backForth nextColor" id="next" onclick="load('endgameClimb')">&rarr;</button>
-            </td>
-        </tr>
-    </table>
+    <main class="page-main">
+      <div class="score-section">
+        <div class="score-card">
+          <div class="score-card-title">+10</div>
+          <div class="score-card-buttons">
+            <button class="tap-btn minus" onclick="addFuel(2, -10)">-10</button>
+            <button class="tap-btn score" onclick="addFuel(2, 10)">SCORE</button>
+            <button class="tap-btn pass" onclick="addFuel(3, 10)">PASS</button>
+            <button class="tap-btn minus" onclick="addFuel(3, -10)">-10</button>
+          </div>
+        </div>
+        
+        <div class="score-card">
+          <div class="score-card-title">+5</div>
+          <div class="score-card-buttons">
+            <button class="tap-btn minus" onclick="addFuel(2, -5)">-5</button>
+            <button class="tap-btn score" onclick="addFuel(2, 5)">SCORE</button>
+            <button class="tap-btn pass" onclick="addFuel(3, 5)">PASS</button>
+            <button class="tap-btn minus" onclick="addFuel(3, -5)">-5</button>
+          </div>
+        </div>
+        
+        <div class="score-card">
+          <div class="score-card-title">+1</div>
+          <div class="score-card-buttons">
+            <button class="tap-btn minus" onclick="addFuel(2, -1)">-1</button>
+            <button class="tap-btn score" onclick="addFuel(2, 1)">SCORE</button>
+            <button class="tap-btn pass" onclick="addFuel(3, 1)">PASS</button>
+            <button class="tap-btn minus" onclick="addFuel(3, -1)">-1</button>
+          </div>
+        </div>
+      </div>
+      
+      <div class="right-panel">
+        <div class="score-displays">
+          <div class="score-display-box">
+            <div class="score-display-label">SCORE</div>
+            <div class="score-display-value" id="scoreValue2">0</div>
+          </div>
+          <div class="score-display-box">
+            <div class="score-display-label">PASS</div>
+            <div class="score-display-value" id="scoreValue3">0</div>
+          </div>
+        </div>
+        
+        <div class="log-section">
+          <div class="terminal-card">
+            <div class="terminal-card-title">
+              <div class="terminal-dot"></div>
+              LOG
+            </div>
+            <div class="terminal-card-content" id="teamLog1">
+              Waiting...
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="page-footer">
+      <div class="footer-accent"></div>
+      <div class="footer-content">
+         <button class="btn btn-nav back" onclick="load('auton')">
+           <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+             <polyline points="15 18 9 12 15 6"></polyline>
+           </svg>
+           <span>BACK</span>
+         </button>
+        
+        <button class="btn undo-btn" onclick="Undo()">UNDO</button>
+        
+        <div class="footer-indicators">
+          <span class="indicator" data-label="AUTON"></span>
+          <span class="indicator" data-label="CLIMB"></span>
+          <span class="indicator active" data-label="TELEOP"></span>
+          <span class="indicator" data-label="END"></span>
+        </div>
+        
+         <button class="btn btn-nav" onclick="load('qr')">
+           <span>NEXT</span>
+           <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+             <polyline points="9 18 15 12 9 6"></polyline>
+           </svg>
+         </button>
+      </div>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
 </body>
-
 </html>

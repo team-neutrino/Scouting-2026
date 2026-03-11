@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>REBUILT // SCOUTING INTERFACE</title>
+  
+  <!-- Shared Styles -->
+  <link rel="stylesheet" href="styles/base.css">
+  <link rel="stylesheet" href="styles/components.css">
+  <link rel="stylesheet" href="styles/animations.css">
+  <link rel="stylesheet" href="styles/loader.css">
+  
+  <!-- Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Teko:wght@300;400;500;600;700&family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+</head>
+<body onload="pullIPadID();setTeam(matchNum.value, iPadIDarea.value);alliancePick('No Alliance')">
+   
+   <!-- Loading Screen -->
+   <div id="loader" class="loader-overlay">
+   
+   <!-- Page Transition Overlay -->
+   <div id="transitionOverlay" class="transition-overlay"></div>
+    <div class="loader-vignette"></div>
+    <div class="loader-grid"></div> 
+    <div class="loader-sparks" id="sparkContainer"></div>
+    <div class="loader-content">
+      <div class="loader-brand">
+        <div class="loader-accent-line"></div>
+        <span class="loader-label">SYSTEM BOOT</span>
+      </div>
+      <div class="loader-text-container">
+        <span class="loader-char" style="--char-index: 0">R</span>
+        <span class="loader-char" style="--char-index: 1">E</span>
+        <span class="loader-char" style="--char-index: 2">B</span>
+        <span class="loader-char" style="--char-index: 3">U</span>
+        <span class="loader-char" style="--char-index: 4">I</span>
+        <span class="loader-char" style="--char-index: 5">L</span>
+        <span class="loader-char" style="--char-index: 6">T</span>
+      </div>
+      <div class="loader-metrics">
+        <div class="loader-metric">
+          <span class="metric-label">STATUS</span>
+          <span class="metric-value" id="loaderStatus">INITIALIZING</span>
+        </div>
+        <div class="loader-metric">
+          <span class="metric-label">PROGRESS</span>
+          <span class="metric-value" id="loaderPercent">0%</span>
+        </div>
+      </div>
+      <div class="loader-progress-container">
+        <div class="loader-progress-bg">
+          <div class="loader-progress-fill" id="loaderProgressFill"></div>
+          <div class="loader-progress-glow"></div>
+        </div>
+        <div class="loader-progress-markers">
+          <span></span><span></span><span></span><span></span><span></span>
+        </div>
+      </div>
+    </div>
+    <div class="loader-corner loader-corner-tl"></div>
+    <div class="loader-corner loader-corner-tr"></div>
+    <div class="loader-corner loader-corner-bl"></div>
+    <div class="loader-corner loader-corner-br"></div>
+  </div>
+
+  <!-- Main Application -->
+  <div class="page-container" id="mainApp">
+    <!-- Ambient Background -->
+    <div class="ambient-grid"></div>
+    <div class="ambient-glow"></div>
+    <div class="noise-overlay"></div>
+    
+    <!-- Header -->
+    <header class="page-header">
+      <div class="header-accent"></div>
+      <div class="header-content">
+        <div class="brand-mark">
+          <div class="brand-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+              <polyline points="2 17 12 22 22 17"></polyline>
+              <polyline points="2 12 12 17 22 12"></polyline>
+            </svg>
+          </div>
+          <div class="brand-text">
+            <span class="brand-title">REBUILT</span>
+            <span class="brand-subtitle">SCOUTING INTERFACE v2.0</span>
+          </div>
+        </div>
+        <div class="header-meta">
+          <div class="match-info">
+            <span class="match-label">SESSION</span>
+            <span class="match-value" id="sessionId">--</span>
+          </div>
+          <div class="match-info">
+            <span class="match-label">TIME</span>
+            <span class="match-value" id="currentTime">--:--</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="page-main">
+      <!-- Match Configuration -->
+      <section class="card animate-in">
+        <div class="card-header">
+          <div class="card-indicator"></div>
+          <h2 class="card-title">MATCH CONFIGURATION</h2>
+        </div>
+        
+        <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: var(--space-xl);">
+          <div class="input-group">
+            <label class="input-label">
+              <span class="label-text">TEAM NUMBER</span>
+              <span class="label-hint">4 digits</span>
+            </label>
+            <div class="input-wrapper">
+              <input type="text" id="teamNum" class="data-input" placeholder="0000" maxlength="5" pattern="[0-9]*">
+              <div class="input-focus-indicator"></div>
+            </div>
+          </div>
+
+          <div class="input-group">
+            <label class="input-label">
+              <span class="label-text">MATCH</span>
+              <span class="label-hint">#</span>
+            </label>
+            <div class="input-wrapper">
+              <input type="text" id="matchNum" class="data-input" placeholder="00" maxlength="3" pattern="[0-9]*" onchange="setTeam(this.value, iPadIDarea.value)">
+              <div class="input-focus-indicator"></div>
+            </div>
+          </div>
+
+          <div class="input-group">
+            <label class="input-label">
+              <span class="label-text">SCOUT ID</span>
+              <span class="label-hint">initials</span>
+            </label>
+            <div class="input-wrapper">
+              <input type="text" id="scout" class="data-input" placeholder="ABC" maxlength="3">
+              <div class="input-focus-indicator"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Alliance Selection -->
+      <section class="card animate-in animate-in-delay-1">
+        <div class="card-header">
+          <div class="card-indicator" style="background: linear-gradient(180deg, var(--accent-red), var(--accent-blue));"></div>
+          <h2 class="card-title">ALLIANCE SELECTION</h2>
+        </div>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-lg);">
+          <button class="btn btn-large btn-ripple btn-particle" id="redAllianceBtn" data-alliance="red" onclick="alliancePick('red')" style="--page-accent: #e63946; --page-accent-rgb: 230, 57, 70;">
+            <div style="display: flex; flex-direction: column; align-items: center; gap: var(--space-sm);">
+              <svg viewBox="0 0 24 24" fill="currentColor" style="width: 48px; height: 48px; opacity: 0.8;">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+              </svg>
+              <span style="font-family: var(--font-display); font-size: 1.75rem; font-weight: 600;">RED ALLIANCE</span>
+              <span style="font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.15em; padding: 4px 12px; border: 1px solid currentColor; border-radius: 2px;">SELECT</span>
+            </div>
+          </button>
+
+          <button class="btn btn-large btn-ripple btn-particle" id="blueAllianceBtn" data-alliance="blue" onclick="alliancePick('blue')" style="--page-accent: #4361ee; --page-accent-rgb: 67, 97, 238;">
+            <div style="display: flex; flex-direction: column; align-items: center; gap: var(--space-sm);">
+              <svg viewBox="0 0 24 24" fill="currentColor" style="width: 48px; height: 48px; opacity: 0.8;">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+              </svg>
+              <span style="font-family: var(--font-display); font-size: 1.75rem; font-weight: 600;">BLUE ALLIANCE</span>
+              <span style="font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.15em; padding: 4px 12px; border: 1px solid currentColor; border-radius: 2px;">SELECT</span>
+            </div>
+          </button>
+        </div>
+      </section>
+
+      <!-- Device & Actions -->
+      <section class="card animate-in animate-in-delay-2">
+        <div style="display: grid; grid-template-columns: auto 1fr auto; gap: var(--space-lg); align-items: end;">
+          <div class="input-group" style="max-width: 120px;">
+            <label class="input-label">
+              <span class="label-text">DEVICE ID</span>
+            </label>
+            <div class="input-wrapper">
+              <input type="text" id="iPadIDarea" class="data-input" placeholder="00" maxlength="2" pattern="[0-9]*">
+              <div class="input-focus-indicator"></div>
+            </div>
+          </div>
+
+          <button class="btn btn-primary btn-action btn-ripple btn-particle" id="goBtn" onclick="load('auton')">
+            <div style="display: flex; align-items: center; gap: var(--space-sm);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width: 24px; height: 24px;">
+                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+              </svg>
+              <span>INITIATE</span>
+            </div>
+          </button>
+
+          <button class="btn btn-nav btn-particle" id="qrBtn" onclick="window.location.href='qr.html'">
+            <div style="display: flex; align-items: center; gap: var(--space-sm);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 20px; height: 20px;">
+                <rect x="3" y="3" width="7" height="7"></rect>
+                <rect x="14" y="3" width="7" height="7"></rect>
+                <rect x="14" y="14" width="7" height="7"></rect>
+                <rect x="3" y="14" width="7" height="7"></rect>
+              </svg>
+              <span style="font-size: 1.1rem;">QUICK QR</span>
+            </div>
+          </button>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="page-footer">
+      <div class="footer-accent"></div>
+      <div class="footer-content">
+        <span class="footer-text">FRC 2025 // REBUILT PROTOCOLS ACTIVE</span>
+        <div class="footer-indicators">
+          <span class="indicator active" data-label="SYS"></span>
+          <span class="indicator" data-label="NET"></span>
+          <span class="indicator active" data-label="STORAGE"></span>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/loader.js"></script>
+  <script src="app.js"></script>
+  <script src="js/otherApp.js"></script>
+  
+  <script>
+    // Clock update
+    function updateClock() {
+      const now = new Date();
+      const timeString = now.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' });
+      document.getElementById('currentTime').textContent = timeString;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+  </script>
+</body>
+</html>

@@ -539,12 +539,82 @@ function updateScore() {
     }
   }
   score = currentScore;
-  document.getElementById("teamLog2").value = score;
+  // Update both old (textarea) and new (div) display elements
+  const teamLog2 = document.getElementById("teamLog2");
+  if (teamLog2) {
+    if (teamLog2.tagName === 'TEXTAREA') {
+      teamLog2.value = score;
+    } else {
+      teamLog2.textContent = score;
+    }
+  }
+  
+  // Update score displays on auton/teleop pages
+  for (let i = 0; i < 4; i++) {
+    const scoreDisplay = document.getElementById(`scoreValue${i}`);
+    if (scoreDisplay) {
+      let typeScore = 0;
+      for (const period of compressedList) {
+        if (period[0] === i) {
+          typeScore += period[1];
+        }
+      }
+      scoreDisplay.textContent = typeScore;
+    }
+  }
 }
 
 function alliancePick(alliance) {
   extraData[4] = alliance;
   console.log(extraData);
+  
+  // Add visual feedback for alliance selection
+  const redBtn = document.getElementById('redAllianceBtn');
+  const blueBtn = document.getElementById('blueAllianceBtn');
+  
+  // Remove any existing pulse effects
+  redBtn.classList.remove('glow-pulse', 'text-glow');
+  blueBtn.classList.remove('glow-pulse', 'text-glow');
+  
+  // Add pulse effect to selected button
+  if (alliance === 'red') {
+    redBtn.classList.add('glow-pulse', 'text-glow');
+    blueBtn.style.opacity = '0.7';
+    createParticleEffect({ target: redBtn }, '#e63946');
+  } else if (alliance === 'blue') {
+    blueBtn.classList.add('glow-pulse', 'text-glow');
+    redBtn.style.opacity = '0.7';
+    createParticleEffect({ target: blueBtn }, '#4361ee');
+  } else {
+    // No alliance selected
+    redBtn.style.opacity = '1';
+    blueBtn.style.opacity = '1';
+  }
+  
+  // Add pulse ring animation
+  const selectedBtn = alliance === 'red' ? redBtn : blueBtn;
+  if (selectedBtn) {
+    selectedBtn.style.position = 'relative';
+    selectedBtn.style.overflow = 'hidden';
+    
+    // Create pulse ring element
+    let pulseRing = selectedBtn.querySelector('.pulse-ring');
+    if (!pulseRing) {
+      pulseRing = document.createElement('div');
+      pulseRing.className = 'pulse-ring';
+      pulseRing.style.position = 'absolute';
+      pulseRing.style.top = '50%';
+      pulseRing.style.left = '50%';
+      pulseRing.style.transform = 'translate(-50%, -50%)';
+      pulseRing.style.borderRadius = '50%';
+      pulseRing.style.pointerEvents = 'none';
+      pulseRing.style.zIndex = '0';
+      selectedBtn.appendChild(pulseRing);
+    }
+    
+    // Trigger animation
+    pulseRing.style.animation = 'pulseRing 1.5s ease-out';
+  }
 }
 
 function selectBackside(boxId, page) {
@@ -581,22 +651,25 @@ function GO(iPadID, matchsaver, scoutsaver, page) {
   var scout = document.getElementById("scout");
   if (extraData[0] === "" || extraData[1] === "" || extraData[2] === "") {
     if (extraData[0] === "") {
-      team.style.border = "5px solid red";
+      team.classList.add('shake');
+      setTimeout(() => team.classList.remove('shake'), 500);
     }
     if (extraData[1] === "") {
-      match.style.border = "5px solid red";
+      match.classList.add('shake');
+      setTimeout(() => match.classList.remove('shake'), 500);
     }
     if (extraData[2] === "") {
-      scout.style.border = "5px solid red";
+      scout.classList.add('shake');
+      setTimeout(() => scout.classList.remove('shake'), 500);
     }
     allClear = false;
   }
-  localStorage.setItem("iPadId", iPadID)
-  sessionStorage.setItem("scoutInitials", scoutsaver)
-  sessionStorage.setItem("matchNum", matchsaver)
-  saveData();
   if (allClear) {
-    window.location.href = "../" + page + ".html";
+    localStorage.setItem("iPadId", iPadID)
+    sessionStorage.setItem("scoutInitials", scoutsaver)
+    sessionStorage.setItem("matchNum", matchsaver)
+    saveData();
+    window.location.href = "./" + page + ".html";
   }
 }
 
@@ -638,8 +711,15 @@ function loadPage(page) {
   getData();
   displayBoxData();
   if (document.getElementById("teamLog2") !== null) {
-    document.getElementById("teamLog2").value = score;
+    const teamLog2 = document.getElementById("teamLog2");
+    if (teamLog2.tagName === 'TEXTAREA') {
+      teamLog2.value = score;
+    } else {
+      teamLog2.textContent = score;
+    }
   }
+  // Also update the individual score displays for scoring pages
+  updateScore();
   if (page === 'autonClimb' || page === 'endgameClimb') {
     loadClimb(page)
   }
@@ -721,7 +801,15 @@ function updateLog() {
     }
   }
 
-  document.getElementById("teamLog1").value = logText;
+  // Update both old (textarea) and new (div) display elements
+  const teamLog1 = document.getElementById("teamLog1");
+  if (teamLog1) {
+    if (teamLog1.tagName === 'TEXTAREA') {
+      teamLog1.value = logText;
+    } else {
+      teamLog1.textContent = logText;
+    }
+  }
 }
 
 function commentEdit(comment) {
@@ -852,9 +940,77 @@ function load(windowLocation) {
     console.log("fun");
     climbList[0] = "noTry";
   }
+  
   saveData();
-  window.location.href = `./${windowLocation}.html`;
+  
+  // Show transition overlay
+  const overlay = document.getElementById('transitionOverlay') || createTransitionOverlay();
+  overlay.classList.add('active');
+  
+  // Navigate after brief transition
+  setTimeout(() => {
+    window.location.href = `./${windowLocation}.html`;
+  }, 400); // Faster transition
 }
+
+// Create transition overlay element
+function createTransitionOverlay() {
+  const overlay = document.createElement('div');
+  overlay.id = 'transitionOverlay';
+  overlay.className = 'transition-overlay';
+  document.body.appendChild(overlay);
+  return overlay;
+}
+
+// Particle effect system
+function createParticleEffect(e, color = '#06b6d4') {
+  const container = document.getElementById('particleContainer') || createParticleContainer();
+  const particleCount = 12;
+  const rect = e.target.getBoundingClientRect();
+  const centerX = rect.left + rect.width / 2;
+  const centerY = rect.top + rect.height / 2;
+  
+  for (let i = 0; i < particleCount; i++) {
+    const particle = document.createElement('div');
+    particle.className = 'spark-particle';
+    
+    const angle = (Math.PI * 2 * i) / particleCount;
+    const velocity = 60 + Math.random() * 60;
+    const tx = Math.cos(angle) * velocity;
+    const ty = Math.sin(angle) * velocity;
+    
+    particle.style.left = centerX + 'px';
+    particle.style.top = centerY + 'px';
+    particle.style.setProperty('--tx', tx + 'px');
+    particle.style.setProperty('--ty', ty + 'px');
+    particle.style.background = color;
+    particle.style.boxShadow = `0 0 6px ${color}, 0 0 12px ${color}`;
+    particle.style.width = (3 + Math.random() * 4) + 'px';
+    particle.style.height = particle.style.width;
+    
+    container.appendChild(particle);
+    
+    setTimeout(() => particle.remove(), 600);
+  }
+}
+
+function createParticleContainer() {
+  const container = document.createElement('div');
+  container.id = 'particleContainer';
+  container.className = 'particle-container';
+  document.body.appendChild(container);
+  return container;
+}
+
+// Add particle effect to buttons with btn-particle class
+document.addEventListener('click', function(e) {
+  if (e.target.closest('.btn-particle')) {
+    const btn = e.target.closest('.btn-particle');
+    const computedStyle = getComputedStyle(btn);
+    const color = computedStyle.getPropertyValue('--page-accent').trim() || '#06b6d4';
+    createParticleEffect({ target: btn }, color);
+  }
+});
 
 function qrZoom() {
   let qr = document.getElementById('qrArea');
