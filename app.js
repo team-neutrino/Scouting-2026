@@ -516,9 +516,6 @@ function addFuel(type, amt) {
 
   finished = lastPosition[3];
 
-  console.log(finished)
-  console.log(lastPosition)
-
   if (!finished) {
     compressedList[compressedList.length - 1][1] += amt;
     compressedList[compressedList.length - 1][2].push(amt);
@@ -529,6 +526,22 @@ function addFuel(type, amt) {
   lastUpdatedTimestamp = Date.now();
   updateLog();
   updateScore();
+}
+
+var timers = [];
+
+function fuelHold(type, bps) {
+  console.log("adding");
+  loopId = setInterval(addFuel, 1/bps * 1000, type, 1);
+  timers.push(loopId)
+}
+
+function cancelTimers() {
+  timers.forEach(function(value) {
+    clearInterval(value);
+  });
+
+  timers = [];
 }
 
 function updateScore() {
@@ -544,7 +557,6 @@ function updateScore() {
 
 function alliancePick(alliance) {
   extraData[4] = alliance;
-  console.log(extraData);
 }
 
 function selectBackside(boxId, page) {
@@ -677,8 +689,6 @@ function updateLog() {
   }
 
   logText = ""
-
-  console.log(compressedList.length)
 
   for (let i = compressedList.length - 1; i >= 0; i--) {
     period = compressedList[i];

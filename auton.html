@@ -35,7 +35,7 @@
         </tr>
         <tr id="row3">
             <td class="largeColumm" colspan="2">
-                <button class="plusButton scoreButton" onclick="addFuel(0, 10)">10</button>
+                <button class="plusButton scoreButton" onpointerdown="fuelHold(0, 10)" onpointerup="cancelTimers()" onpointerout="cancelTimers()">10/s</button>
             </td>
             <td class="smallColumm">
                 <button class="minusButton" onclick="addFuel(0, -10)">-10</button>
@@ -44,12 +44,12 @@
                 <button class="minusButton" onclick="addFuel(1, -10)">-10</button>
             </td>
             <td class="largeColumm" colspan="2">
-                <button class="plusButton passButton" onclick="addFuel(1, 10)">10</button>
+                <button class="plusButton passButton" onpointerdown="fuelHold(1, 10)" onpointerup="cancelTimers()" onpointerout="cancelTimers()">10/s</button>
             </td>
         </tr>
         <tr id="row5">
-            <td colspan="2">
-                <button class="plusButton scoreButton" onclick="addFuel(0, 5)">5</button>
+            <td class="largeColumm" colspan="2">
+                <button class="plusButton scoreButton" onpointerdown="fuelHold(0, 5)" onpointerup="cancelTimers()" onpointerout="cancelTimers()">5/s</button>
             </td>
             <td>
                 <button class="minusButton" onclick="addFuel(0, -5)">-5</button>
@@ -58,12 +58,12 @@
                 <button class="minusButton" onclick="addFuel(1, -5)">-5</button>
             </td>
             <td colspan="2">
-                <button class="plusButton passButton" onclick="addFuel(1, 5)">5</button>
+                <button class="plusButton passButton" onpointerdown="fuelHold(1, 5)" onpointerup="cancelTimers()" onpointerout="cancelTimers()">5/s</button>
             </td>
         </tr>
         <tr id="row6">
             <td colspan="2">
-                <button class="plusButton scoreButton" onclick="addFuel(0, 1)">1</button>
+                <button class="plusButton scoreButton" onpointerdown="fuelHold(0, 1)" onpointerup="cancelTimers()" onpointerout="cancelTimers()">1/s</button>
             </td>
             <td>
                 <button class="minusButton" onclick="addFuel(0, -1)">-1</button>
@@ -72,7 +72,7 @@
                 <button class="minusButton" onclick="addFuel(1, -1)">-1</button>
             </td>
             <td colspan="2">
-                <button class="plusButton passButton" onclick="addFuel(1, 1)">1</button>
+                <button class="plusButton passButton" onpointerdown="fuelHold(1, 1)" onpointerup="cancelTimers()" onpointerout="cancelTimers()">1/s</button>
             </td>
         </tr>
         <tr class="footer" id="row7">
