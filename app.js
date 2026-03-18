@@ -560,11 +560,6 @@ var autonScoreSlider = document.getElementById("autonScoreSlider");
 var autonPassButton = document.getElementById("customAutonPass");
 var autonPassSlider = document.getElementById("autonPassSlider");
 
-console.log(autonScoreButton);
-console.log(autonPassSlider);
-console.log(autonPassButton);
-console.log(autonScoreSlider);
-
 function addSlider(button, slider, id) {
   button.innerHTML = slider.value + "/s";
 
@@ -583,10 +578,10 @@ function addSlider(button, slider, id) {
   });
 }
 
-addSlider(teleopScoreButton, teleopScoreSlider, 2);
-addSlider(teleopPassButton, teleopPassSlider, 3);
-addSlider(autonScoreButton, autonScoreSlider, 0);
-addSlider(autonPassButton, autonPassSlider, 1);
+// addSlider(teleopScoreButton, teleopScoreSlider, 2);
+// addSlider(teleopPassButton, teleopPassSlider, 3);
+// addSlider(autonScoreButton, autonScoreSlider, 0);
+// addSlider(autonPassButton, autonPassSlider, 1);
 
 function updateScore() {
   var currentScore = 0
@@ -698,6 +693,14 @@ function loadPage(page) {
   }
   if (page === 'autonClimb' || page === 'endgameClimb') {
     loadClimb(page)
+  }
+  if (page == 'teleop') {
+    addSlider(teleopScoreButton, teleopScoreSlider, 2);
+    addSlider(teleopPassButton, teleopPassSlider, 3);
+  }
+  if (page == 'auton') {
+    addSlider(autonScoreButton, autonScoreSlider, 0);
+    addSlider(autonPassButton, autonPassSlider, 1);
   }
 }
 
