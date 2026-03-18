@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<script src="./app.js"></script>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Qualitative</title>
+    <link rel="styleSheet" type="text/css" href="qual.css">
+    <link rel="styleSheet" type="text/css" href="styleSheet.css">
+</head>
+
+<body id='body' class="qualBody" style="overflow: scroll;" onload="loadPage('qual')">
+    <table class="qualTable" id="table">
+        <tr>
+            <th class="topSideBox" colspan="2">
+                <input class="infoBox" type="text" name="teamBox" id="teamNumberBox" readonly />
+            </th>
+            <th colspan="4" class="header">Qualitative</th>
+            <th class="topSideBox" colspan="2">
+                <input class="infoBox" type="text" name="matchBox" id="matchNumberBox" readonly />
+            </th>
+        </tr>
+        <tr class="tr1">
+            <td colspan="2">Auton Path</td>
+            <td colspan="2">Teleop Comments</td>
+            <td colspan="2">Defense Comments</td>
+            <td colspan="2">Defense Checklist</td>
+        </tr>
+        <tr>
+            <td>
+                <label>
+                    <input type="checkbox" class="checkbox" onclick="addCheckbox(0)">
+                    Nothing</label>
+            </td>
+            <td>
+                <label>
+                    <input type="checkbox" class="checkbox" onclick="addCheckbox(1)">
+                    Preload</label>
+            </td>
+            <td rowspan="4" colspan="2">
+                <textarea placeholder="Comments" class="commentBox"></textarea>
+            </td>
+            <td rowspan="4" colspan="2">
+                <textarea placeholder="Comments" class="commentBox"></textarea>
+            </td>
+            <td colspan="2">
+                <label>
+                    <input type="checkbox" class="checkbox" onclick="addCheckbox(6)">
+                    Played Defense</label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label>
+                    <input type="checkbox" class="checkbox" onclick="addCheckbox(2)">
+                    Depot</label>
+            </td>
+            <td>
+                <label>
+                    <input type="checkbox" class="checkbox" onclick="addCheckbox(3)">
+                    Outpost</label>
+            </td>
+            <td colspan="2">
+                <label>
+                    <input type="checkbox" class="checkbox" onclick="addCheckbox(7)">
+                    Played Against Defense</label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label>
+                    <input type="checkbox" class="checkbox" onclick="addCheckbox(4)">
+                    Neutral Zone</label>
+            </td>
+            <td>
+                <label>
+                    <input type="checkbox" class="checkbox" onclick="addCheckbox(5)">
+                    More Neutral Zone</label>
+            </td>
+            <td colspan="2">
+                <label>
+                    <input type="checkbox" class="checkbox" onclick="addCheckbox(8)">
+                    None of the Above</label>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <button class="backForth nextColor" id="next" onclick="load('teleop')">&larr;</button>
+            </td>
+            <td colspan="2">
+                <button class="backForth nextColor" id="next" onclick="load('qr')">&rarr;</button>
+            </td>
+        </tr>
+    </table>
+</body>
+
+</html>

@@ -50,10 +50,10 @@
             document.getElementById('teamNumberBox').value = extraData[0];
             document.getElementById('matchNumberBox').value = extraData[1];
             var climb = getList("climbList");
-            if(climb[0] === "noTry"){
+            if (climb[0] === "noTry") {
                 climb[0] = "0";
             }
-            if(climb[2] === "noTry"){
+            if (climb[2] === "noTry") {
                 climb[2] = "0";
             }
 
@@ -114,7 +114,7 @@
     <style id="changeStyle"></style>
 </head>
 
-<body onload="initQRCode();loadPage('qr')" id="body" class="qrBody"style="overflow: scroll;">
+<body onload="initQRCode();loadPage('qr')" id="body" class="qrBody" style="overflow: scroll;">
     <table>
         <tr class="top" id="row1">
             <th class="topSideBox">
@@ -134,7 +134,7 @@
         </tr>
         <tr class="footer" id="row3">
             <td>
-                <button class="backForth nextColor" id="next" onclick="load('endgameClimb')">&larr;</button>
+                <button class="backForth nextColor" id="next" onclick="load('qual')">&larr;</button>
             </td>
             <td>
                 <button id="regenButton" onclick="regenOldQR()">Regen</button>
