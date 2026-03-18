@@ -1,0 +1,38 @@
+table {
+    height: 100vh;
+    width: 100vw;
+    table-layout: fixed;
+}
+
+tr {
+    height: 16.66%;
+}
+
+td {
+    color: white;
+    width: 12.5%;
+}
+
+label {
+    color: white;
+    font-size: 3vh;
+}
+
+.tr1 {
+    font-size: 6vh;
+}
+
+.commentBox {
+    height: 90%;
+    width: 90%;
+    font-size: 3vh;
+    background-color: black;
+}
+
+.checkbox {
+    scale: 1.5;
+}
+
+.qualBody {
+    background-color: rgb(56, 8, 10);
+}

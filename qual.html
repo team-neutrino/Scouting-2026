@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<script src="./app.js"></script>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Qualitative</title>
+    <link rel="styleSheet" type="text/css" href="qual.css">
+    <link rel="styleSheet" type="text/css" href="styleSheet.css">
+</head>
+
+<body id='body' class="qualBody" style="overflow: scroll;" onload="loadPage('qual')">
+    <table class="qualTable" id="table">
+        <tr>
+            <th class="topSideBox" colspan="2">
+                <input class="infoBox" type="text" name="teamBox" id="teamNumberBox" readonly />
+            </th>
+            <th colspan="4" class="header">Qualitative</th>
+            <th class="topSideBox" colspan="2">
+                <input class="infoBox" type="text" name="matchBox" id="matchNumberBox" readonly />
+            </th>
+        </tr>
+        <tr class="tr1">
+            <td colspan="2">Auton Path</td>
+            <td colspan="2">Teleop Comments</td>
+            <td colspan="2">Defense Comments</td>
+            <td colspan="2">Defense Checklist</td>
+        </tr>
+        <tr>
+            <td>
+                <label>
+                    <input type="checkbox" class="checkbox" id="Nothing" onclick="addAutonCheckbox(0, this.id)">
+                    Nothing</label>
+            </td>
+            <td>
+                <label>
+                    <input type="checkbox" class="checkbox" id="Preload" onclick="addAutonCheckbox(1, this.id)">
+                    Preload</label>
+            </td>
+            <td rowspan="4" colspan="2">
+                <textarea placeholder="Comments" class="commentBox" id="teleopComments"
+                    onchange="addComments(this.id)"></textarea>
+            </td>
+            <td rowspan="4" colspan="2">
+                <textarea placeholder="Comments" class="commentBox" id="defenseComments"
+                    onchange="addComments(this.id)"></textarea>
+            </td>
+            <td colspan="2">
+                <label>
+                    <input type="checkbox" class="checkbox" id="Played Defense"
+                        onclick="addDefenseCheckbox(0, this.id)">
+                    Played Defense</label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label>
+                    <input type="checkbox" class="checkbox" id="Depot" onclick="addAutonCheckbox(2, this.id)">
+                    Depot</label>
+            </td>
+            <td>
+                <label>
+                    <input type="checkbox" class="checkbox" id="Outpost" onclick="addAutonCheckbox(3, this.id)">
+                    Outpost</label>
+            </td>
+            <td colspan="2">
+                <label>
+                    <input type="checkbox" class="checkbox" id="Played Against Defense"
+                        onclick="addDefenseCheckbox(1, this.id)">
+                    Played Against Defense</label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label>
+                    <input type="checkbox" class="checkbox" id="Neutral Zone" onclick="addAutonCheckbox(4, this.id)">
+                    Neutral Zone</label>
+            </td>
+            <td>
+                <label>
+                    <input type="checkbox" class="checkbox" id="More Neutral Zone"
+                        onclick="addAutonCheckbox(5, this.id)">
+                    More Neutral Zone</label>
+            </td>
+            <td colspan="2">
+                <label>
+                    <input type="checkbox" class="checkbox" id="None of the Above"
+                        onclick="addDefenseCheckbox(2, this.id)">
+                    None of the Above</label>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <button class="backForth nextColor" id="next" onclick="load('teleop')">&larr;</button>
+            </td>
+            <td colspan="2">
+                <button class="backForth nextColor" id="next" onclick="load('qr')">&rarr;</button>
+            </td>
+        </tr>
+    </table>
+</body>
+
+</html>
