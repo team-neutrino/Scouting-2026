@@ -913,6 +913,36 @@ function load(windowLocation) {
   window.location.href = `./${windowLocation}.html`;
 }
 
+function qualLoad(windowLocation) {
+  teleopBox = document.getElementById("teleopComments");
+  defenseBox = document.getElementById("defenseComments");
+  if(teleopBox.value !== "" && defenseBox.value !== ""){
+    load(windowLocation);
+  } else {
+    if (teleopBox.value === ""){
+      borderColorChange(teleopBox,1);
+    }
+    if (defenseBox.value === ""){
+      borderColorChange(defenseBox,1);
+    }
+  }
+}
+
+function borderColorChange(element,speed){
+  intialWidth = parseInt(window.getComputedStyle(element).getPropertyValue('border-left-width'),10);
+  element.style.borderColor = "rgb(255,0,0)"
+  element.style.borderWidth = String(intialWidth*2) + "px";
+  length = 15;
+  setTimeout(() => {
+    for(let i = 0; i < length; i++){
+      setTimeout(() => {
+        element.style.borderColor = `rgb(${255}, ${i*(255/length)}, ${i*(255/length)})`;
+        element.style.borderWidth = String(((intialWidth*2)-(intialWidth/length)*i)) + "px";
+      }, i*50*speed);
+    }
+  },750*speed);
+}
+
 function qrZoom() {
   let qr = document.getElementById('qrArea');
   if (zoom) {

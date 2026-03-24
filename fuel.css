@@ -55,6 +55,10 @@
     margin-left: -36%;
 }
 
+#next {
+    margin-right: -36%;
+}
+
 .no-border{
     border:none;
 }
