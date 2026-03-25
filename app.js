@@ -153,15 +153,30 @@ var autonScoreSlider = document.getElementById("autonScoreSlider");
 var autonPassButton = document.getElementById("customAutonPass");
 var autonPassSlider = document.getElementById("autonPassSlider");
 
+var activeSliders = [];
+var activeButtons = [];
+var sliderValue = 10;
+
+function updateAll() {
+  for (slider of activeSliders) {
+    slider.value = sliderValue;
+  }
+  for (button of activeButtons) {
+    button.innerHTML = sliderValue + "/s";
+  }
+}
+
 function addSlider(button, slider, id) {
-  button.innerHTML = slider.value + "/s";
+  button.innerHTML = sliderValue + "/s";
 
   slider.addEventListener("input", function (newVal) {
-    button.innerHTML = newVal.target.value + "/s";
+    sliderValue = slider.value;
+    console.log(sliderValue)
+    updateAll();
   });
 
   button.addEventListener("pointerdown", function () {
-    fuelHold(id, slider.value);
+    fuelHold(id, sliderValue);
   });
   button.addEventListener("pointerup", function () {
     cancelTimers();
@@ -169,6 +184,9 @@ function addSlider(button, slider, id) {
   button.addEventListener("pointerout", function () {
     cancelTimers();
   });
+
+  activeButtons.push(button);
+  activeSliders.push(slider);
 }
 
 // addSlider(teleopScoreButton, teleopScoreSlider, 2);
@@ -258,6 +276,7 @@ function saveData() {
   sessionStorage.setItem("extraData", JSON.stringify(extraData));
   sessionStorage.setItem("score", score.toString());
   sessionStorage.setItem("climbList", JSON.stringify(climbList));
+  sessionStorage.setItem("sliderValue", sliderValue.toString());
 }
 
 function getData() {
@@ -265,6 +284,7 @@ function getData() {
   compressedList = getList("compressedList");
   extraData = getList("extraData");
   climbList = getList("climbList");
+  sliderValue = parseInt(sessionStorage.getItem("sliderValue"), 10);
   console.log(compressedList);
   console.log(extraData);
   console.log(climbList);
@@ -290,12 +310,18 @@ function loadPage(page) {
     loadClimb(page);
   }
   if (page == "teleop") {
+    activeSliders = [];
+    activeButtons = [];
     addSlider(teleopScoreButton, teleopScoreSlider, 2);
     addSlider(teleopPassButton, teleopPassSlider, 3);
+    updateAll();
   }
   if (page == "auton") {
+    activeSliders = [];
+    activeButtons = [];
     addSlider(autonScoreButton, autonScoreSlider, 0);
     addSlider(autonPassButton, autonPassSlider, 1);
+    updateAll();
   }
 }
 
