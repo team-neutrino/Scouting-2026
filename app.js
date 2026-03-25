@@ -703,7 +703,7 @@ function displayBoxData() {
   if (extraData[1] !== undefined) {
     document.getElementById('matchNumberBox').value = extraData[1];
   }
-  if (document.getElementById('Nothing') !== null) {
+  if (document.getElementById('Climb') !== null) {
     for (var i = 0; i < autonChecklist.length; i++) {
       if (autonChecklist[i] !== "") {
         document.getElementById(autonChecklist[i]).checked = true;
@@ -724,6 +724,7 @@ function displayBoxData() {
     document.getElementById('defenseComments').value = defenseComments;
   }
 }
+
 
 function updateLog() {
   // var logText = actionList.slice().reverse().join("\n");

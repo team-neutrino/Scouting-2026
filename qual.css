@@ -11,15 +11,25 @@ tr {
 td {
     color: white;
     width: 12.5%;
+    font-size: 1.5em;
 }
+
 
 label {
     color: white;
     font-size: 3vh;
+    display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
 
 .tr1 {
-    font-size: 6vh;
+    font-size: 2vh;
+}
+
+.tr1 > td {
+  border-left: 1px solid white;
 }
 
 .commentBox {
