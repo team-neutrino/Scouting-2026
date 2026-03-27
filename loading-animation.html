@@ -421,6 +421,7 @@
                 // Trigger exit animation
                 setTimeout(() => {
                     document.getElementById('loader').classList.add('exiting');
+                    window.location.href = `new app/index.html?skipLoader=true`;
                 }, 500);
             }
         }
