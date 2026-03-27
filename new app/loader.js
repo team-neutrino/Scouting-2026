@@ -1,6 +1,18 @@
 // REBUILT Loading Animation Controller
 
 (function() {
+  // Check if we should skip the loader (coming from loading-animation.html)
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.get('skipLoader') === 'true') {
+    const loader = document.getElementById('loader');
+    const mainApp = document.getElementById('mainApp');
+    loader.style.display = 'none';
+    mainApp.style.display = 'flex';
+    // Clean up the URL
+    window.history.replaceState({}, '', window.location.pathname);
+    return;
+  }
+
   // Create floating debris/dust particles
   const debrisContainer = document.getElementById('debrisContainer');
   const debrisCount = 2000;
