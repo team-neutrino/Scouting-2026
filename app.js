@@ -887,14 +887,11 @@ function load(windowLocation) {
 function qualLoad(windowLocation) {
   teleopBox = document.getElementById("teleopComments");
   defenseBox = document.getElementById("defenseComments");
-  if(teleopBox.value !== "" && defenseBox.value !== ""){
+  if(teleopBox.value !== ""){
     load(windowLocation);
   } else {
     if (teleopBox.value === ""){
       borderColorChange(teleopBox,1);
-    }
-    if (defenseBox.value === ""){
-      borderColorChange(defenseBox,1);
     }
   }
 }
