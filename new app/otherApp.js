@@ -95,6 +95,9 @@
   const deviceInput = document.getElementById('deviceInput');
   const redAllianceBtn = document.getElementById('redAllianceBtn');
   const blueAllianceBtn = document.getElementById('blueAllianceBtn');
+  const dumperBtn = document.getElementById('dumperBtn');
+  const turretBtn = document.getElementById('turretBtn');
+  const defaultBtn = document.getElementById('defaultBtn');
   const goBtn = document.getElementById('goBtn');
   const qrBtn = document.getElementById('qrBtn');
   const sessionId = document.getElementById('sessionId');
@@ -102,6 +105,7 @@
   
   // State
   let selectedAlliance = null;
+  let selectedBotType = null;
   
   // Generate session ID
   function generateSessionId() {
@@ -181,6 +185,34 @@
   
   redAllianceBtn.addEventListener('click', () => selectAlliance('red'));
   blueAllianceBtn.addEventListener('click', () => selectAlliance('blue'));
+
+  // ============================================
+  // ROBOT TYPE SELECTION
+  // ============================================
+  
+  function selectBotType(botType) {
+    selectedBotType = botType;
+    
+    // Remove selected class from all bot type buttons
+    dumperBtn.classList.remove('selected');
+    turretBtn.classList.remove('selected');
+    defaultBtn.classList.remove('selected');
+    
+    // Add selected class to chosen
+    if (botType === 'dumper') {
+      dumperBtn.classList.add('selected');
+    } else if (botType === 'turret') {
+      turretBtn.classList.add('selected');
+    } else if (botType === 'default') {
+      defaultBtn.classList.add('selected');
+    }
+  }
+  
+  dumperBtn.addEventListener('click', () => selectBotType('dumper'));
+  turretBtn.addEventListener('click', () => selectBotType('turret'));
+  defaultBtn.addEventListener('click', () => selectBotType('default'));
+
+  selectBotType('default');
   
   // ============================================
   // FORM SUBMISSION
@@ -243,6 +275,7 @@
       match: matchNum.value,
       scout: scout.value,
       alliance: selectedAlliance,
+      robotType: selectedBotType || 'default',
       device: iPadIDarea.value || '00',
       sessionId: sessionId.textContent,
       timestamp: new Date().toISOString()
@@ -261,7 +294,11 @@
     setTimeout(() => {
       console.log('Proceeding with data:', scoutingData);
       // window.location.href = 'auton.html';
-      GO(document.getElementById('iPadIDarea').value, document.getElementById('matchNum').value, document.getElementById('scout').value, "auton");
+      if (selectedBotType === 'default' || selectedBotType === 'turret') {
+        GO(document.getElementById('iPadIDarea').value, document.getElementById('matchNum').value, document.getElementById('scout').value, "auton");
+      } else { 
+        GO(document.getElementById('iPadIDarea').value, document.getElementById('matchNum').value, document.getElementById('scout').value, "auton-" + selectedBotType);
+      }
     }, 500);
   });
   

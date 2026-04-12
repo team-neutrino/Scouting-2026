@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>auton</title>
+    <script src="app.js"></script>
+    <link rel="styleSheet" type="text/css" href="styleSheet.css">
+    <link rel="styleSheet" type="text/css" href="fuel.css">
+</head>
+
+<body class="autonBody" style="overflow: scroll;" onload="loadPage('auton')">
+    <table id="table">
+        <tr id="row1">
+            <th class="topSideBox" colspan="3">
+                <input class="infoBox" type="text" name="teamBox" id="teamNumberBox" readonly />
+            </th>
+            <th colspan="1" class="header" id="color" rowspan="2">Auton</th>
+            <th class="topSideBox" colspan="3">
+                <input class="infoBox" type="text" name="matchBox" id="matchNumberBox" readonly />
+            </th>
+        </tr>
+        <tr class="subHeaderRow" id="row2">
+            <td colspan="3" rowspan="2" class="subHeader">score</td>
+            <td colspan="3" rowspan="2" class="subHeader">pass</td>
+        </tr>
+        <tr class="subHeaderRow">
+            <td rowspan="6">
+                <textarea readonly id="teamLog1" class="terminalFuel" placeholder="Nothing to undo"></textarea>
+                <br>
+                <textarea readonly id="teamLog2" class="score" placeholder="Nothing yet"></textarea>
+                <br>
+                <button class="undo" id="undo" onclick="Undo()">Undo</button>
+            </td>
+        </tr>
+        <tr id="row3">
+            <td class="largeColumm" colspan="2">
+                <button class="plusButton scoreButton" onclick="addFuel(4, 1)">100% Hopper</button>
+            </td>
+            <td class="smallColumm">
+                <button class="minusButton" onclick="addFuel(4, -1)">-100%</button>
+            </td>
+            <td class="smallColumm">
+                <button class="minusButton" onclick="addFuel(5, -1)">-100%</button>
+            </td>
+            <td class="largeColumm" colspan="2">
+                <button class="plusButton passButton" onclick="addFuel(5, 1)">100% Hopper</button>
+            </td>
+        </tr>
+        <tr id="row5">
+            <td colspan="2">
+                <button class="plusButton scoreButton" onclick="addFuel(4, 0.75)">75% Hopper</button>
+            </td>
+            <td>
+                <button class="minusButton" onclick="addFuel(4, -0.75)">-75%</button>
+            </td>
+            <td>
+                <button class="minusButton" onclick="addFuel(5, -0.75)">-75%</button>
+            </td>
+            <td colspan="2">
+                <button class="plusButton passButton" onclick="addFuel(5, 0.75)">75% Hopper</button>
+            </td>
+        </tr>
+        <tr id="row6">
+            <td colspan="2">
+                <button class="plusButton scoreButton" onclick="addFuel(0, 1)">1</button>
+            </td>
+            <td>
+                <button class="minusButton" onclick="addFuel(0, -1)">-1</button>
+            </td>
+            <td>
+                <button class="minusButton" onclick="addFuel(1, -1)">-1</button>
+            </td>
+            <td colspan="2">
+                <button class="plusButton passButton" onclick="addFuel(1, 1)">1</button>
+            </td>
+        </tr>
+        <tr class="footer" id="row7">
+            <td>
+                <button class="backForth nextColor" id="back" onclick="load('index')">&larr;</button>
+            </td>
+            <td colspan="5"></td>
+            <td>
+                <button class="backForth nextColor" id="next" onclick="load('teleop-dumper')">&rarr;</button>
+            </td>
+        </tr>
+    </table>
+</body>
+
+</html>

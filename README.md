@@ -10,6 +10,10 @@ Qr positions:
     1. Auton Balls Passed
     2. Teleop Balls Scored
     3. Teleop Balls Passed
+    4. Auton Hoppers Scored
+    5. Auton Hoppers Passed
+    6. Teleop Hoppers Scored
+    7. Teleop Hoppers Passed
 6. Qualitative List
     0. Auton Nothing (true or false)
     1. Auton Preload (true or false)

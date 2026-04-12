@@ -1,6 +1,8 @@
 .subHeader {
     color: white;
     font-size: 10vh;
+    stroke-width: 0.5vw;
+    stroke: black;
 }
 
 .subHeaderRow {
@@ -82,8 +84,10 @@
 
 .autonBody{
     background-color: rgb(8, 51, 48);
+    background-image: url('background.png');
 }
 
 .teleopBody{
     background-color: rgb(8, 10, 51);
+    background-image: url('background.png');
 }

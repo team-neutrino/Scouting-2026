@@ -179,6 +179,65 @@
         </div>
       </section>
 
+      <!-- Robot Type Selection -->
+      <!-- entirely vibe coded. Sorry. the person who did this originally vibe coded it anyway so idc -->
+       
+      <section class="data-section robot-type-section">
+        <div class="section-header">
+          <div class="section-indicator robot-indicator"></div>
+          <h2 class="section-title">ROBOT TYPE</h2>
+        </div>
+        
+        <div class="robot-type-grid" id="robot-type-selection">
+          <button class="robot-type-btn dumper-type" id="dumperBtn" data-robot-type="dumper">
+            <div class="robot-content">
+              <div class="robot-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="2" y="7" width="20" height="10"></rect>
+                  <path d="M4 7V5a1 1 0 0 1 1-1h5"></path>
+                  <path d="M14 7V5a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v2"></path>
+                  <circle cx="6" cy="19" r="2"></circle>
+                  <circle cx="18" cy="19" r="2"></circle>
+                </svg>
+              </div>
+              <span class="robot-name">BIG DUMPER</span>
+              <span class="robot-status">SELECT</span>
+            </div>
+            <div class="robot-border"></div>
+          </button>
+
+          <button class="robot-type-btn turret-type" id="turretBtn" data-robot-type="turret">
+            <div class="robot-content">
+              <div class="robot-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="5"></circle>
+                  <path d="M12 7V2"></path>
+                  <path d="M12 17v5"></path>
+                  <rect x="10" y="10" width="4" height="4"></rect>
+                </svg>
+              </div>
+              <span class="robot-name">TURRET</span>
+              <span class="robot-status">SELECT</span>
+            </div>
+            <div class="robot-border"></div>
+          </button>
+
+          <button class="robot-type-btn default-type" id="defaultBtn" data-robot-type="default">
+            <div class="robot-content">
+              <div class="robot-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z"></path>
+                  <path d="M12 8v8M9 12h6"></path>
+                </svg>
+              </div>
+              <span class="robot-name">DEFAULT</span>
+              <span class="robot-status">SELECT</span>
+            </div>
+            <div class="robot-border"></div>
+          </button>
+        </div>
+      </section>
+
       <!-- Device & Actions -->
       <section class="data-section action-section">
         <div class="action-grid">

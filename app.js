@@ -514,9 +514,6 @@ function addFuel(type, amt) {
 
   finished = lastPosition[3];
 
-  // console.log(finished)
-  // console.log(lastPosition)
-
   if (!finished) {
     compressedList[compressedList.length - 1][1] += amt;
     compressedList[compressedList.length - 1][2].push(amt);
@@ -707,6 +704,22 @@ function displayBoxData() {
   }
 }
 
+function format(str, ...values) {
+  return str.replace(/{(\d+)}/g, function(match, index) {
+    return typeof values[index] !== 'undefined' ? values[index] : match;
+  });
+} // I like lua why can't js just have this by default : (
+
+idToLogText = {
+  0: "Scored {0} Fuel ({1} total) (A)",
+  1: "Passed {0} Fuel ({1} total) (A)",
+  2: "Scored {0} Fuel ({1} total) (T)",
+  3: "Passed {0} Fuel ({1} total) (T)",
+  4: "Scored {0}% of Hopper (A)",
+  5: "Passed {0}% of Hopper (A)",
+  6: "Scored {0}% of Hopper (T)",
+  7: "Passed {0}% of Hopper (T)",
+}
 
 function updateLog() {
   // var logText = actionList.slice().reverse().join("\n");
@@ -736,28 +749,19 @@ function updateLog() {
         logText = logText + " (T)"
       }
 
-      logText = logText + "\n"
+      logText = logText + "\n";
     }
 
-    score = period[1]
+    score = period[1];
 
     for (let i = period[2].length - 1; i >= 0; i--) {
-      amt = period[2][i]
-      if (period[0] === 1 || period[0] === 3) {
-        logText = logText + "Passed " + amt + " Fuel (" + score + " total)"
+      amt = period[2][i];
+      if (period[0] < 4) {
+        logText = logText + format(idToLogText[period[0]], amt, score) + "\n";
       } else {
-        logText = logText + amt + " Fuel (" + score + " total)"
+        logText = logText + format(idToLogText[period[0]], amt * 100) + "\n";
       }
-
-      if (period[0] < 2) {
-        logText = logText + " (A)"
-      } else {
-        logText = logText + " (T)"
-      }
-
-      logText = logText + "\n"
-
-      score -= amt
+      score -= amt;
     }
   }
 
