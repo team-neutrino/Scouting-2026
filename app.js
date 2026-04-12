@@ -79,7 +79,7 @@ var blue1 = [8770,
   3267,
   10476,
   1108];
-  var blue2 = [5837,
+var blue2 = [5837,
   6419,
   4260,
   3298,
@@ -150,7 +150,7 @@ var blue1 = [8770,
   11241,
   9570,
   2847];
-  var blue3 = [6420,
+var blue3 = [6420,
   11241,
   5442,
   6805,
@@ -221,7 +221,7 @@ var blue1 = [8770,
   9543,
   7848,
   59];
-  var red1 = [648,
+var red1 = [648,
   7531,
   967,
   11312,
@@ -292,7 +292,7 @@ var blue1 = [8770,
   5809,
   6805,
   9061];
-  var red2 = [8766,
+var red2 = [8766,
   11219,
   9543,
   5809,
@@ -363,7 +363,7 @@ var blue1 = [8770,
   1997,
   8821,
   5141];
-  var red3 = [3723,
+var red3 = [3723,
   5041,
   2847,
   1108,
@@ -705,7 +705,7 @@ function displayBoxData() {
 }
 
 function format(str, ...values) {
-  return str.replace(/{(\d+)}/g, function(match, index) {
+  return str.replace(/{(\d+)}/g, function (match, index) {
     return typeof values[index] !== 'undefined' ? values[index] : match;
   });
 } // I like lua why can't js just have this by default : (
@@ -737,16 +737,32 @@ function updateLog() {
     period = compressedList[i];
 
     if (period[3] || Date.now() - lastUpdatedTimestamp > TIMEOUT) { // if period finished
-      if (period[0] === 1 || period[0] === 3) {
-        logText = logText + "-- Passed " + period[1] + " fuel. --"
+      if (period[0] < 4) {
+        if (period[0] === 1 || period[0] === 3) {
+          logText = logText + "-- Passed " + period[1] + " fuel. --"
+        } else {
+          logText = logText + "-- Scored " + period[1] + " fuel. --"
+        }
       } else {
-        logText = logText + "-- Scored " + period[1] + " fuel. --"
+        if (period[0] === 5 || period[0] === 7) {
+          logText = logText + "-- Passed " + period[1] + " hoppers. --"
+        } else {
+          logText = logText + "-- Scored " + period[1] + " hoppers. --"
+        }
       }
 
-      if (period[0] < 2) {
-        logText = logText + " (A)"
+      if (period[0] < 4) {
+        if (period[0] < 2) {
+          logText = logText + " (A)"
+        } else {
+          logText = logText + " (T)"
+        }
       } else {
-        logText = logText + " (T)"
+        if (period[0] < 6) {
+          logText = logText + " (A)"
+        } else {
+          logText = logText + " (T)"
+        }
       }
 
       logText = logText + "\n";
@@ -903,28 +919,28 @@ function load(windowLocation) {
 function qualLoad(windowLocation) {
   teleopBox = document.getElementById("teleopComments");
   defenseBox = document.getElementById("defenseComments");
-  if(teleopBox.value !== ""){
+  if (teleopBox.value !== "") {
     load(windowLocation);
   } else {
-    if (teleopBox.value === ""){
-      borderColorChange(teleopBox,1);
+    if (teleopBox.value === "") {
+      borderColorChange(teleopBox, 1);
     }
   }
 }
 
-function borderColorChange(element,speed){
-  intialWidth = parseInt(window.getComputedStyle(element).getPropertyValue('border-left-width'),10);
+function borderColorChange(element, speed) {
+  intialWidth = parseInt(window.getComputedStyle(element).getPropertyValue('border-left-width'), 10);
   element.style.borderColor = "rgb(255,0,0)"
-  element.style.borderWidth = String(intialWidth*2) + "px";
+  element.style.borderWidth = String(intialWidth * 2) + "px";
   length = 15;
   setTimeout(() => {
-    for(let i = 0; i < length; i++){
+    for (let i = 0; i < length; i++) {
       setTimeout(() => {
-        element.style.borderColor = `rgb(${255}, ${i*(255/length)}, ${i*(255/length)})`;
-        element.style.borderWidth = String(((intialWidth*2)-(intialWidth/length)*i)) + "px";
-      }, i*50*speed);
+        element.style.borderColor = `rgb(${255}, ${i * (255 / length)}, ${i * (255 / length)})`;
+        element.style.borderWidth = String(((intialWidth * 2) - (intialWidth / length) * i)) + "px";
+      }, i * 50 * speed);
     }
-  },750*speed);
+  }, 750 * speed);
 }
 
 function qrZoom() {
