@@ -237,6 +237,7 @@
     }
     
     // Success - store data and proceed
+    console.log(selectedAlliance);
     const scoutingData = {
       team: teamNum.value,
       match: matchNum.value,
@@ -249,6 +250,10 @@
     
     // Store in localStorage
     localStorage.setItem('scoutingData', JSON.stringify(scoutingData));
+
+    extraData[4] = selectedAlliance;
+    console.log(extraData);
+    saveData();
     
     // Visual feedback
     this.classList.add('processing');
