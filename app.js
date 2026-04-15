@@ -440,7 +440,7 @@ var matchnum = 1;
 var team = "";
 var match = "";
 var savescout = sessionStorage.getItem("scoutInitials");
-var score = 0;
+let score = 0;
 
 const TIMEOUT = 1000 // time before fuel scoring period times out, measured in ms
 
@@ -514,8 +514,8 @@ function addFuel(type, amt) {
 
   finished = lastPosition[3];
 
-  console.log(finished)
-  console.log(lastPosition)
+  // console.log(finished)
+  // console.log(lastPosition)
 
   if (!finished) {
     compressedList[compressedList.length - 1][1] += amt;
@@ -538,6 +538,18 @@ function updateScore() {
   }
   score = currentScore;
   document.getElementById("teamLog2").value = score;
+  console.log(score);
+}
+
+function updateScoreNoEditScreen() {
+  var currentScore = 0
+  for (i = 0; i < compressedList.length; i++) {
+    if (compressedList[i][0] === 0 || compressedList[i][0] === 2) {
+      currentScore += compressedList[i][1];
+    }
+  }
+  score = currentScore;
+  console.log(score);
 }
 
 function alliancePick(alliance) {
@@ -706,7 +718,7 @@ function updateLog() {
 
   logText = ""
 
-  console.log(compressedList.length)
+  // console.log(compressedList.length)
 
   for (let i = compressedList.length - 1; i >= 0; i--) {
     period = compressedList[i];
@@ -947,6 +959,7 @@ function toQuotes() {
 
   }
   setTimeout(() => {
+    updateScoreNoEditScreen();
     insertQuote.innerHTML += "<br><br><strong>" + author + "</strong>";
     insertQuote.innerHTML += "<button onclick='loadIndex()' class='continuieButton' id='contineButton'>Continue</button>";
     insertQuote.innerHTML += "<strong>Score: " + score + "</strong>";

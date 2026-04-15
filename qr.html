@@ -54,6 +54,10 @@
             var defenseChecklist = getList("defenseChecklist");
             var teleopComments = sessionStorage.getItem("teleopComments");
             var defenseComments = sessionStorage.getItem("defenseComments");
+
+            if (defenseComments === "") {
+              defenseComments = "\n"; //CHANGE ME TO A SPACE IF THIS DOES NOT WORK
+            }
             if (climb[0] === "noTry") {
                 climb[0] = "0";
             }
