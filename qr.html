@@ -49,7 +49,6 @@
 
             document.getElementById('teamNumberBox').value = extraData[0];
             document.getElementById('matchNumberBox').value = extraData[1];
-            var climb = getList("climbList");
             var autonChecklist = getList("autonChecklist");
             var defenseChecklist = getList("defenseChecklist");
             var hopperCapacity = sessionStorage.getItem("hopperCapacity")
@@ -59,12 +58,6 @@
 
             if (defenseComments === "") {
                 defenseComments = "\n"; //CHANGE ME TO A SPACE IF THIS DOES NOT WORK
-            }
-            if (climb[0] === "noTry") {
-                climb[0] = "0";
-            }
-            if (climb[2] === "noTry") {
-                climb[2] = "0";
             }
 
             qrcode.clear();
