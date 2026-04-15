@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
-<script src="./app.js"></script>
 
 <head>
     <meta charset="UTF-8">
     <title>Qualitative</title>
     <link rel="styleSheet" type="text/css" href="qual.css">
     <link rel="styleSheet" type="text/css" href="styleSheet.css">
+    <script src="./app.js"></script>
+
 </head>
 
 <body id='body' class="qualBody" style="overflow: scroll;" onload="loadPage('qual')">
@@ -27,20 +28,20 @@
             <td colspan="2">Defense</td>
         </tr>
         <tr>
-            <td rowspan="3" colspan="2">
+            <td rowspan="2" colspan="2">
                 <textarea placeholder="Comments" class="commentBox" id="autonComments" onchange="addComments(this.id)"></textarea>
             </td>
-            <td rowspan="4" colspan="2">
+            <td rowspan="3" colspan="2">
                 <textarea placeholder="Comments" class="commentBox" id="teleopComments"
                     onchange="addComments(this.id)"></textarea>
             </td>
-            <td rowspan="4" colspan="2">
+            <td rowspan="3" colspan="2">
                 <textarea placeholder="Comments" class="commentBox" id="defenseComments"
                     onchange="addComments(this.id)"></textarea>
             </td>
             <td colspan="2">
                 <label>
-                    <input type="checkbox" class="checkbox" id="Defense Bot"
+                    <input type="checkbox" class="checkbox" id="defenseBot"
                         onclick="addDefenseCheckbox(0, this.id)">
                     Defense Bot</label>
             </td>
@@ -48,22 +49,14 @@
         <tr>
             <td colspan="2">
                 <label>
-                    <input type="checkbox" class="checkbox" id="Broken Mechanism"
+                    <input type="checkbox" class="checkbox" id="brokenMechanism"
                         onclick="addDefenseCheckbox(1, this.id)">
                     Broken Mechanism</label>
             </td>
         </tr>
         <tr>
             <td colspan="2">
-                <label>
-                    <input type="checkbox" class="checkbox" id="Against Defense"
-                        onclick="addDefenseCheckbox(2, this.id)">
-                    Against Defense</label>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2">
-                <button class="backForth nextColor" id="next" onclick="load('backQual')">&larr;</button>
+                <button class="backForth nextColor" id="next" onclick="load('teleop')">&larr;</button>
             </td>
             <td colspan="2">
                 <button class="backForth nextColor" id="next" onclick="qualLoad('qr')">&rarr;</button>

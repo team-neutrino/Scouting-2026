@@ -3,7 +3,7 @@ const pointList = [1, 4, 3]
 let extraData = []; //['teamNum', 'matchNum', 'scout', 'comment', 'alliance pick']
 var compressedList = []; //This is the list that collects all the IDs for the QR Code.
 var climbList = ["0", false, "0", false]; //['auton climb', auton backside, 'endgame climb', endgame backside]
-var defenseChecklist = ["", "", ""];
+var defenseChecklist = ["", ""];
 var autonComments = "";
 var teleopComments = "";
 var defenseComments = "";
@@ -678,7 +678,7 @@ function displayBoxData() {
   if (extraData[1] !== undefined) {
     document.getElementById('matchNumberBox').value = extraData[1];
   }
-  if (document.getElementById('Defense Bot') !== null) {
+  if (document.getElementById('defenseBot') !== null) {
     for (var i = 0; i < defenseChecklist.length; i++) {
       if (defenseChecklist[i] !== "") {
         document.getElementById(defenseChecklist[i]).checked = true;
