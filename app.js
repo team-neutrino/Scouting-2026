@@ -3,8 +3,8 @@ const pointList = [1, 4, 3]
 let extraData = []; //['teamNum', 'matchNum', 'scout', 'comment', 'alliance pick']
 var compressedList = []; //This is the list that collects all the IDs for the QR Code.
 var climbList = ["0", false, "0", false]; //['auton climb', auton backside, 'endgame climb', endgame backside]
-var autonComments = "";
 var defenseChecklist = ["", "", ""];
+var autonComments = "";
 var teleopComments = "";
 var defenseComments = "";
 var comments = ""; //Comments Box
@@ -473,10 +473,11 @@ function addDefenseCheckbox(slot, action) {
 }
 
 function addComments(id) {
-  if (id == "teleopComments") {
-    teleopComments = document.getElementById("teleopComments").value;
-  } else if (id == "autonComments") {
+  if (id == "autonComments") {
     autonComments = document.getElementById("autonComments").value;
+  }
+  else if (id == "teleopComments") {
+    teleopComments = document.getElementById("teleopComments").value;
   }
   else {
     defenseComments = document.getElementById("defenseComments").value;
@@ -614,8 +615,8 @@ function saveData() {
   sessionStorage.setItem("extraData", JSON.stringify(extraData));
   sessionStorage.setItem("score", score.toString());
   sessionStorage.setItem("climbList", JSON.stringify(climbList));
-  sessionStorage.setItem("autonComments", autonComments);
   sessionStorage.setItem("defenseChecklist", JSON.stringify(defenseChecklist));
+  sessionStorage.setItem("autonComments", autonComments);
   sessionStorage.setItem("teleopComments", teleopComments);
   sessionStorage.setItem("defenseComments", defenseComments);
 }
@@ -625,15 +626,15 @@ function getData() {
   compressedList = getList("compressedList");
   extraData = getList("extraData");
   climbList = getList("climbList");
-  autonComments = sessionStorage.getItem("autonComments");
   defenseChecklist = getList("defenseChecklist");
+  autonComments = sessionStorage.getItem("autonComments");
   teleopComments = sessionStorage.getItem("teleopComments");
   defenseComments = sessionStorage.getItem("defenseComments");
   console.log(compressedList);
   console.log(extraData);
   console.log(climbList);
-  console.log(autonComments);
   console.log(defenseChecklist);
+  console.log(autonComments);
   console.log(teleopComments);
   console.log(defenseComments);
   if (document.getElementById('teamLog1') !== null) {

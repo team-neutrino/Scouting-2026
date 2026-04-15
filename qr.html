@@ -52,6 +52,7 @@
             var climb = getList("climbList");
             var autonChecklist = getList("autonChecklist");
             var defenseChecklist = getList("defenseChecklist");
+            var autonComments = sessionStorage.getItem("autonComments")
             var teleopComments = sessionStorage.getItem("teleopComments");
             var defenseComments = sessionStorage.getItem("defenseComments");
 
@@ -77,9 +78,9 @@
                 "\t" +
                 sums.join(",") +
                 "\t" +
-                autonChecklist +
-                "\t" +
                 defenseChecklist +
+                "\t" +
+                autonComments +
                 "\t" +
                 teleopComments +
                 "\t" +
