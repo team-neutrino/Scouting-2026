@@ -912,7 +912,19 @@ function load(windowLocation) {
     console.log("fun");
     climbList[0] = "noTry";
   }
+
   saveData();
+
+  if (windowLocation === "backQual") {
+    robotType = sessionStorage.getItem("robotType")
+
+    if (robotType === "dumper") {
+      window.location.href = `./teleop-dumper.html`;
+    } else {
+      window.location.href = `./teleop.html`;
+    }
+    return
+  }
   window.location.href = `./${windowLocation}.html`;
 }
 

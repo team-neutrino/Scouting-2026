@@ -1,22 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>REBUILT // SCOUTING INTERFACE</title>
   <link rel="styleSheet" type="text/css" href="index.css">
   <link rel="styleSheet" type="text/css" href="loader.css">
-  
+
   <!-- Industrial Typography -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Teko:wght@300;400;500;600;700&family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Teko:wght@300;400;500;600;700&family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&display=swap"
+    rel="stylesheet">
 </head>
+
 <body onload="pullIPadID();setTeam(matchNum.value, iPadIDarea.value);alliancePick('No Alliance')">
   <!-- Loading Screen -->
   <div id="loader" class="loader-overlay">
     <div class="loader-vignette"></div>
-    <div class="loader-grid"></div> 
+    <div class="loader-grid"></div>
     <div class="loader-sparks" id="sparkContainer"></div>
     <div class="loader-content">
       <div class="loader-brand">
@@ -64,7 +68,7 @@
     <div class="ambient-grid"></div>
     <div class="ambient-glow"></div>
     <div class="noise-overlay"></div>
-    
+
     <!-- Header Section -->
     <header class="app-header">
       <div class="header-accent"></div>
@@ -104,7 +108,7 @@
           <div class="section-indicator"></div>
           <h2 class="section-title">MATCH CONFIGURATION</h2>
         </div>
-        
+
         <div class="input-grid">
           <div class="input-group large">
             <label class="input-label">
@@ -123,7 +127,8 @@
               <span class="label-hint">#</span>
             </label>
             <div class="input-wrapper">
-              <input type="text" id="matchNum" class="data-input" placeholder="00" maxlength="3" pattern="[0-9]*" onchange="setTeam(this.value, iPadIDarea.value)">
+              <input type="text" id="matchNum" class="data-input" placeholder="00" maxlength="3" pattern="[0-9]*"
+                onchange="setTeam(this.value, iPadIDarea.value)">
               <div class="input-focus-indicator"></div>
             </div>
           </div>
@@ -147,13 +152,15 @@
           <div class="section-indicator alliance-indicator"></div>
           <h2 class="section-title">ALLIANCE SELECTION</h2>
         </div>
-        
-        <div class="alliance-grid"  id="allliance-selection">
+
+        <div class="alliance-grid" id="allliance-selection">
           <button class="alliance-btn red-alliance" id="redAllianceBtn" data-alliance="red">
             <div class="alliance-content">
               <div class="alliance-icon">
                 <svg viewBox="0 0 24 24" fill="currentColor">
-                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                  <polygon
+                    points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
+                  </polygon>
                 </svg>
               </div>
               <span class="alliance-name">RED ALLIANCE</span>
@@ -167,7 +174,9 @@
             <div class="alliance-content">
               <div class="alliance-icon">
                 <svg viewBox="0 0 24 24" fill="currentColor">
-                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                  <polygon
+                    points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
+                  </polygon>
                 </svg>
               </div>
               <span class="alliance-name">BLUE ALLIANCE</span>
@@ -181,13 +190,13 @@
 
       <!-- Robot Type Selection -->
       <!-- entirely vibe coded. Sorry. the person who did this originally vibe coded it anyway so idc -->
-       
+
       <section class="data-section robot-type-section">
         <div class="section-header">
           <div class="section-indicator robot-indicator"></div>
           <h2 class="section-title">ROBOT TYPE</h2>
         </div>
-        
+
         <div class="robot-type-grid" id="robot-type-selection">
           <button class="robot-type-btn dumper-type" id="dumperBtn" data-robot-type="dumper">
             <div class="robot-content">
@@ -201,22 +210,6 @@
                 </svg>
               </div>
               <span class="robot-name">BIG DUMPER</span>
-              <span class="robot-status">SELECT</span>
-            </div>
-            <div class="robot-border"></div>
-          </button>
-
-          <button class="robot-type-btn turret-type" id="turretBtn" data-robot-type="turret">
-            <div class="robot-content">
-              <div class="robot-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <circle cx="12" cy="12" r="5"></circle>
-                  <path d="M12 7V2"></path>
-                  <path d="M12 17v5"></path>
-                  <rect x="10" y="10" width="4" height="4"></rect>
-                </svg>
-              </div>
-              <span class="robot-name">TURRET</span>
               <span class="robot-status">SELECT</span>
             </div>
             <div class="robot-border"></div>
@@ -299,6 +292,7 @@
   <script src="loader.js"></script>
   <script src="../app.js"></script>
   <script src="otherApp.js"></script>
-  
+
 </body>
+
 </html>
