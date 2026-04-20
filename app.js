@@ -4,7 +4,6 @@ let extraData = []; //['teamNum', 'matchNum', 'scout', 'comment', 'alliance pick
 var compressedList = []; //This is the list that collects all the IDs for the QR Code.
 var climbList = ["0", false, "0", false]; //['auton climb', auton backside, 'endgame climb', endgame backside]
 var defenseChecklist = ["", ""];
-var hopperCapacity = 0;
 var autonComments = "";
 var teleopComments = "";
 var defenseComments = "";
@@ -442,6 +441,8 @@ var team = "";
 var match = "";
 var savescout = sessionStorage.getItem("scoutInitials");
 let score = 0;
+var hopperCapacity = 0;
+
 
 const TIMEOUT = 1000 // time before fuel scoring period times out, measured in ms
 
@@ -483,6 +484,10 @@ function addComments(id) {
   else {
     defenseComments = document.getElementById("defenseComments").value;
   }
+}
+
+function addHopperCapacity() {
+  hopperCapacity = document.getElementById("hopperCapacityBox").value;
 }
 
 lastUpdatedTimestamp = 0
@@ -617,6 +622,7 @@ function saveData() {
   sessionStorage.setItem("score", score.toString());
   sessionStorage.setItem("climbList", JSON.stringify(climbList));
   sessionStorage.setItem("defenseChecklist", JSON.stringify(defenseChecklist));
+  sessionStorage.setItem("hopperCapacity", hopperCapacity.toString());
   sessionStorage.setItem("autonComments", autonComments);
   sessionStorage.setItem("teleopComments", teleopComments);
   sessionStorage.setItem("defenseComments", defenseComments);
@@ -628,6 +634,7 @@ function getData() {
   extraData = getList("extraData");
   climbList = getList("climbList");
   defenseChecklist = getList("defenseChecklist");
+  hopperCapacity = parseInt(sessionStorage.getItem("hopperCapacity"), 10);
   autonComments = sessionStorage.getItem("autonComments");
   teleopComments = sessionStorage.getItem("teleopComments");
   defenseComments = sessionStorage.getItem("defenseComments");
@@ -635,6 +642,7 @@ function getData() {
   console.log(extraData);
   console.log(climbList);
   console.log(defenseChecklist);
+  console.log(hopperCapacity);
   console.log(autonComments);
   console.log(teleopComments);
   console.log(defenseComments);
@@ -685,6 +693,9 @@ function displayBoxData() {
         document.getElementById(defenseChecklist[i]).checked = true;
       }
     }
+  }
+  if (document.getElementById('hopperCapacityBox') !== null) {
+    document.getElementById('hopperCapacityBox').value = hopperCapacity;
   }
   if (document.getElementById('autonComments') !== null) {
     document.getElementById('autonComments').value = autonComments;

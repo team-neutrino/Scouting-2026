@@ -17,6 +17,7 @@ Qr positions:
 6. Defense List
     0. Defense Bot
     1. Broken Mechanism
-7. Auton Comments
-8. Teleop Comments
-9. Defense Comments
+7. Hopper Capacity Estimate
+8. Auton Comments
+9. Teleop Comments
+10. Defense Comments

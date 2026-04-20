@@ -52,12 +52,13 @@
             var climb = getList("climbList");
             var autonChecklist = getList("autonChecklist");
             var defenseChecklist = getList("defenseChecklist");
+            var hopperCapacity = sessionStorage.getItem("hopperCapacity")
             var autonComments = sessionStorage.getItem("autonComments")
             var teleopComments = sessionStorage.getItem("teleopComments");
             var defenseComments = sessionStorage.getItem("defenseComments");
 
             if (defenseComments === "") {
-              defenseComments = "\n"; //CHANGE ME TO A SPACE IF THIS DOES NOT WORK
+                defenseComments = "\n"; //CHANGE ME TO A SPACE IF THIS DOES NOT WORK
             }
             if (climb[0] === "noTry") {
                 climb[0] = "0";
@@ -79,6 +80,8 @@
                 sums.join(",") +
                 "\t" +
                 defenseChecklist +
+                "\t" +
+                hopperCapacity +
                 "\t" +
                 autonComments +
                 "\t" +
