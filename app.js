@@ -592,7 +592,6 @@ function saveData() {
   sessionStorage.setItem("compressedList", JSON.stringify(compressedList));
   sessionStorage.setItem("extraData", JSON.stringify(extraData));
   sessionStorage.setItem("score", score.toString());
-  sessionStorage.setItem("climbList", JSON.stringify(climbList));
   sessionStorage.setItem("autonChecklist", JSON.stringify(autonChecklist));
   sessionStorage.setItem("defenseChecklist", JSON.stringify(defenseChecklist));
   sessionStorage.setItem("hopperCapacity", hopperCapacity.toString());
@@ -605,7 +604,6 @@ function getData() {
   score = parseInt(sessionStorage.getItem("score"), 10);
   compressedList = getList("compressedList");
   extraData = getList("extraData");
-  climbList = getList("climbList");
   autonChecklist = getList("autonChecklist");
   defenseChecklist = getList("defenseChecklist");
   hopperCapacity = parseInt(sessionStorage.getItem("hopperCapacity"), 10);
@@ -614,7 +612,6 @@ function getData() {
   defenseComments = sessionStorage.getItem("defenseComments");
   console.log(compressedList);
   console.log(extraData);
-  console.log(climbList);
   console.log(autonChecklist);
   console.log(defenseChecklist);
   console.log(hopperCapacity);
