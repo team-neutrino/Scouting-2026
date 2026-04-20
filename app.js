@@ -487,7 +487,7 @@ function addComments(id) {
 }
 
 function addHopperCapacity() {
-  hopperCapacity = document.getElementById("hopperCapacityBox").value;
+  hopperCapacity = document.getElementById("hopperCapacityBox").value || 0;
 }
 
 lastUpdatedTimestamp = 0
