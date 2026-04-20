@@ -61,7 +61,7 @@
             <td colspan="2">
                 Hopper Capacity Estimate:
                 <input class="infoBox" type="text" name="hopperCapacity" id="hopperCapacityBox"
-                    onchange="addHopperCapacity()" />
+                    oninput="this.value=this.value.replace(/[^0-9]/g,'')" onchange="addHopperCapacity()" />
             </td>
             <td colspan="2">
                 <button class="backForth nextColor" id="next" onclick="qualLoad('qr')">&rarr;</button>
