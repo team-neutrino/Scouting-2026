@@ -4,6 +4,7 @@ let extraData = []; //['teamNum', 'matchNum', 'scout', 'comment', 'alliance pick
 var compressedList = []; //This is the list that collects all the IDs for the QR Code.
 var climbList = ["0", false, "0", false]; //['auton climb', auton backside, 'endgame climb', endgame backside]
 var defenseChecklist = ["", ""];
+var hopperCapacity = 0;
 var autonComments = "";
 var teleopComments = "";
 var defenseComments = "";

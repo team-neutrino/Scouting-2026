@@ -29,9 +29,10 @@
         </tr>
         <tr>
             <td rowspan="2" colspan="2">
-                <textarea placeholder="Comments" class="commentBox" id="autonComments" onchange="addComments(this.id)"></textarea>
+                <textarea placeholder="Comments" class="commentBox" id="autonComments"
+                    onchange="addComments(this.id)"></textarea>
             </td>
-            <td rowspan="3" colspan="2">
+            <td rowspan="2" colspan="2">
                 <textarea placeholder="Comments" class="commentBox" id="teleopComments"
                     onchange="addComments(this.id)"></textarea>
             </td>
@@ -41,8 +42,7 @@
             </td>
             <td colspan="2">
                 <label>
-                    <input type="checkbox" class="checkbox" id="defenseBot"
-                        onclick="addDefenseCheckbox(0, this.id)">
+                    <input type="checkbox" class="checkbox" id="defenseBot" onclick="addDefenseCheckbox(0, this.id)">
                     Defense Bot</label>
             </td>
         </tr>
@@ -57,6 +57,10 @@
         <tr>
             <td colspan="2">
                 <button class="backForth nextColor" id="next" onclick="load('teleop')">&larr;</button>
+            </td>
+            <td colspan="2">
+                Hopper Capacity Estimate:
+                <input class="infoBox" type="text" name="hopperCapacity" id="hopperCapacityBox" />
             </td>
             <td colspan="2">
                 <button class="backForth nextColor" id="next" onclick="qualLoad('qr')">&rarr;</button>
