@@ -2,12 +2,10 @@ const pointList = [1, 4, 3]
 
 let extraData = []; //['teamNum', 'matchNum', 'scout', 'comment', 'alliance pick']
 var compressedList = []; //This is the list that collects all the IDs for the QR Code.
-var climbList = ["0", false, "0", false]; //['auton climb', auton backside, 'endgame climb', endgame backside]
 var defenseChecklist = ["", ""];
 var autonComments = "";
 var teleopComments = "";
 var defenseComments = "";
-var comments = ""; //Comments Box
 var blue1 = [8770,
   3055,
   5557,
@@ -556,32 +554,6 @@ function alliancePick(alliance) {
   console.log(extraData);
 }
 
-function selectBackside(boxId, page) {
-  var backsideIndex = 3;
-  if (page === "autonClimb") {
-    backsideIndex = 1;
-  }
-  climbList[backsideIndex] = !climbList[backsideIndex]
-  if (climbList[backsideIndex]) {
-    document.getElementById(boxId).style.backgroundColor = "rgb(159, 221, 67)";
-  } else {
-    document.getElementById(boxId).style.backgroundColor = "rgb(227, 137, 20)";
-  }
-}
-
-function updateClimb(name, page) {
-  var climbIndex = 2;
-  if (page === "autonClimb") {
-    climbIndex = 0;
-  }
-
-  if (!(climbList[climbIndex] === "0")) {
-    document.getElementById(climbList[climbIndex]).style.backgroundColor = "#8ac3d5"; // get rid of old style
-  }
-  climbList[climbIndex] = name;
-  document.getElementById(climbList[climbIndex]).style.backgroundColor = "rgb(159, 221, 67)"; // add new style
-}
-
 function GO(iPadID, matchsaver, scoutsaver, page) {
   getBoxData();
   var allClear = true;
@@ -620,7 +592,6 @@ function saveData() {
   sessionStorage.setItem("compressedList", JSON.stringify(compressedList));
   sessionStorage.setItem("extraData", JSON.stringify(extraData));
   sessionStorage.setItem("score", score.toString());
-  sessionStorage.setItem("climbList", JSON.stringify(climbList));
   sessionStorage.setItem("defenseChecklist", JSON.stringify(defenseChecklist));
   sessionStorage.setItem("hopperCapacity", hopperCapacity.toString());
   sessionStorage.setItem("autonComments", autonComments);
@@ -632,7 +603,6 @@ function getData() {
   score = parseInt(sessionStorage.getItem("score"), 10);
   compressedList = getList("compressedList");
   extraData = getList("extraData");
-  climbList = getList("climbList");
   defenseChecklist = getList("defenseChecklist");
   hopperCapacity = parseInt(sessionStorage.getItem("hopperCapacity"), 10);
   autonComments = sessionStorage.getItem("autonComments");
@@ -640,7 +610,6 @@ function getData() {
   defenseComments = sessionStorage.getItem("defenseComments");
   console.log(compressedList);
   console.log(extraData);
-  console.log(climbList);
   console.log(defenseChecklist);
   console.log(hopperCapacity);
   console.log(autonComments);
@@ -663,20 +632,6 @@ function loadPage(page) {
   displayBoxData();
   if (document.getElementById("teamLog2") !== null) {
     document.getElementById("teamLog2").value = score;
-  }
-  if (page === 'autonClimb' || page === 'endgameClimb') {
-    loadClimb(page)
-  }
-}
-
-function loadClimb(page) {
-  var climbModifier = 2;
-  if (page === 'autonClimb') {
-    climbModifier = 0;
-  }
-  updateClimb(climbList[climbModifier], page);
-  if (climbList[1 + climbModifier] == true) {
-    document.getElementById("backsideButton").style.backgroundColor = "rgb(159, 221, 67)";
   }
 }
 
@@ -914,7 +869,6 @@ function reset(action) {
 function load(windowLocation) {
   if (windowLocation == "teleop" && window.location.pathname === `/auton.html`) {
     console.log("fun");
-    climbList[0] = "noTry";
   }
 
   saveData();
