@@ -46,3 +46,69 @@ label {
 .qualBody {
     background-color: rgb(56, 8, 10);
 }
+
+.modal-dialog {
+    position: fixed;
+    /* font-family: Arial, Helvetica, sans-serif; */
+    font-family: Monospace;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0,0,0,0.3);
+    z-index: 99999;
+    opacity:0;
+    color: white;
+    -webkit-transition: opacity 100ms ease-in;
+    -moz-transition: opacity 100ms ease-in;
+    transition: opacity 100ms ease-in;
+    pointer-events: none;
+}
+
+.modal-dialog.show{
+    opacity:1;
+    pointer-events: auto;
+}
+
+.modal-dialog:target {
+    opacity:1;
+    pointer-events: auto;
+}
+
+.modal-dialog div {
+    width: 50vw;
+    height: 50vh;
+    position: relative;
+    margin: 10% auto;
+    padding: 16px 20px 21px 20px;
+    background: rgb(28, 4, 5);
+    border: 2px black solid;
+    overflow-y: scroll;
+    scrollbar-color: gray gray;
+    scrollbar-width: thin;
+
+}
+
+.modal-dialog p {
+    color: white;
+    text-shadow: none;
+    text-transform: none;
+    font-size: min(14px, 6vh);
+}
+.close {
+    background: black;
+    color: white;
+    line-height: 24px;
+    position: absolute;
+    right: 0px;
+    text-align: center;
+    top: 0px;
+    width: 26px;
+    text-decoration: none;
+    font-weight: bold;
+    border: 1px solid #666;
+    box-shadow: 1px 1px 3px #000;
+    font-family: Monospace;
+}
+
+.close:hover { background: #aaa; }

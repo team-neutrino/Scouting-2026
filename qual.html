@@ -22,7 +22,8 @@
             </th>
         </tr>
         <tr class="tr1">
-            <td colspan="2">Auton Comments</td>
+            <td colspan="1">Auton Comments</td>
+            <td colspan="1"><button onclick="showInfoBox('auton-info')">Info</button></td>
             <td colspan="2">Teleop Comments</td>
             <td colspan="2">Defense Comments</td>
             <td colspan="2">Defense</td>
@@ -56,7 +57,7 @@
         </tr>
         <tr>
             <td colspan="2">
-                <button class="backForth nextColor" id="next" onclick="load('teleop')">&larr;</button>
+                <button class="backForth nextColor" id="next" onclick="load('backQual')">&larr;</button>
             </td>
             <td colspan="2">
                 Hopper Capacity Estimate:
@@ -69,5 +70,25 @@
         </tr>
     </table>
 </body>
+
+<div id="auton-info" class="modal-dialog">
+    <div>
+        <a href="#close" title="Close" class="close" onclick="showInfoBox('auton-info')">x</a>
+      <h2>Auton Info</h2>
+      <p>This is where you will describe the robot's actions during the Autonomous period! (You can scroll on this menu)</p>
+      <h2>General Guidelines</h2>
+      <p>Do your best to accurately describe the <b>robot's path.</b> This is very important for our drive and strategy members, since knowing what a robot does and when can greatly help us cooperate with other teams.</p>
+      <h2>Useful Terms</h2>
+      <p>
+        <b>Outpost:</b> The <i>Outpost</i> is on the corner of the field next to the Human Player. It can both accept and deliver balls to the robots.<br>
+        <b>Depot:</b> The <i>Depot</i> is a section of the field containing an amount of pre-set balls. Robots must drive over a raised perimeter to access it.<br>
+        <b>Pre-load:</b> Robots can be <i>pre-loaded</i> with up to eight balls. It's not likely that robots at Champs will only shoot pre-loaded balls.<br>
+        <b>[Times] Sweep:</b> <i>Sweeping</i> refers to a robot going into the neutral zone and intaking balls. Replace <i>[Times]</i> with how many times it repeats this action.<br>
+        <b>Sweep x Bump:</b> A robot that <i>sweeps</i> and only goes over the bump.<br>
+        <b>Sweep x Trench:</b> A robot that <i>sweeps</i> and only goes over the trench.<br>
+        <b>Trench x Sweep x Bump:</b> A robot that reaches the Neutral Zone using the trench, <i>sweeps</i>, but then elects to go over the Bump instead of through the trench again.<br>
+    </p>
+    </div>
+ </div>
 
 </html>

@@ -788,6 +788,16 @@ function Undo() {
   updateScore();
 }
 
+function showInfoBox(id) {
+  infoBox = document.getElementById(id);
+
+  if (infoBox.classList.contains("show")) {
+    infoBox.classList.remove("show");
+  } else {
+    infoBox.classList.add("show");
+  }
+}
+
 function pullIPadID() {
   document.getElementById("iPadIDarea").value = localStorage.getItem("iPadId");
   savescout = sessionStorage.getItem("scoutInitials");
