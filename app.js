@@ -964,11 +964,6 @@ function toQuotes() {
 }
 
 function loadIndex() {
-  const number = Math.random();
-
-  if (number < 0.1) {
-    window.location.href = `./loading-animation.html`;
-  } else {
+  // const number = Math.random();
     window.location.href = `./index.html`;
-  }
 }

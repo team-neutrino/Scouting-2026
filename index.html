@@ -3,6 +3,11 @@
 <head>
     <meta http-equiv="refresh" content="0; url=new%20app/">
     <title>Redirecting...</title>
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js');
+      }
+    </script>
 </head>
 <body style="background-color: black;">
     <p>Redirecting... </p>
