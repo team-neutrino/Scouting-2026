@@ -708,11 +708,12 @@ function updateLog() {
   for (let i = compressedList.length - 1; i >= 0; i--) {
     period = compressedList[i];
 
-    if (period[0] === 1 || period[0] === 3) {
-      logText = logText + "-- Passed " + period[1] + " fuel. --"
-    } else {
-      logText = logText + "-- Scored " + period[1] + " fuel. --"
-
+    if (period[3] || Date.now() - lastUpdatedTimestamp > TIMEOUT) { // if period finished
+      if (period[0] === 1 || period[0] === 3) {
+        logText = logText + "-- Passed " + period[1] + " fuel. --"
+      } else {
+        logText = logText + "-- Scored " + period[1] + " fuel. --"
+      }
       if (period[0] < 2) {
         logText = logText + " (A)"
       } else {
@@ -721,7 +722,6 @@ function updateLog() {
 
       logText = logText + "\n"
     }
-
     score = period[1]
 
     for (let i = period[2].length - 1; i >= 0; i--) {
