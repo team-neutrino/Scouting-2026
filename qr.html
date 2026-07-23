@@ -50,7 +50,6 @@
             document.getElementById('teamNumberBox').value = extraData[0];
             document.getElementById('matchNumberBox').value = extraData[1];
             var defenseChecklist = getList("defenseChecklist");
-            var hopperCapacity = sessionStorage.getItem("hopperCapacity")
             var autonComments = sessionStorage.getItem("autonComments")
             var teleopComments = sessionStorage.getItem("teleopComments");
             var defenseComments = sessionStorage.getItem("defenseComments");
@@ -70,8 +69,6 @@
                 extraData[4] +
                 "\t" +
                 sums.join(",") +
-                "\t" +
-                hopperCapacity +
                 "\t" +
                 defenseChecklist +
                 "\t" +

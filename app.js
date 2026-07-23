@@ -481,8 +481,6 @@ var team = "";
 var match = "";
 var savescout = sessionStorage.getItem("scoutInitials");
 let score = 0;
-var hopperCapacity = 0;
-
 
 const TIMEOUT = 1000 // time before fuel scoring period times out, measured in ms
 
@@ -524,10 +522,6 @@ function addComments(id) {
   else {
     defenseComments = document.getElementById("defenseComments").value;
   }
-}
-
-function addHopperCapacity() {
-  hopperCapacity = document.getElementById("hopperCapacityBox").value || 0;
 }
 
 lastUpdatedTimestamp = 0
@@ -635,7 +629,6 @@ function saveData() {
   sessionStorage.setItem("extraData", JSON.stringify(extraData));
   sessionStorage.setItem("score", score.toString());
   sessionStorage.setItem("defenseChecklist", JSON.stringify(defenseChecklist));
-  sessionStorage.setItem("hopperCapacity", hopperCapacity.toString());
   sessionStorage.setItem("autonComments", autonComments);
   sessionStorage.setItem("teleopComments", teleopComments);
   sessionStorage.setItem("defenseComments", defenseComments);
@@ -646,14 +639,12 @@ function getData() {
   compressedList = getList("compressedList");
   extraData = getList("extraData");
   defenseChecklist = getList("defenseChecklist");
-  hopperCapacity = parseInt(sessionStorage.getItem("hopperCapacity"), 10);
   autonComments = sessionStorage.getItem("autonComments");
   teleopComments = sessionStorage.getItem("teleopComments");
   defenseComments = sessionStorage.getItem("defenseComments");
   console.log(compressedList);
   console.log(extraData);
   console.log(defenseChecklist);
-  console.log(hopperCapacity);
   console.log(autonComments);
   console.log(teleopComments);
   console.log(defenseComments);
@@ -691,9 +682,6 @@ function displayBoxData() {
       }
     }
   }
-  if (document.getElementById('hopperCapacityBox') !== null) {
-    document.getElementById('hopperCapacityBox').value = hopperCapacity;
-  }
   if (document.getElementById('autonComments') !== null) {
     document.getElementById('autonComments').value = autonComments;
   }
@@ -703,23 +691,6 @@ function displayBoxData() {
   if (document.getElementById('defenseComments') !== null) {
     document.getElementById('defenseComments').value = defenseComments;
   }
-}
-
-function format(str, ...values) {
-  return str.replace(/{(\d+)}/g, function (match, index) {
-    return typeof values[index] !== 'undefined' ? values[index] : match;
-  });
-} // I like lua why can't js just have this by default : (
-
-idToLogText = {
-  0: "Scored {0} Fuel ({1} total) (A)",
-  1: "Passed {0} Fuel ({1} total) (A)",
-  2: "Scored {0} Fuel ({1} total) (T)",
-  3: "Passed {0} Fuel ({1} total) (T)",
-  4: "Scored {0}% of Hopper (A)",
-  5: "Passed {0}% of Hopper (A)",
-  6: "Scored {0}% of Hopper (T)",
-  7: "Passed {0}% of Hopper (T)",
 }
 
 function updateLog() {
@@ -737,49 +708,42 @@ function updateLog() {
   for (let i = compressedList.length - 1; i >= 0; i--) {
     period = compressedList[i];
 
-    if (period[3] || Date.now() - lastUpdatedTimestamp > TIMEOUT) { // if period finished
-      if (period[0] < 4) {
-        if (period[0] === 1 || period[0] === 3) {
-          logText = logText + "-- Passed " + period[1] + " fuel. --"
-        } else {
-          logText = logText + "-- Scored " + period[1] + " fuel. --"
-        }
+    if (period[0] === 1 || period[0] === 3) {
+      logText = logText + "-- Passed " + period[1] + " fuel. --"
+    } else {
+      logText = logText + "-- Scored " + period[1] + " fuel. --"
+
+      if (period[0] < 2) {
+        logText = logText + " (A)"
       } else {
-        if (period[0] === 5 || period[0] === 7) {
-          logText = logText + "-- Passed " + period[1] + " hoppers. --"
-        } else {
-          logText = logText + "-- Scored " + period[1] + " hoppers. --"
-        }
+        logText = logText + " (T)"
       }
 
-      if (period[0] < 4) {
-        if (period[0] < 2) {
-          logText = logText + " (A)"
-        } else {
-          logText = logText + " (T)"
-        }
+      logText = logText + "\n"
+    }
+
+    score = period[1]
+
+    for (let i = period[2].length - 1; i >= 0; i--) {
+      amt = period[2][i]
+      if (period[0] === 1 || period[0] === 3) {
+        logText = logText + "Passed " + amt + " Fuel (" + score + " total)"
       } else {
-        if (period[0] < 6) {
-          logText = logText + " (A)"
-        } else {
-          logText = logText + " (T)"
-        }
+        logText = logText + amt + " Fuel (" + score + " total)"
+      }
+
+      if (period[0] < 2) {
+        logText = logText + " (A)"
+      } else {
+        logText = logText + " (T)"
       }
 
       logText = logText + "\n";
     }
 
-    score = period[1];
+    logText = logText + "\n"
 
-    for (let i = period[2].length - 1; i >= 0; i--) {
-      amt = period[2][i];
-      if (period[0] < 4) {
-        logText = logText + format(idToLogText[period[0]], amt, score) + "\n";
-      } else {
-        logText = logText + format(idToLogText[period[0]], amt * 100) + "\n";
-      }
-      score -= amt;
-    }
+    score -= amt
   }
 
   document.getElementById("teamLog1").value = logText;
@@ -914,17 +878,6 @@ function load(windowLocation) {
   }
 
   saveData();
-
-  if (windowLocation === "backQual") {
-    robotType = sessionStorage.getItem("robotType")
-
-    if (robotType === "dumper") {
-      window.location.href = `./teleop-dumper.html`;
-    } else {
-      window.location.href = `./teleop.html`;
-    }
-    return
-  }
   window.location.href = `./${windowLocation}.html`;
 }
 
