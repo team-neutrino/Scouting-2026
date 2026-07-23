@@ -1007,5 +1007,5 @@ function toQuotes() {
 
 function loadIndex() {
   // const number = Math.random();
-    window.location.href = `./index.html`;
+  window.location.href = `./index.html`;
 }
