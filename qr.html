@@ -42,7 +42,7 @@
             actionList = JSON.parse(unparsedActionList);
             compressedList = JSON.parse(unparsedCompressedList);
             extraData = JSON.parse(unparsedExtradata);
-            var sums = Array(8).fill(0); //Compress List
+            var sums = Array(4).fill(0); //Compress List
             for (const period of compressedList) {
                 sums[period[0]] += period[1];
             }
@@ -50,7 +50,6 @@
             document.getElementById('teamNumberBox').value = extraData[0];
             document.getElementById('matchNumberBox').value = extraData[1];
             var defenseChecklist = getList("defenseChecklist");
-            var hopperCapacity = sessionStorage.getItem("hopperCapacity")
             var autonComments = sessionStorage.getItem("autonComments")
             var teleopComments = sessionStorage.getItem("teleopComments");
             var defenseComments = sessionStorage.getItem("defenseComments");
@@ -70,8 +69,6 @@
                 extraData[4] +
                 "\t" +
                 sums.join(",") +
-                "\t" +
-                hopperCapacity +
                 "\t" +
                 defenseChecklist +
                 "\t" +
