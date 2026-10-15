@@ -2,7 +2,6 @@ const CACHE_NAME = 'my-site-v1';
 
 const FILES_TO_CACHE = [
   '/app.js',
-  '/auton-dumper.html',
   '/auton.html',
   '/background.png',
   '/fuel.css',
@@ -24,7 +23,6 @@ const FILES_TO_CACHE = [
   '/qual.html',
   '/quote.js',
   '/styleSheet.css',
-  '/teleop-dumper.html',
   '/teleop.html',
 ];
 
